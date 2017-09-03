@@ -24,6 +24,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private ArrayList<ParentRow> parentRowList;
     private ArrayList<ParentRow> originalList;
+
     DatabaseHelper db;
 
     public MyExpandableListAdapter(Context context
@@ -115,23 +116,40 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+    /**
+     * Applies the action for when no query is happening
+     */
+    void applyDefaultBehaviour() {
+        //Show 5 recipe names from the database
+        Cursor res = db.getAllData();
+        ArrayList<ChildRow> childList = new ArrayList<ChildRow>();
+        int num_results = 0;
+        while (res.moveToNext() && num_results < 5) {
+            String str = res.getString(res.getColumnIndex("NAME"));
+            childList.add(new ChildRow(R.mipmap.generic_icon,str));
+            num_results++;
+        }
+        ParentRow nParentRow = new ParentRow("Algumas receitas", childList);
+        parentRowList.add(nParentRow);
+    }
+
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
 
     /**
-     * Deve executar a query no banco de dados db, e mostrar resultados
-     * @param query
+     * Shows recipe names which begin with a given prefix
+     * @param query the prefix
      */
     public void filterData(String query) {
         parentRowList.clear();
 
         if (query.isEmpty()) {
-            parentRowList.addAll(originalList);
+           applyDefaultBehaviour();
         }
         else {
-            //Procura na db
+            //Search for names in the database
             Cursor res = db.matchSearch(query);
             StringBuffer buffer = new StringBuffer();
             ArrayList<ChildRow> childList = new ArrayList<ChildRow>();

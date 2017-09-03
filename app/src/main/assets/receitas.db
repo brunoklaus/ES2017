@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS "Receitas";
+CREATE TABLE "Receitas" ("ID" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "NAME" TEXT);
+INSERT INTO "Receitas" VALUES(0,'Bolo de bolacha light');
+INSERT INTO "Receitas" VALUES(1,'Brownie light');
+INSERT INTO "Receitas" VALUES(2,'Bolinhos de chocolate com licor de cafe');
+INSERT INTO "Receitas" VALUES(3,'Charlotte de Tiramisu');
+INSERT INTO "Receitas" VALUES(4,'Mini tartes de cereja');
+INSERT INTO "Receitas" VALUES(5,'Bolo com banana com coco');
+INSERT INTO "Receitas" VALUES(6,'Queques de quinoa com arandos vermelhos');
+INSERT INTO "Receitas" VALUES(7,'Mousse de chocolate');
+INSERT INTO "Receitas" VALUES(8,'Pudim de laranja');

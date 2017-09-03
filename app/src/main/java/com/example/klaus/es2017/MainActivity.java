@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
-
+    public static String PACKAGE_NAME;
     private SearchManager searchManager;
     private android.widget.SearchView searchView;
     private MyExpandableListAdapter listAdapter;
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PACKAGE_NAME = getApplicationContext().getPackageName();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,6 +55,16 @@ public class MainActivity extends AppCompatActivity
 
         //Inicializa banco de dados
         db = new DatabaseHelper(this);
+        try {
+
+            db.createDataBase();
+            db.openDataBase();
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         // The app will crash if display list is not called here.
         displayList();
@@ -66,27 +77,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void loadData() {
-        ArrayList<ChildRow> childRows = new ArrayList<ChildRow>();
-        ParentRow parentRow = null;
-
-       /*childRows.add(new ChildRow(R.mipmap.generic_icon
-                ,"Lorem ipsum dolor sit amet, consectetur adipiscing elit."));
-        childRows.add(new ChildRow(R.mipmap.generic_icon
-                , "Sit Fido, sit."));
-        parentRow = new ParentRow("First Group", childRows);
-        parentList.add(parentRow);
-
-        childRows = new ArrayList<ChildRow>();
-        childRows.add(new ChildRow(R.mipmap.generic_icon
-                , "Fido is the name of my dog."));
-        childRows.add(new ChildRow(R.mipmap.generic_icon
-                , "Add two plus two."));
-        parentRow = new ParentRow("Second Group", childRows);
-        parentList.add(parentRow);
-        */
-
-    }
 
     private void expandAll() {
         int count = listAdapter.getGroupCount();
@@ -96,10 +86,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void displayList() {
-        loadData();
 
         myList = (ExpandableListView) findViewById(R.id.expandableListView_search);
         listAdapter = new MyExpandableListAdapter(MainActivity.this, parentList,db);
+        listAdapter.applyDefaultBehaviour();
 
         myList.setAdapter(listAdapter);
     }
