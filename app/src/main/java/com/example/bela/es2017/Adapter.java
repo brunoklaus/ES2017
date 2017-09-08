@@ -10,18 +10,18 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter {
 
-    private List<Livros> livros;
+    private List<Receitas> receitas;
     private Context context;
 
-    public Adapter(List<Livros> livros, Context context) {
-        this.livros = livros;
+    public Adapter(List<Receitas> receitas, Context context) {
+        this.receitas = receitas;
         this.context = context;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.item_livro, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_receita, parent, false);
 
         ViewHolder holder = new ViewHolder(view);
         return holder;
@@ -32,17 +32,16 @@ public class Adapter extends RecyclerView.Adapter {
 
         ViewHolder holder = (ViewHolder) viewHolder;
 
-        Livros livro  = livros.get(position) ;
+        Receitas receita  = receitas.get(position) ;
 
-        holder.nome.setText(livro.getNomeLivro());
-        holder.descricao.setText(livro.getDescricao());
-        holder.autor.setText(livro.getNomeAutor());
-        holder.preco.setText(livro.getPreco().toString());
-        holder.imagem.setImageResource(livro.getIm());
+        holder.nome.setText(receita.getNomeReceita());
+        holder.descricao.setText(receita.getDescricao());
+        holder.ingredientes.setText(receita.getIngredientes());
+        holder.imagem.setImageResource(receita.getImagem());
     }
 
     @Override
     public int getItemCount() {
-        return livros.size();
+        return receitas.size();
     }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 public class Lista extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     private RecyclerView rView;
-    private Livros livro1, livro2;
+    private Receitas receita1, receita2;
     private SearchManager searchManager;
     private android.widget.SearchView searchView;
     private MenuItem searchItem;
@@ -28,14 +28,14 @@ public class Lista extends AppCompatActivity implements SearchView.OnQueryTextLi
 
         rView = (RecyclerView) findViewById(R.id.recycler1);
 
-        livro1 = new Livros("Crimes do ABC", " - Agatha Christie", "Suspense Policial", (double) 13, R.drawable.crimes_do_abc);
-        livro2 = new Livros("Um estudo em vermelho", " - Arthur Conan Doyle", "Suspense Policial", (double) 14, R.drawable.estudo_vermelho_sherlock);
+        receita1= new Receitas("Hamburguer de carne", "Como fazer um delicioso hamburguer", "Carne, ovo, farinha de trigo", R.drawable.hamburguer);
+        receita2 = new Receitas("Molho bolonhesa", "Para a melhor macarronada", "Carne, extrato de tomate, pimenta", R.drawable.molho_bolonhesa);
 
-        List<Livros> livros = new ArrayList<Livros>();
-        livros.add(livro1);
-        livros.add(livro2);
+        List<Receitas> receitas = new ArrayList<Receitas>();
+        receitas.add(receita1);
+        receitas.add(receita2);
 
-        rView.setAdapter(new Adapter(livros, this));
+        rView.setAdapter(new Adapter(receitas, this));
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
