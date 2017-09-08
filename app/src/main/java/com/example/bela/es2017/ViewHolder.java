@@ -9,16 +9,17 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
     final TextView nome;
     final TextView descricao;
-    final TextView preco;
-    final TextView autor;
+    //final TextView preco;
+    final TextView ingredientes;
     final ImageView imagem;
 
     public ViewHolder(View view) {
         super(view);
-        nome = (TextView) view.findViewById(R.id.item_livro_nome);
-        descricao = (TextView) view.findViewById(R.id.item_livro_descricao);
-        preco = (TextView) view.findViewById(R.id.item_livro_preco);
-        autor = (TextView) view.findViewById(R.id.item_livro_autor);
-        imagem = (ImageView) view.findViewById(R.id.item_livro_imagem);
+        nome = (TextView) view.findViewById(R.id.item_receita_nome);
+        descricao = (TextView) view.findViewById(R.id.item_receita_descricao);
+        ingredientes = (TextView) view.findViewById(R.id.item_receita_ingredientes);
+        imagem = (ImageView) view.findViewById(R.id.item_receita_imagem);
+
+        //preco = (TextView) view.findViewById(R.id.item_livro_preco);
     }
 }
