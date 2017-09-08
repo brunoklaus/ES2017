@@ -1,7 +1,4 @@
 <resources>
-    <string name="app_name">ES2017</string>
+    <string name="app_name">ListaNova</string>
     <string name="action_settings">Settings</string>
-    <string name="app_label">Search</string>
-    <string name="search_hint">Search Me</string>
-    <string name="search">Search</string>
 </resources>
