@@ -286,6 +286,7 @@ public class AuthActivity extends AppCompatActivity implements
             mStatusTextView.setText(R.string.signed_out);
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
+            findViewById(R.id.button_optional_action).setVisibility(View.GONE);
         }
     }
 

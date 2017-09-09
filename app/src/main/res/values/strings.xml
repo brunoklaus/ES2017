@@ -6,13 +6,13 @@
 
 
 <!-- Begin Google Stuff HERE -->
-    <string name="title_text">Google Sign-In\nQuickstart</string>
+    <string name="title_text">Login pelo Google</string>
 
     <!-- Sign-in status messages -->
-    <string name="signed_in_fmt">Signed in as: %s</string>
-    <string name="signed_in">Signed in</string>
-    <string name="signing_in">Signing in…</string>
-    <string name="signed_out">Signed out</string>
+    <string name="signed_in_fmt">Entrou como usuário: %s</string>
+    <string name="signed_in">Entrou</string>
+    <string name="signing_in">Entrando…</string>
+    <string name="signed_out">Saiu</string>
     <string name="signed_in_err">"Error: please check logs."</string>
     <string name="error_null_person">
         Error: Plus.PeopleApi.getCurrentPerson returned null. Ensure that the Google+ API is
@@ -27,8 +27,8 @@
     <string name="play_services_error_fmt">Google Play Services Error: %i</string>
 
     <!-- Button labels -->
-    <string name="sign_out">Sign Out</string>
-    <string name="disconnect">Disconnect</string>
+    <string name="sign_out">Sair</string>
+    <string name="disconnect">Desconectar</string>
 
     <!-- Content Description for images -->
     <string name="desc_google_icon">Google Logo</string>
