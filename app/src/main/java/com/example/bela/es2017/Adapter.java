@@ -6,14 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bela.es2017.model.InstIngrediente;
+import com.example.bela.es2017.model.Receita;
+
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter {
 
-    private List<Receitas> receitas;
+    private List<Receita> receitas;
     private Context context;
 
-    public Adapter(List<Receitas> receitas, Context context) {
+    public Adapter(List<Receita> receitas, Context context) {
         this.receitas = receitas;
         this.context = context;
     }
@@ -32,12 +35,22 @@ public class Adapter extends RecyclerView.Adapter {
 
         ViewHolder holder = (ViewHolder) viewHolder;
 
-        Receitas receita  = receitas.get(position) ;
+        Receita receita  = receitas.get(position) ;
 
-        holder.nome.setText(receita.getNomeReceita());
-        holder.descricao.setText(receita.getDescricao());
-        holder.ingredientes.setText(receita.getIngredientes());
-        holder.imagem.setImageResource(receita.getImagem());
+        holder.nome.setText(receita.titulo);
+        holder.descricao.setText(receita.subtitulo);
+        holder.ingredientes.setText(getIngredientStr(receita.ingredientesUsados));
+        holder.imagem.setImageResource(receita.img);
+    }
+
+    String getIngredientStr(List<InstIngrediente> ingredientesUsados){
+        String str = "";
+        for (int i = 0; i < ingredientesUsados.size(); i++) {
+            str += ingredientesUsados.get(i).nome;
+            str += (i != ingredientesUsados.size() - 1) ? ", " : "";
+        }
+
+        return str;
     }
 
     @Override
