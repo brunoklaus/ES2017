@@ -4,4 +4,7 @@
     <string name="app_label">Search</string>
     <string name="search_hint">Search Me</string>
     <string name="search">Search</string>
+    <string name="title_activity_main_estoque">MainEstoqueActivity</string>
+    <string name="title_activity_cadastro_ingrediente">CadastroIngrediente</string>
+    <string name="title_activity_estoque">EstoqueActivity</string>
 </resources>
