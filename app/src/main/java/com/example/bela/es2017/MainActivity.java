@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity  {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
-                Intent it = new Intent(MainActivity.this, Lista.class);
+                Intent it = new Intent(MainActivity.this, AuthActivity.class);
                 startActivity(it);
             }
         });
