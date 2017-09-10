@@ -31,6 +31,8 @@ public class Lista extends AppCompatActivity implements SearchView.OnQueryTextLi
     private SearchManager searchManager;
     private android.widget.SearchView searchView;
     private MenuItem searchItem;
+    private Adapter mAdapter;
+
     List<Receita> receitas = new ArrayList<Receita>();
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     @Override
@@ -69,7 +71,9 @@ public class Lista extends AppCompatActivity implements SearchView.OnQueryTextLi
     }
 
     void setupViews(){
-        rView.setAdapter(new Adapter(receitas, this));
+        mAdapter = new Adapter(this);
+        mAdapter.filter("",mDatabase);
+        rView.setAdapter(mAdapter);
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rView.setLayoutManager(layout);
         //Set up searchview
@@ -176,13 +180,13 @@ public class Lista extends AppCompatActivity implements SearchView.OnQueryTextLi
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        //TODO: filtrar recyclerview
+        mAdapter.filter(query,mDatabase);
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        //TODO: filtrar recyclerview
+        mAdapter.filter(newText,mDatabase);
         return false;
     }
 
