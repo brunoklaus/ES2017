@@ -24,7 +24,7 @@ public class IngredientesDAO extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
         String ddl = "CREATE TABLE " + TABELA
-                + "(id INTEGER PRIMARY KEY,"
+                + "(id INTEGER PRIMARY KEY autoincrement,"
                 + "nome TEXT NOT NULL,"
                 + "quantidade TEXT NOT NULL,"
                 + "marca TEXT);";
