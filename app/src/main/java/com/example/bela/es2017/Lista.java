@@ -61,8 +61,8 @@ public class Lista extends AppCompatActivity implements SearchView.OnQueryTextLi
 
                 });
 
-       // receita1= new Receitas("Hamburguer de carne", "Como fazer um delicioso hamburguer", "Carne, ovo, farinha de trigo", R.drawable.hamburguer);
-       // receita2 = new Receitas("Molho bolonhesa", "Para a melhor macarronada", "Carne, extrato de tomate, pimenta", R.drawable.molho_bolonhesa);
+        // receita1= new Receitas("Hamburguer de carne", "Como fazer um delicioso hamburguer", "Carne, ovo, farinha de trigo", R.drawable.hamburguer);
+        // receita2 = new Receitas("Molho bolonhesa", "Para a melhor macarronada", "Carne, extrato de tomate, pimenta", R.drawable.molho_bolonhesa);
 
         //receitas.add(receita1);
         //receitas.add(receita2);

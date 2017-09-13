@@ -2,6 +2,7 @@ package com.example.bela.es2017;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +15,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter {
 
-    private List<Receita> receitas;
+    private List<Receita> receitas = new ArrayList<>();
     private Context context;
     public final int MAX_LEN = 27;
-
+    volatile QueryRunnable nextToRun = null;
+    volatile QueryRunnable currentlyRunning = null;
     public Adapter(Context context) {
         this.context = context;
     }
@@ -33,6 +36,14 @@ public class Adapter extends RecyclerView.Adapter {
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
+
+    public List<Receita> getReceitas(){
+        return receitas;
+    }
+    public void setReceitas(List<Receita> r) {
+        receitas = r;
+    }
+
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
@@ -82,32 +93,38 @@ public class Adapter extends RecyclerView.Adapter {
     }
 
 
+    public synchronized void onQueryFinished(List<Receita> r, QueryRunnable q){
+        Log.d("d","teste - " + q.str);
+        if (q.equals(this.currentlyRunning)) {
+            this.receitas = r;
+            notifyDataSetChanged();
+        }
+        if (nextToRun == null) {
+            this.currentlyRunning = null;
+        } else {
+            this.currentlyRunning = nextToRun;
+            this.nextToRun = null;
+            new Thread(currentlyRunning).start();
+        }
 
-    public void filter(String str, DatabaseReference mDatabase) {
-        receitas = new ArrayList<>();
+    }
 
-        final String match = str.toUpperCase();
-        mDatabase.child("receitas").orderByChild("titulo").startAt(match).limitToFirst(50)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        receitas.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Receita r = (Receita) snapshot.getValue(Receita.class);
-                            if (r.titulo.toUpperCase().startsWith(match)) {
-                                receitas.add(r);
-                            } else {
-                                break;
-                            }
-                        }
-                        notifyDataSetChanged();
+    public synchronized void filter(String str, DatabaseReference mDatabase) {
+        Log.d("d","Called filter");
+        if (this.currentlyRunning == null) {
+            this.currentlyRunning = new QueryRunnable(this,mDatabase,str);
+            Thread t = new Thread(currentlyRunning);
+            Log.d("d","currentlyrunning is null, create thread " + t.getId());
+            t.start();
+        } else if (this.currentlyRunning.mustBeTerminated == false){
+            Log.d("d","must terminate current");
+            this.nextToRun = new QueryRunnable(this,mDatabase,str);
+            this.currentlyRunning.mustBeTerminated = true;
+        } else {
+            this.nextToRun = new QueryRunnable(this,mDatabase,str);
+        }
 
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-
-                });}
+    }
 
 
 
