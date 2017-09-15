@@ -1,10 +1,47 @@
 <resources>
-    <string name="app_name">ES2017</string>
+    <string name="app_name">ListaNova</string>
     <string name="action_settings">Settings</string>
-    <string name="app_label">Search</string>
-    <string name="search_hint">Search Me</string>
-    <string name="search">Search</string>
-    <string name="title_activity_main_estoque">MainEstoqueActivity</string>
-    <string name="title_activity_cadastro_ingrediente">CadastroIngrediente</string>
-    <string name="title_activity_estoque">EstoqueActivity</string>
+    <string name="title_activity_auth">AuthActivity</string>
+
+
+
+<!-- Begin Google Stuff HERE -->
+    <string name="title_text">Login pelo Google</string>
+
+    <!-- Sign-in status messages -->
+    <string name="signed_in_fmt">Entrou como usuário: %s</string>
+    <string name="signed_in">Entrou</string>
+    <string name="signing_in">Entrando…</string>
+    <string name="signed_out">Saiu</string>
+    <string name="signed_in_err">"Error: please check logs."</string>
+    <string name="error_null_person">
+        Error: Plus.PeopleApi.getCurrentPerson returned null. Ensure that the Google+ API is
+        enabled for your project, you have a properly configured google-services.json file
+        and that your device has an internet connection.
+    </string>
+    <string name="loading">Loading…</string>
+    <string name="auth_code_fmt">Auth Code: %s</string>
+    <string name="id_token_fmt">ID Token: %s</string>
+
+    <!-- Google Play Services error for Toast -->
+    <string name="play_services_error_fmt">Google Play Services Error: %i</string>
+
+    <!-- Button labels -->
+    <string name="sign_out">Sair</string>
+    <string name="disconnect">Desconectar</string>
+
+    <!-- Content Description for images -->
+    <string name="desc_google_icon">Google Logo</string>
+
+    <!-- Rationale for asking for Contacts -->
+    <string name="contacts_permission_rationale">Contacts access is needed in order to retrieve your email address.</string>
+
+
+
+    <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
+         from https://console.developers.google.com/ -->
+    <string name="server_client_id">348999571211-prd1171f5hv6eeb7917484bo35t8hca2.apps.googleusercontent.com</string>
+    <string name="title_activity_fdatabase">FDatabaseActivity</string>
+<!-- End Google Stuff HERE -->
+
 </resources>

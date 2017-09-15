@@ -1,4 +1,4 @@
-package com.example.klaus.es2017;
+package com.example.bela.es2017;
 
 import org.junit.Test;
 
