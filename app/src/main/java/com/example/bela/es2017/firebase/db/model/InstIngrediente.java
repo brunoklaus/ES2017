@@ -1,9 +1,6 @@
-package com.example.bela.es2017.model;
+package com.example.bela.es2017.firebase.db.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by klaus on 09/09/17.

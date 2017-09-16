@@ -1,11 +1,14 @@
-package com.example.bela.es2017;
+package com.example.bela.es2017.firebase.db.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ViewHolder extends RecyclerView.ViewHolder {
+import com.example.bela.es2017.R;
+
+public class ReceitaViewHolder extends RecyclerView.ViewHolder {
+
 
     final TextView nome;
     final TextView descricao;
@@ -13,13 +16,30 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     final TextView ingredientes;
     final ImageView imagem;
 
-    public ViewHolder(View view) {
+    public TextView getNome() {
+        return nome;
+    }
+
+    public TextView getDescricao() {
+        return descricao;
+    }
+
+    public TextView getIngredientes() {
+        return ingredientes;
+    }
+
+    public ImageView getImagem() {
+        return imagem;
+    }
+
+
+
+    public ReceitaViewHolder(View view) {
         super(view);
         nome = (TextView) view.findViewById(R.id.item_receita_nome);
         descricao = (TextView) view.findViewById(R.id.item_receita_descricao);
         ingredientes = (TextView) view.findViewById(R.id.item_receita_ingredientes);
         imagem = (ImageView) view.findViewById(R.id.item_receita_imagem);
-
         //preco = (TextView) view.findViewById(R.id.item_livro_preco);
     }
 }

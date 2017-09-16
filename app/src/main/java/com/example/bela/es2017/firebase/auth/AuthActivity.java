@@ -1,4 +1,4 @@
-package com.example.bela.es2017;
+package com.example.bela.es2017.firebase.auth;
 
 
 import android.app.ProgressDialog;
@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.bela.es2017.model.User;
+import com.example.bela.es2017.firebase.db.ListaReceitasActivity;
+import com.example.bela.es2017.R;
+import com.example.bela.es2017.firebase.db.model.User;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -34,8 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
- * Activity to demonstrate basic retrieval of the Google user's ID, email address, and basic
- * profile.
+ * A atividade de autorizacao. Permite uso de contas google.
  */
 public class AuthActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
@@ -278,7 +279,7 @@ public class AuthActivity extends AppCompatActivity implements
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(AuthActivity.this, Lista.class));
+                    startActivity(new Intent(AuthActivity.this, ListaReceitasActivity.class));
                     //finish();
                 }
             });

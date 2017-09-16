@@ -1,4 +1,4 @@
-package com.example.bela.es2017.model;
+package com.example.bela.es2017.firebase.db.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 

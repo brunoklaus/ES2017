@@ -19,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Lista" />
+        <activity android:name=".firebase.db.ListaReceitasActivity" />
         <activity
-            android:name=".AuthActivity"
+            android:name=".firebase.auth.AuthActivity"
             android:label="@string/title_activity_auth"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

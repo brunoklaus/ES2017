@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.bela.es2017.firebase.auth.AuthActivity;
+
 public class MainActivity extends AppCompatActivity  {
 
 
