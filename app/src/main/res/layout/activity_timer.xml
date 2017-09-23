@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bela.es2017.TimerActivity">
+    tools:context="com.example.bela.es2017.timer.TimerActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -29,6 +29,7 @@
         <include
             layout="@layout/content_timer"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="2.13" />
 
     </LinearLayout>

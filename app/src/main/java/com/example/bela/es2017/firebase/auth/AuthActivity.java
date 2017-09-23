@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.bela.es2017.firebase.db.ListaReceitasActivity;
+import com.example.bela.es2017.timer.TimerActivity;
 import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.User;
 import com.google.android.gms.auth.api.Auth;
@@ -50,6 +50,7 @@ public class AuthActivity extends AppCompatActivity implements
     private ProgressDialog mProgressDialog;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
+    public Class ActivityToBeLaunched = TimerActivity.class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -279,7 +280,7 @@ public class AuthActivity extends AppCompatActivity implements
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(AuthActivity.this, ListaReceitasActivity.class));
+                    startActivity(new Intent(AuthActivity.this, ActivityToBeLaunched));
                     //finish();
                 }
             });

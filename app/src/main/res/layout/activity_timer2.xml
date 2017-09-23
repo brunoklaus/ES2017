@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bela.es2017.Timer2Activity">
+    tools:context="com.example.bela.es2017.timer.Timer2Activity">
 
     <TextView
         android:gravity="center"

@@ -25,10 +25,10 @@
             android:label="@string/title_activity_auth"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".TimerActivity"
+            android:name=".timer.TimerActivity"
             android:label="@string/title_activity_timer"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Timer2Activity"></activity>
+        <activity android:name=".timer.Timer2Activity"></activity>
     </application>
 
 </manifest>
