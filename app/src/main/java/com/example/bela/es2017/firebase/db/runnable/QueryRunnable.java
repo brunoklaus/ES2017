@@ -74,17 +74,17 @@ public abstract class QueryRunnable<T> implements Runnable {
                                 break;
                             }
                             if (mustBeTerminated) {
-                                adapter.onQueryFinished(newModel, q);
+                                adapter.onQueryFinished(newModel, q,false);
                                 Log.d("d", "terminated current");
                                 return;
                             }
                         }
                         if (mustBeTerminated) {
                             Log.d("d", "terminated current");
-                            adapter.onQueryFinished(newModel, q);
+                            adapter.onQueryFinished(newModel, q,false);
                             return;
                         }
-                        adapter.onQueryFinished(newModel, q);
+                        adapter.onQueryFinished(newModel, q,true);
                     }
 
                     @Override

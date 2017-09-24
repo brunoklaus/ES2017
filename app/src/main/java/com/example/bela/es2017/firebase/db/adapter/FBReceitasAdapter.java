@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.bela.es2017.R;
+import com.example.bela.es2017.firebase.db.runnable.AdvancedQueryRunnable;
+import com.example.bela.es2017.firebase.db.runnable.ReceitaTituloAdvancedRunnable;
 import com.example.bela.es2017.firebase.db.viewholder.ReceitaViewHolder;
 import com.example.bela.es2017.firebase.db.model.Receita;
 import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
@@ -27,7 +29,7 @@ public class FBReceitasAdapter extends FBAdapter<Receita> {
     @Override
     QueryRunnable createQueryRunnable(String str, DatabaseReference mDatabase) {
         //nosso queryrunnable aqui eh um ReceitaTituloRunnable
-        return new ReceitaTituloRunnable(this, mDatabase, str, Receita.class);
+        return new AdvancedQueryRunnable(this, mDatabase, str, Receita.class);
     }
 
     @Override

@@ -67,11 +67,11 @@ public class FBAdapter<T> extends RecyclerView.Adapter {
      * @param r O resultado da query, que serah o novo model
      * @param q o queryrunnable que terminou
      */
-    public synchronized void onQueryFinished(List<T> r, QueryRunnable q){
+    public synchronized void onQueryFinished(List<T> r, QueryRunnable q, boolean update){
         Log.d("d","Finished Query of " + q.getString());
         if (q.equals(this.currentlyRunning)) {
             this.model = r;
-            notifyDataSetChanged();
+            if(update) notifyDataSetChanged();
         }
         if (nextToRun == null) {
             this.currentlyRunning = null;

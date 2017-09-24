@@ -1,4 +1,4 @@
-package com.example.bela.es2017.firebase.db;
+package com.example.bela.es2017.firebase.db.searchActivity;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -27,14 +27,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ListaReceitasActivity<T extends FBAdapter> extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public abstract class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private RecyclerView rView;
     private SearchManager searchManager;
     private android.widget.SearchView searchView;
     private MenuItem searchItem;
-    private FBReceitasAdapter mAdapter;
+    FBAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +46,10 @@ public class ListaReceitasActivity<T extends FBAdapter> extends AppCompatActivit
 
     }
 
+    abstract void initAdapter();
+
     void setupViews() {
-        mAdapter = new FBReceitasAdapter(this);
-        mAdapter.filter("", mDatabase);
+        initAdapter();
         rView.setAdapter(mAdapter);
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rView.setLayoutManager(layout);
