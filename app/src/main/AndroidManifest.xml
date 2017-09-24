@@ -23,7 +23,14 @@
         <activity
             android:name=".AuthActivity"
             android:label="@string/title_activity_auth"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Estoque"
+            android:label="@string/title_activity_estoque"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Codigo_de_barras" />
+        <activity android:name=".Ingredientes" />
+        <activity android:name=".Adicionar_receita"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,5 @@
 package com.example.bela.es2017;
 
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;

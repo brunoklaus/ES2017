@@ -4,8 +4,7 @@
     <string name="title_activity_auth">AuthActivity</string>
 
 
-
-<!-- Begin Google Stuff HERE -->
+    <!-- Begin Google Stuff HERE -->
     <string name="title_text">Login pelo Google</string>
 
     <!-- Sign-in status messages -->
@@ -37,11 +36,11 @@
     <string name="contacts_permission_rationale">Contacts access is needed in order to retrieve your email address.</string>
 
 
-
     <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
          from https://console.developers.google.com/ -->
     <string name="server_client_id">348999571211-prd1171f5hv6eeb7917484bo35t8hca2.apps.googleusercontent.com</string>
     <string name="title_activity_fdatabase">FDatabaseActivity</string>
-<!-- End Google Stuff HERE -->
+    <string name="title_activity_estoque">Estoque</string>
+    <!-- End Google Stuff HERE -->
 
 </resources>

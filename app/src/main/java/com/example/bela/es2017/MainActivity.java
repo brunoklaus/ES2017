@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -26,6 +27,26 @@ public class MainActivity extends AppCompatActivity  {
 
                 Intent it = new Intent(MainActivity.this, AuthActivity.class);
                 startActivity(it);
+            }
+        });
+
+        Button botao_estoque = (Button) findViewById(R.id.button2);
+        botao_estoque.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it2 = new Intent(MainActivity.this, Estoque.class);
+                startActivity(it2);
+            }
+        });
+
+        Button botao_add_receitas = (Button) findViewById(R.id.button3);
+        botao_add_receitas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it3 = new Intent(MainActivity.this, Adicionar_receita.class);
+                startActivity(it3);
             }
         });
     }
