@@ -40,6 +40,9 @@
          from https://console.developers.google.com/ -->
     <string name="server_client_id">348999571211-prd1171f5hv6eeb7917484bo35t8hca2.apps.googleusercontent.com</string>
     <string name="title_activity_fdatabase">FDatabaseActivity</string>
+    <string name="title_activity_timer">TimerActivity</string>
+    <string name="title_activity_set_time">setTimeActivity</string>
+    <!-- End Google Stuff HERE -->
     <string name="title_activity_estoque">Estoque</string>
     <!-- End Google Stuff HERE -->
 

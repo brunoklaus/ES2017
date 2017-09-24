@@ -31,6 +31,12 @@
         <activity android:name=".Codigo_de_barras" />
         <activity android:name=".Ingredientes" />
         <activity android:name=".Adicionar_receita"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TimerActivity"
+            android:label="@string/title_activity_timer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Timer2Activity"></activity>
     </application>
 
 </manifest>
