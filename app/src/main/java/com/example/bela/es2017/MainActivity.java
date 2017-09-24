@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.example.bela.es2017.firebase.auth.AuthActivity;
 import com.example.bela.es2017.firebase.db.model.sapo.SapoReceita;
 import com.example.bela.es2017.firebase.db.model.sapo.SapoTeste;
+import com.example.bela.es2017.firebase.db.searchActivity.ListaReceitasActivity;
 import com.example.bela.es2017.helpers.FBInsereReceitas;
 import com.example.bela.es2017.helpers.StringHelper;
 import com.google.gson.Gson;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
-                Intent it = new Intent(MainActivity.this, LeitorDeBarras.class);
+                Intent it = new Intent(MainActivity.this, ListaReceitasActivity.class);
                 startActivity(it);
             }
         });

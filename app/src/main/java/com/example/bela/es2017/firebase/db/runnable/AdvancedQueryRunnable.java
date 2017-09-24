@@ -88,8 +88,8 @@ public class AdvancedQueryRunnable extends QueryRunnable<Receita> {
                                 // Create a Pattern object
                                 Pattern r = Pattern.compile(inputWords[i]);
                                 // Now create matcher object.
-                                Matcher mIngr = r.matcher(title);
-                                Matcher mTitle = r.matcher(matchWords);
+                                Matcher mIngr = r.matcher(matchWords);
+                                Matcher mTitle = r.matcher(title);
 
                                 boolean foundIngr = mIngr.find();
                                 boolean foundTitle = mTitle.find();
@@ -126,8 +126,8 @@ public class AdvancedQueryRunnable extends QueryRunnable<Receita> {
                         };
 
                         Collections.sort(results,comp);
-                        for (Result res : results) {
-                            newModel.add(res.r);
+                        for (int i = 0; i < results.size(); i++) {
+                            newModel.add(results.get(i).r);
                         }
                         adapter.onQueryFinished(newModel, q,true);
                     }

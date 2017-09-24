@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.bela.es2017.LeitorDeBarras;
+import com.example.bela.es2017.MainActivity;
 import com.example.bela.es2017.firebase.db.runnable.ReceitaTituloRunnable;
 import com.example.bela.es2017.firebase.db.searchActivity.ListaReceitasActivity;
 import com.example.bela.es2017.timer.TimerActivity;
@@ -52,7 +54,7 @@ public class AuthActivity extends AppCompatActivity implements
     private ProgressDialog mProgressDialog;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
-    public Class ActivityToBeLaunched = ListaReceitasActivity.class;
+    public Class ActivityToBeLaunched = MainActivity.class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
