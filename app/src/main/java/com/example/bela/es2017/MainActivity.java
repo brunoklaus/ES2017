@@ -10,6 +10,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.bela.es2017.firebase.auth.AuthActivity;
+import com.example.bela.es2017.firebase.db.model.sapo.SapoReceita;
+import com.example.bela.es2017.firebase.db.model.sapo.SapoTeste;
+import com.example.bela.es2017.helpers.FBInsereReceitas;
+import com.example.bela.es2017.helpers.StringHelper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -30,6 +40,8 @@ public class MainActivity extends AppCompatActivity  {
                 startActivity(it);
             }
         });
+
+
     }
 
     @Override

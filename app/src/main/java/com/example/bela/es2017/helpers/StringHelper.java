@@ -1,8 +1,24 @@
 package com.example.bela.es2017.helpers;
 
+import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.util.Log;
+
 
 /**
  * Classe que contem alguns metodos para criar strings desejadas.
@@ -44,6 +60,9 @@ public class StringHelper {
      * @return string com os ingredientes listados um a um, com newlines
      */
     public static String getIngredientStr(List<InstIngrediente> ingredientesUsados, int MAX_LEN) {
+        if ( ingredientesUsados == null) {
+            return "";
+        }
         String str = "";
         int caracterLinha = 0;
         for (int i = 0; i < ingredientesUsados.size(); i++) {
@@ -59,4 +78,42 @@ public class StringHelper {
         }
         return str;
     }
+    public static String readFromJsonFile(Context c){
+
+        Writer writer = null;
+        InputStream is = null;
+        try {
+            AssetManager am = c.getAssets();
+            is  = am.open("quotes.json");
+            writer = new StringWriter();
+            char[] buffer = new char[1024];
+            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+            is.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        String jsonString = writer.toString();
+        return jsonString;
+    }
+
+    public static String findLongestMatch(String regex, String s) {
+        Pattern pattern = Pattern.compile("(" + regex + ")$");
+        Matcher matcher = pattern.matcher(s);
+        String longest = null;
+        int longestLength = -1;
+        for (int i = s.length(); i > longestLength; i--) {
+            matcher.region(0, i);
+            if (matcher.find() && longestLength < matcher.end() - matcher.start()) {
+                longest = matcher.group();
+                longestLength = longest.length();
+            }
+        }
+        return longest;
+    }
+
 }

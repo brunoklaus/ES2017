@@ -82,7 +82,7 @@ public class FBInsereReceitas {
      * @param receita    a receita
      * @param safeInsert se verdadeiro, soh adiciona nao tiver outra com mesmo titulo
      */
-    static void insereReceita(DatabaseReference mDatabase, Receita receita, final boolean safeInsert) {
+    public static void insereReceita(DatabaseReference mDatabase, Receita receita, final boolean safeInsert) {
         final DatabaseReference db = mDatabase;
         final Receita r = receita;
         mDatabase.child("receitas").orderByChild("titulo").equalTo(r.titulo).addListenerForSingleValueEvent(

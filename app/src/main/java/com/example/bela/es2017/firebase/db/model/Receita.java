@@ -15,6 +15,7 @@ public class Receita {
     public  String subtitulo;
     public  String descr;
     public  int img;
+    public  String imgLink;
 
     public int upvotes = 0;
     public int downvotes = 0;
@@ -32,6 +33,18 @@ public class Receita {
         this.descr = descr;
         this.ingredientesUsados = new ArrayList<>(ingredientesUsados);
         this.img = img;
+        this.imgLink = "";
+
+    }
+
+    public Receita(String titulo, String subtitulo, String descr,
+                   List<InstIngrediente> ingredientesUsados, int img, String imgLink) {
+        this.titulo = titulo;
+        this.subtitulo = subtitulo;
+        this.descr = descr;
+        this.ingredientesUsados = new ArrayList<>(ingredientesUsados);
+        this.img = img;
+        this.imgLink = imgLink;
 
     }
 

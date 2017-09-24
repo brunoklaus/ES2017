@@ -16,13 +16,18 @@ import com.example.bela.es2017.firebase.db.adapter.FBAdapter;
 import com.example.bela.es2017.firebase.db.adapter.FBReceitasAdapter;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 import com.example.bela.es2017.firebase.db.model.Receita;
+import com.example.bela.es2017.firebase.db.model.sapo.SapoReceita;
 import com.example.bela.es2017.helpers.FBInsereReceitas;
+import com.example.bela.es2017.helpers.StringHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +48,28 @@ public abstract class SearchActivity extends AppCompatActivity implements Search
         rView = (RecyclerView) findViewById(R.id.recycler1);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         setupViews();
+        /*
+        Gson g = new Gson();
+        String founderGson = StringHelper.readFromJsonFile(this);
+        Type foundListType = new TypeToken<ArrayList<SapoReceita>>(){}.getType();
+        List<SapoReceita> str = new Gson().fromJson(founderGson, foundListType);
+        FBInsereReceitas.adicionaReceitasIniciais(mDatabase);
+
+        for (SapoReceita s : str) {
+            List<InstIngrediente> ingr = new ArrayList<>();
+            for (int i = 1; i < s.ingr.size(); i+=2) {
+                String ingrStr = s.ingr.get(i);
+                String numberStr = StringHelper.findLongestMatch("\\d*\\.?\\d+",ingrStr);
+                String otherStr  = ingrStr.replaceAll("\\d*\\.?\\d+","");
+                Double d = (numberStr == null || numberStr.isEmpty()) ? new Double("-1") : Double.parseDouble(numberStr);
+                ingr.add(new InstIngrediente(s.ingr.get(i-1),d,otherStr));
+            }
+            Receita r = new Receita(s.titulo,s.subtitulo,s.descr, ingr, -1);
+            if(s.descr.isEmpty() || ingr.isEmpty()) continue;
+            FBInsereReceitas.insereReceita(mDatabase,r,true);
+        }
+        int a = 1;
+        */
 
     }
 

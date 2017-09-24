@@ -120,7 +120,7 @@ public class AdvancedQueryRunnable extends QueryRunnable<Receita> {
                         Comparator comp = new Comparator<Result>() {
                             @Override
                             public int compare(Result result, Result t1) {
-                                return Integer.valueOf(result.score).
+                                return -Integer.valueOf(result.score).
                                         compareTo(Integer.valueOf(t1.score));
                             }
                         };
