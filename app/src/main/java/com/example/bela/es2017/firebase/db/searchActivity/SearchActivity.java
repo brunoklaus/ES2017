@@ -19,6 +19,7 @@ import com.example.bela.es2017.firebase.db.model.Receita;
 import com.example.bela.es2017.firebase.db.model.sapo.SapoReceita;
 import com.example.bela.es2017.helpers.FBInsereReceitas;
 import com.example.bela.es2017.helpers.StringHelper;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,6 +72,7 @@ public abstract class SearchActivity extends AppCompatActivity implements Search
         }
         int a = 1;
         */
+        FBInsereReceitas.adicionaEstoqueExemplo(FirebaseAuth.getInstance().getCurrentUser(),mDatabase);
 
     }
 
