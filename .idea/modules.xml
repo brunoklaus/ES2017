@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ES2017_V5.iml" filepath="$PROJECT_DIR$/ES2017_V5.iml" />
       <module fileurl="file://$PROJECT_DIR$/ES2017.iml" filepath="$PROJECT_DIR$/ES2017.iml" />
       <module fileurl="file://$PROJECT_DIR$/ES2017.2.iml" filepath="$PROJECT_DIR$/ES2017.2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ES2017_V5.iml" filepath="$PROJECT_DIR$/ES2017_V5.iml" />
       <module fileurl="file://$PROJECT_DIR$/Teste2.iml" filepath="$PROJECT_DIR$/Teste2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
