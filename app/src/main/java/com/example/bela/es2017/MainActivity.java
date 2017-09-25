@@ -10,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.example.bela.es2017.firebase.db.searchActivity.ListaReceitasActivity;
+import com.example.bela.es2017.timer.TimerActivity;
+
 public class MainActivity extends AppCompatActivity  {
 
 
@@ -49,6 +52,35 @@ public class MainActivity extends AppCompatActivity  {
                 startActivity(it3);
             }
         });
+        Button botao_timer = (Button) findViewById(R.id.button4);
+        botao_timer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it3 = new Intent(MainActivity.this, TimerActivity.class);
+                startActivity(it3);
+            }
+        });
+        Button botao_busca = (Button) findViewById(R.id.button5);
+        botao_busca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it3 = new Intent(MainActivity.this, ListaReceitasActivity.class);
+                startActivity(it3);
+            }
+        });
+        Button botao_barras = (Button) findViewById(R.id.button6);
+        botao_barras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it3 = new Intent(MainActivity.this, LeitorDeBarras.class);
+                startActivity(it3);
+            }
+        });
+
+
     }
 
     @Override

@@ -48,12 +48,13 @@ public abstract class SearchActivity extends AppCompatActivity implements Search
         rView = (RecyclerView) findViewById(R.id.recycler1);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         setupViews();
+        FBInsereReceitas.adicionaReceitasIniciais(mDatabase);
         /*
         Gson g = new Gson();
         String founderGson = StringHelper.readFromJsonFile(this);
         Type foundListType = new TypeToken<ArrayList<SapoReceita>>(){}.getType();
         List<SapoReceita> str = new Gson().fromJson(founderGson, foundListType);
-        FBInsereReceitas.adicionaReceitasIniciais(mDatabase);
+
 
         for (SapoReceita s : str) {
             List<InstIngrediente> ingr = new ArrayList<>();
