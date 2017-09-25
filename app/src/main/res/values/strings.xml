@@ -12,7 +12,7 @@
     <string name="signed_in_fmt">Entrou como usuário: %s</string>
     <string name="signed_in">Entrou</string>
     <string name="signing_in">Entrando…</string>
-    <string name="signed_out">Saiu</string>x'
+    <string name="signed_out">Saiu</string>
     <string name="signed_in_err">"Error: please check logs."</string>
     <string name="error_null_person">
         Error: Plus.PeopleApi.getCurrentPerson returned null. Ensure that the Google+ API is
@@ -44,6 +44,7 @@
     <string name="title_activity_fdatabase">FDatabaseActivity</string>
     <string name="title_activity_timer">TimerActivity</string>
     <string name="title_activity_set_time">setTimeActivity</string>
-<!-- End Google Stuff HERE -->
+    <!-- End Google Stuff HERE -->
+    <string name="title_activity_estoque">Estoque</string>
 
 </resources>

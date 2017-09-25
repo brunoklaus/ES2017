@@ -15,6 +15,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "1004362970269-9sihva30fio9iqgb8dcn0hkm9akqpqa3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bela.es2017",
+            "certificate_hash": "4347617342abe2835aa8bd0a921a1079743fc405"
+          }
+        },
+        {
+          "client_id": "1004362970269-ag726pslq8hca1n00gu2aeeoa3u5mho6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bela.es2017",
+            "certificate_hash": "2824dd4fd923bc12bd3f8a7ada63c738a2ccb675"
+          }
+        },
+        {
+          "client_id": "1004362970269-b8lnt714ev10k6g59q6laqokk979pr22.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bela.es2017",
+            "certificate_hash": "5da99aeefe2ead26516aa380653fc26fd98bcc65"
+          }
+        },
+        {
           "client_id": "1004362970269-t8rut3bra481sdthb7dvcnleievcihmp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -30,6 +54,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyA_2EBEns1O2JPeFlogY9yUYqd0ckgle7w"
+        },
+        {
+          "current_key": "AIzaSyBTAJFLKhz3eAT88cnOrwrrDkyfc-kqnIs"
         }
       ],
       "services": {

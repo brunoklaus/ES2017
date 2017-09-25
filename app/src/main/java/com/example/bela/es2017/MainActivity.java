@@ -8,19 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.example.bela.es2017.firebase.auth.AuthActivity;
-import com.example.bela.es2017.firebase.db.model.sapo.SapoReceita;
-import com.example.bela.es2017.firebase.db.model.sapo.SapoTeste;
-import com.example.bela.es2017.firebase.db.searchActivity.ListaReceitasActivity;
-import com.example.bela.es2017.helpers.FBInsereReceitas;
-import com.example.bela.es2017.helpers.StringHelper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -37,12 +25,30 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
-                Intent it = new Intent(MainActivity.this, ListaReceitasActivity.class);
+                Intent it = new Intent(MainActivity.this, LeitorDeBarras.class);
                 startActivity(it);
             }
         });
 
+        Button botao_estoque = (Button) findViewById(R.id.button2);
+        botao_estoque.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent it2 = new Intent(MainActivity.this, Estoque.class);
+                startActivity(it2);
+            }
+        });
+
+        Button botao_add_receitas = (Button) findViewById(R.id.button3);
+        botao_add_receitas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it3 = new Intent(MainActivity.this, Adicionar_receita.class);
+                startActivity(it3);
+            }
+        });
     }
 
     @Override
