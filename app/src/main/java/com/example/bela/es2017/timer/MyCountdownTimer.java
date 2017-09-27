@@ -7,6 +7,7 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -38,6 +39,10 @@ public class MyCountdownTimer extends CountDownTimer {
         tempo -= 1000;
         tvAux.setText(getCorrectTimer(true, tempo) + ":" + getCorrectTimer(false, tempo));
         ToneGenerator beep = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+        Vibrator vibra = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        long t_mili = 500;
+        
+        vibra.vibrate(t_mili);
         beep.startTone(ToneGenerator.TONE_CDMA_PIP, 300);
     }
 
