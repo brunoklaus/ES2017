@@ -17,7 +17,7 @@ public class Adicionar_receita extends FragmentActivity {
     private EditText tempo_preparo;
     private EditText dificuldade;*/
     Button continuar;
-    Boolean status = false;
+    int status = 0;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
@@ -36,7 +36,7 @@ public class Adicionar_receita extends FragmentActivity {
         fragmentTransaction.replace(R.id.fragment_container, fragment1);
         fragmentTransaction.commit();
         continuar.setText("Continuar");
-        status = true;
+        status = 1;
 
         continuar.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -44,13 +44,19 @@ public class Adicionar_receita extends FragmentActivity {
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
 
-                if(status){
+                if(status == 1){
                     Fragment_adicionar_receita2 fragment2 = new Fragment_adicionar_receita2();
                     fragmentTransaction.replace(R.id.fragment_container, fragment2);
                     fragmentTransaction.commit();
+                    continuar.setText("Continuar");
+                    status = 2;
+                } else if (status == 2) {
+                    Fragment_adicionar_receita3 fragment3 = new Fragment_adicionar_receita3();
+                    fragmentTransaction.replace(R.id.fragment_container, fragment3);
+                    fragmentTransaction.commit();
                     continuar.setText("Adicionar");
-                    status = false;
-                } else {
+                    status = 3;
+                } else if (status == 3){
                     Intent it = new Intent(Adicionar_receita.this, MainActivity.class);
                     startActivity(it);
                 }

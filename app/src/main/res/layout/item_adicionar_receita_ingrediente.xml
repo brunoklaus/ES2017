@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="0dp">
 
 
     <android.support.v7.widget.CardView
@@ -18,43 +19,40 @@
             android:layout_height="match_parent"
             android:layout_margin="8dp">
 
-            <EditText
+            <TextView
                 android:id="@+id/editText_ingrediente"
+                android:textAppearance="@style/campos_cadastro_preenchido"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/item_ingrediente"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="-4dp"
-                android:layout_marginTop="-6dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Ingrediente"
                 android:textColor="@color/blue_grey_500"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_receita_nome"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
+            <TextView
                 android:id="@+id/editText_quantidade"
+                android:textAppearance="@style/campos_cadastro_preenchido"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="0dp"
                 android:layout_marginLeft="0dp"
-                android:layout_marginRight="22dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:ems="10"
-                android:inputType="number"
-                android:text="Quantidade"
                 android:textColor="@color/blue_grey_500"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.764"
-                app:layout_constraintLeft_toRightOf="@+id/editText"
-                app:layout_constraintRight_toLeftOf="@+id/spinner_unidade"
+                app:layout_constraintLeft_toRightOf="@+id/editText_ingrediente"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.54"
+                app:layout_constraintRight_toLeftOf="@+id/spinner_unidade"
+                android:layout_marginRight="8dp"
+                app:layout_constraintHorizontal_bias="0.609" />
 
             <Spinner
                 android:id="@+id/spinner_unidade"
@@ -63,14 +61,19 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/item_receita_imagem"
-                tools:layout_editor_absoluteX="238dp"
-                tools:layout_editor_absoluteY="4dp" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="7dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="0dp"
+                app:layout_constraintVertical_bias="0.0" />
 
 
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
 
-</LinearLayout>
+</RelativeLayout>
 
 

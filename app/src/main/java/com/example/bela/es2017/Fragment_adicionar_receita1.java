@@ -1,11 +1,24 @@
 package com.example.bela.es2017;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +27,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment_adicionar_receita1 extends Fragment{
+public class Fragment_adicionar_receita1 extends Fragment  implements View.OnClickListener {
 
-    //private Ingredientes ing1;
-    //private ImageButton adicionarIng;
-    //private ArrayList arrTemp = new ArrayList();
-    //private ArrayList array = new ArrayList();
-    private Adicionar_receita_Adapter adicionarreceitaAdapter;
-
-
-    //private EditText nome;
-    //private EditText quantidade;
-
-    List<Ingredientes> ingredientes = new ArrayList<Ingredientes>();
-
+    private Button adicionarIng;
+    public EditText ingrediente, quantidade;
+    public Spinner unidade;
+    public LinearLayout add_container;
 
     public Fragment_adicionar_receita1() {
         // Required empty public constructor
@@ -38,31 +43,43 @@ public class Fragment_adicionar_receita1 extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_adicionar_receita1, container, false);
-    /*
-        adicionarIng = (ImageButton) view.findViewById(R.id.item_adicionar_ingrediente);
+
+        //declarando views do layout do fragment1
+        ingrediente = (EditText)view.findViewById(R.id.editText_ingrediente_original);
+        quantidade = (EditText)view.findViewById(R.id.editText_quantidade_original);
+        unidade = (Spinner) view.findViewById(R.id.spinner_unidade_original);
+
+        add_container = (LinearLayout)view.findViewById(R.id.add_container);
+
+        //declarando botao
+        adicionarIng = (Button) view.findViewById(R.id.item_adicionar_ingrediente);
         adicionarIng.setOnClickListener(this);
 
-        nome = (EditText)view.findViewById(R.id.editText_ingrediente);
-        quantidade = (EditText)view.findViewById(R.id.editText_quantidade);
-        String nomeIng = nome.getText().toString();
-        String quantIng = quantidade.getText().toString();
-
-        ing1 = new Ingredientes(nomeIng, quantIng, R.drawable.ic_action_name);
-
-        ingredientes.add(ing1);
-
-        arrTemp.add(ingredientes);
-
-        adicionarreceitaAdapter= new Adicionar_receita_Adapter();
-        ListView listView = (ListView) view.findViewById(R.id.list_ingrediente);
-        listView.setAdapter(adicionarreceitaAdapter);
-        */
         return view;
     }
-    /*
+
+    @Override
     public void onClick(View view) {
-        ingredientes.add(ing1);
-        adicionarreceitaAdapter.notifyDataSetChanged();
+        //no lugar de getActivity estava getBaseContext
+        LayoutInflater layoutInflater =
+                (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View addView_item = layoutInflater.inflate(R.layout.item_adicionar_receita_ingrediente, add_container, false);
+
+        TextView textOut = (TextView) addView_item.findViewById(R.id.editText_ingrediente);
+        TextView textOut2 = (TextView) addView_item.findViewById(R.id.editText_quantidade);
+        Spinner textOut3 = (Spinner) addView_item.findViewById(R.id.spinner_unidade);
+
+        textOut.setText(ingrediente.getText().toString());
+        textOut2.setText(quantidade.getText().toString());
+
+        add_container.addView(addView_item);
+
+        quantidade.setText(" ");
+        ingrediente.setText(" ");
+
+        //testando o botao
+        //Intent intent = new Intent(getActivity(), MainActivity.class);
+        //startActivity(intent);
     }
- */
+
 }
