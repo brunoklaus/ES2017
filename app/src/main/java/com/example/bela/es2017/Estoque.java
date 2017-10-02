@@ -32,7 +32,7 @@ public class Estoque extends AppCompatActivity {
         fabMenu = (FloatingActionsMenu) findViewById(R.id.fab_menu);
 
         fabMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
-            @Override
+
             public void onMenuExpanded() {
                 frameLayout.getBackground().setAlpha(240);
                 frameLayout.setOnTouchListener(new View.OnTouchListener() {
