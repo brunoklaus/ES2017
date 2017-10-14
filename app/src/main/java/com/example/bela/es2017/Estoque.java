@@ -66,6 +66,8 @@ public class Estoque extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent it2 = new Intent(Estoque.this, Ingredientes.class);
+                Bundle b = new Bundle();
+                it2.putExtras(b);
                 startActivity(it2);
             }
         });

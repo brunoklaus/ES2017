@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.example.bela.es2017.firebase.db.searchActivity.ListaReceitasActivity;
+import com.example.bela.es2017.texttospeech.TTSActivity;
 import com.example.bela.es2017.timer.TimerActivity;
 
 public class MainActivity extends AppCompatActivity  {
@@ -79,6 +80,17 @@ public class MainActivity extends AppCompatActivity  {
                 startActivity(it3);
             }
         });
+
+        Button botao_tts = (Button) findViewById(R.id.button7);
+        botao_tts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it7 = new Intent(MainActivity.this, TTSActivity.class);
+                startActivity(it7);
+            }
+        });
+
 
 
     }
