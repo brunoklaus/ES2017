@@ -1,17 +1,20 @@
-package com.example.bela.es2017;
+package com.example.bela.es2017.Estoque;
 
 import android.content.Intent;
 import android.os.Bundle;
 //import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import com.example.bela.es2017.R;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class Estoque extends AppCompatActivity {
 
@@ -57,20 +60,43 @@ public class Estoque extends AppCompatActivity {
         fab_cod_barras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it1 = new Intent(Estoque.this, Codigo_de_barras.class);
-                startActivity(it1);
+
+                IntentIntegrator integrator = new IntentIntegrator(Estoque.this);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+                integrator.setOrientationLocked(false);
+                integrator.setPrompt("Escaneie o código de barras do produto");
+                integrator.setCameraId(0);  // Selecionar camera do dispositivo
+                integrator.setBeepEnabled(false);
+                integrator.setBarcodeImageEnabled(true);
+                integrator.initiateScan();
             }
         });
 
         fab_selecao_itens.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it2 = new Intent(Estoque.this, Ingredientes.class);
+                Intent it2 = new Intent(Estoque.this, AddIngredientes.class);
                 Bundle b = new Bundle();
                 it2.putExtras(b);
                 startActivity(it2);
             }
         });
+
+    }
+
+    //leitor de codigo de barras
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                // chamar tela de inserção
+                Toast.makeText(this, "Resultado: " + result.getContents(), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
 
     }
 }

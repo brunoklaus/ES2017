@@ -1,14 +1,15 @@
-package com.example.bela.es2017;
+package com.example.bela.es2017.Add_receita;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.bela.es2017.MainActivity;
+import com.example.bela.es2017.R;
 
 public class Adicionar_receita extends FragmentActivity {
     /*

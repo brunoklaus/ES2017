@@ -98,15 +98,6 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <Button
-            android:id="@+id/button6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="0"
-            android:text="Leitor de Barras"
-            tools:layout_editor_absoluteX="154dp"
-            tools:layout_editor_absoluteY="354dp" />
-        <Button
             android:id="@+id/button7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

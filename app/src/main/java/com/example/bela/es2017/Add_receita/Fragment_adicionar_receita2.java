@@ -1,4 +1,4 @@
-package com.example.bela.es2017;
+package com.example.bela.es2017.Add_receita;
 
 
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.bela.es2017.R;
 
 public class Fragment_adicionar_receita2 extends Fragment  implements View.OnClickListener {
 

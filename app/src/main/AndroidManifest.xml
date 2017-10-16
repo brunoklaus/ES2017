@@ -28,14 +28,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Estoque"
+            android:name=".Estoque.Estoque"
             android:label="@string/title_activity_estoque"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Codigo_de_barras" />
-        <activity android:name=".Ingredientes" />
-        <activity android:name=".Adicionar_receita"
+        <activity android:name=".Estoque.AddIngredientes" />
+        <activity android:name=".Add_receita.Adicionar_receita"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LeitorDeBarras" />
         <activity android:name=".texttospeech.TTSActivity" />
         <activity
             android:name=".timer.TimerActivity"
