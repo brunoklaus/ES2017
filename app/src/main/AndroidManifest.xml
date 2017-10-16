@@ -31,7 +31,7 @@
             android:name=".Estoque.Estoque"
             android:label="@string/title_activity_estoque"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Estoque.AddIngredientes" />
+        <activity android:name=".Estoque.Add_Ing_Estoque.AddIngredientes" />
         <activity android:name=".Add_receita.Adicionar_receita"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".texttospeech.TTSActivity" />

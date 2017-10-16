@@ -1,6 +1,4 @@
-package com.example.bela.es2017.Estoque;
-
-import android.text.BoringLayout;
+package com.example.bela.es2017.Estoque.Add_Ing_Estoque;
 
 public class Ingrediente {
 

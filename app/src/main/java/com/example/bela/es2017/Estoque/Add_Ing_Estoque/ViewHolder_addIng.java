@@ -1,9 +1,8 @@
-package com.example.bela.es2017.Estoque;
+package com.example.bela.es2017.Estoque.Add_Ing_Estoque;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.TextView;
 
 import com.example.bela.es2017.R;

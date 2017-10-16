@@ -1,16 +1,15 @@
-package com.example.bela.es2017.Estoque;
+package com.example.bela.es2017.Estoque.Add_Ing_Estoque;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.bela.es2017.Estoque.Estoque;
 import com.example.bela.es2017.R;
 
 import java.util.ArrayList;
@@ -76,9 +75,9 @@ public class AddIngredientes extends AppCompatActivity {
                         .show();
 
 
-
-                Intent it = new Intent(AddIngredientes.this, Estoque.class);
-                startActivity(it);
+                finish();
+                //Intent it = new Intent(AddIngredientes.this, Estoque.class);
+                //startActivity(it);
             }
         });
     }
