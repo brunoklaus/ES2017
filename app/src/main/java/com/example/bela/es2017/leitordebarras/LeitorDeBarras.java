@@ -1,4 +1,4 @@
-package com.example.bela.es2017;
+package com.example.bela.es2017.leitordebarras;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +35,8 @@ public class LeitorDeBarras extends AppCompatActivity {
             } else {
                 // chamar tela de inserção
                 Toast.makeText(this, "Resultado: " + result.getContents(), Toast.LENGTH_LONG).show();
+                Intent it3 = new Intent(LeitorDeBarras.this, BarrasEntradaPopup.class);
+                startActivity(it3);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

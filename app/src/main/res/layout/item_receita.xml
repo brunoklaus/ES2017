@@ -8,52 +8,77 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        app:cardElevation="10dp"
         app:cardCornerRadius="8dp"
-        >
-        <RelativeLayout
+        app:cardElevation="10dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_margin="8dp"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/item_receita_nome"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/item_receita_rl"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:text="Oi" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/item_receita_descricao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                android:layout_below="@+id/item_receita_nome"
-                android:text="TextView" />
+                <TextView
+                    android:id="@+id/item_receita_nome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oi"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/item_receita_ingredientes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/item_receita_descricao"
-                android:text="TextView" />
+                <TextView
+                    android:id="@+id/item_receita_descricao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/item_receita_nome"
+                    android:text="TextView"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/item_receita_imagem"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_margin="0dp"
-                android:layout_alignRight="@+id/item_receita_descricao"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="59dp"
-                android:layout_marginRight="59dp"
-                app:srcCompat="@drawable/hamburguer" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/item_receita_ingredientes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/item_receita_descricao"
+                    android:layout_below="@+id/item_receita_descricao"
+                    android:text="TextView" />
 
+
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@color/blue_grey_500"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/item_receita_imagem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="59dp"
+                    android:layout_marginRight="59dp"
+                    android:layout_weight="1"
+
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/hamburguer" />
+            </FrameLayout>
+
+        </LinearLayout>
     </android.support.v7.widget.CardView>
+
 </LinearLayout>

@@ -59,7 +59,7 @@ public class StringHelper {
      * @param ingredientesUsados lista de ingredientes usados na receita
      * @return string com os ingredientes listados um a um, com newlines
      */
-    public static String getIngredientStr(List<InstIngrediente> ingredientesUsados, int MAX_LEN) {
+    public static String getIngredientStr(List<InstIngrediente> ingredientesUsados) {
         if ( ingredientesUsados == null) {
             return "";
         }
@@ -69,12 +69,7 @@ public class StringHelper {
             String nxt = ingredientesUsados.get(i).nome;
             nxt += (i != ingredientesUsados.size() - 1) ? ", " : "";
             caracterLinha += nxt.length();
-            if (caracterLinha > MAX_LEN) {
-                str += "\n" + nxt;
-                caracterLinha = nxt.length();
-            } else {
-                str += nxt;
-            }
+            str += nxt;
         }
         return str;
     }

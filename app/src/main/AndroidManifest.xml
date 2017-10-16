@@ -17,6 +17,7 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".firebase.db.searchActivity.ListaReceitasActivity" />
+        <activity android:name=".firebase.db.searchActivity.ListaEstoqueActivity" />
         <activity
             android:name=".firebase.auth.AuthActivity"
             android:label="@string/title_activity_auth"
@@ -35,8 +36,10 @@
         <activity android:name=".Ingredientes" />
         <activity android:name=".Adicionar_receita"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LeitorDeBarras" />
+        <activity android:name=".leitordebarras.LeitorDeBarras" />
         <activity android:name=".texttospeech.TTSActivity" />
+        <activity android:name=".leitordebarras.BarrasEntradaPopup"
+            android:theme = "@style/AppTheme.CustomTheme"/>
         <activity
             android:name=".timer.TimerActivity"
             android:label="@string/title_activity_timer"

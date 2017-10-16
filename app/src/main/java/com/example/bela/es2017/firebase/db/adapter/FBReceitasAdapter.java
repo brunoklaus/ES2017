@@ -7,12 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.bela.es2017.R;
-import com.example.bela.es2017.firebase.db.runnable.AdvancedQueryRunnable;
+import com.example.bela.es2017.firebase.db.runnable.AQTReceita;
 import com.example.bela.es2017.firebase.db.viewholder.ReceitaViewHolder;
 import com.example.bela.es2017.firebase.db.model.Receita;
 import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
 import com.example.bela.es2017.helpers.StringHelper;
 import com.google.firebase.database.DatabaseReference;
+import com.squareup.picasso.Picasso;
 
 /**
  * Ver documentacao em FBAdapter.
@@ -27,7 +28,7 @@ public class FBReceitasAdapter extends FBAdapter<Receita> {
     @Override
     QueryRunnable createQueryRunnable(String str, DatabaseReference mDatabase) {
         //nosso queryrunnable aqui eh um ReceitaTituloRunnable
-        return new AdvancedQueryRunnable(this, mDatabase, str, Receita.class);
+        return new AQTReceita(this, mDatabase, str, Receita.class);
     }
 
     @Override
@@ -39,6 +40,7 @@ public class FBReceitasAdapter extends FBAdapter<Receita> {
     }
 
 
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
@@ -46,11 +48,13 @@ public class FBReceitasAdapter extends FBAdapter<Receita> {
 
         Receita receita = this.getModel().get(position);
         int MAX_LEN = 27;
-        holder.getNome().setText(StringHelper.adjustStr(receita.titulo, MAX_LEN));
-        holder.getDescricao().setText(StringHelper.adjustStr(receita.subtitulo, MAX_LEN));
-        holder.getIngredientes().setText(StringHelper.getIngredientStr(receita.ingredientesUsados, MAX_LEN));
+        holder.getNome().setText(receita.titulo.trim());
+        holder.getDescricao().setText(receita.subtitulo.trim());
+        holder.getIngredientes().setText(StringHelper.getIngredientStr(receita.ingredientesUsados).trim());
         if (receita.img != -1) {
             holder.getImagem().setImageResource(receita.img);
+        } else if (receita.imgLink != null && !receita.imgLink.isEmpty()){
+            Picasso.with(this.context).load(receita.imgLink).into(holder.getImagem());
         }
     }
 

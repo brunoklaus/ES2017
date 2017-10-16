@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bela.es2017.R;
+import com.squareup.picasso.Picasso;
 
 public class ReceitaViewHolder extends RecyclerView.ViewHolder {
 

@@ -10,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.example.bela.es2017.firebase.db.searchActivity.ListaEstoqueActivity;
 import com.example.bela.es2017.firebase.db.searchActivity.ListaReceitasActivity;
+import com.example.bela.es2017.leitordebarras.LeitorDeBarras;
 import com.example.bela.es2017.texttospeech.TTSActivity;
 import com.example.bela.es2017.timer.TimerActivity;
 
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
-                Intent it3 = new Intent(MainActivity.this, ListaReceitasActivity.class);
+                Intent it3 = new Intent(MainActivity.this, ListaEstoqueActivity.class);
                 startActivity(it3);
             }
         });

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/barras_editText_naoencontrado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.27"
+        android:background="@null"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:focusable="false"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Não foi encontrado o código de barras. \n Digite manualmente os dados"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="8dp" />
+
+    <LinearLayout
+        android:id="@+id/barras_entrada_menusel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="0.005"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="0.02">
+
+                <EditText
+                    android:id="@+id/barras_entrada_plain_nome"
+                    android:layout_width="125dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@null"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:inputType="textPersonName"
+                    android:text="Nome:" />
+
+                <SearchView
+                    android:id="@+id/barras_entrada_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignBottom="@+id/barras_entrada_plain_nome"
+                    android:layout_toRightOf="@+id/barras_entrada_plain_nome"
+                    android:focusable="false"
+                    android:focusableInTouchMode="true"
+                    android:focusedByDefault="false">
+
+                </SearchView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="0.02">
+
+                <EditText
+                    android:id="@+id/barras_entrada_qtde"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/barras_entrada_plain_qtde"
+                    android:layout_weight="1"
+
+                    android:hint="escolha qtde"
+                    android:inputType="numberDecimal"
+                    android:paddingLeft="10dp" />
+
+                <Spinner
+                    android:id="@+id/barras_entrada_unidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/barras_entrada_qtde" />
+
+
+                <EditText
+                    android:id="@+id/barras_entrada_plain_qtde"
+                    android:layout_width="125dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@null"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:text="Quantidade:" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/barras_btn_sel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/green"
+            android:text="Seleciona"
+            android:textColor="@color/white_overlay" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/barras_entrada_rview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2" />
+
+    <LinearLayout
+        android:id="@+id/barras_entrada_menuconfirma"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/barras_textview_pedeconfirma"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="As seguintes mudanças serão feitas:"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <LinearLayout
+            android:id="@+id/barras_linearlayout_result"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/textView12"
+            android:layout_below="@+id/textView11"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/barras_textview_result_nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="[nome]" />
+
+            <TextView
+                android:id="@+id/barras_textview_result_antes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Antes" />
+
+            <TextView
+                android:id="@+id/barras_textview_result_seta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="->"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/barras_textview_result_depois"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Depois"
+                android:textColor="@color/red" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/barras_btn_cancela"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+
+                android:layout_weight="1"
+                android:background="@color/red"
+                android:gravity="center"
+                android:text="CANCELA"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintRight_toRightOf="@+id/barras_btn_confirma" />
+
+            <Button
+                android:id="@+id/barras_btn_confirma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
+                android:background="@color/green"
+                android:gravity="center"
+                android:text="CONFIRMA"
+                android:textColor="@color/white"
+                tools:layout_editor_absoluteY="0dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

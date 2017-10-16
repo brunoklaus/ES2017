@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.viewholder.ReceitaViewHolder;
 import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
+import com.example.bela.es2017.firebase.searcher.Searcher;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.List;
  * enviadas ao firebase quando digitassemos "hamburguer")
  * @param <T> FBADapter
  */
-public class FBAdapter<T> extends RecyclerView.Adapter {
+public class FBAdapter<T> extends RecyclerView.Adapter implements Searcher<T>{
 
     private List<T> model = new ArrayList<>();//Uma lista com o tipo de dados guardado
     Context context;
@@ -38,12 +39,12 @@ public class FBAdapter<T> extends RecyclerView.Adapter {
         this.context = context;
     }
 
+
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.item_receita, parent, false);
-        ReceitaViewHolder holder = new ReceitaViewHolder(view);
-        return holder;
+        throw new IllegalStateException("Must implement onCreateViewHolder");
     }
 
     public List<T> getModel(){
@@ -82,7 +83,9 @@ public class FBAdapter<T> extends RecyclerView.Adapter {
         }
 
     }
-
+    public void onSearchFinished(String input, List<T> results, QueryRunnable<T> q, boolean update){
+        this.onQueryFinished(results,q,update);
+    }
 
 
     /**
