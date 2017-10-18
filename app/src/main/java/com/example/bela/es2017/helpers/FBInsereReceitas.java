@@ -3,6 +3,7 @@ package com.example.bela.es2017.helpers;
 import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 import com.example.bela.es2017.firebase.db.model.Receita;
+import com.example.bela.es2017.firebase.db.model.Unidade;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -136,15 +137,15 @@ public class FBInsereReceitas {
 
 
     public static void adicionaEstoqueExemplo(FirebaseUser user, DatabaseReference mDatabase){
-        InstIngrediente i1 = new InstIngrediente("Carne de vaca picada", 500, "g");
-        InstIngrediente i2 = new InstIngrediente("Polpa de tomate", 200, "g");
-        InstIngrediente i3 = new InstIngrediente("Massa Espaguete", 350, "g");
-        InstIngrediente i4 = new InstIngrediente("Dentes de alho", 3, "");
-        InstIngrediente i5 = new InstIngrediente("Tomates maduros", 4, "200g");
-        InstIngrediente i6 = new InstIngrediente("Cebola", 1, "");
-        InstIngrediente i7 = new InstIngrediente("Orégão", -1, "");
-        InstIngrediente i8 = new InstIngrediente("Azeite", 1, "");
-        InstIngrediente i9 = new InstIngrediente("Sal", 1, "");
+        InstIngrediente i1 = new InstIngrediente("Carne de vaca picada", 500, Unidade.uEnum.G);
+        InstIngrediente i2 = new InstIngrediente("Polpa de tomate", 200, Unidade.uEnum.G);
+        InstIngrediente i3 = new InstIngrediente("Massa Espaguete", 350, Unidade.uEnum.G);
+        InstIngrediente i4 = new InstIngrediente("Dentes de alho", 3, Unidade.uEnum.UNIDADE);
+        InstIngrediente i5 = new InstIngrediente("Tomates maduros", 4, Unidade.uEnum.UNIDADE);
+        InstIngrediente i6 = new InstIngrediente("Cebola", 1, Unidade.uEnum.VAZIO);
+        InstIngrediente i7 = new InstIngrediente("Orégão", -1, Unidade.uEnum.VAZIO);
+        InstIngrediente i8 = new InstIngrediente("Azeite", 1, Unidade.uEnum.VAZIO);
+        InstIngrediente i9 = new InstIngrediente("Sal", 1, Unidade.uEnum.VAZIO);
         List<InstIngrediente> l = Arrays.asList(i1, i2, i3, i4, i5, i6, i7, i8, i9);
         for (InstIngrediente inst : l) {
             inserenoEstoque(user,mDatabase,inst ,true);

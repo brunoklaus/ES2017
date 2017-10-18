@@ -7,11 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
+import com.example.bela.es2017.firebase.db.model.Unidade;
 import com.example.bela.es2017.firebase.db.runnable.AQTEstoque;
 import com.example.bela.es2017.firebase.db.runnable.AQTReceita;
 import com.example.bela.es2017.firebase.db.viewholder.InstIngredienteViewHolder;
@@ -32,15 +35,13 @@ public class FBEstoqueAdapter extends FBAdapter<InstIngrediente> {
 
 
     final SearchView t;
+    final Spinner s;
     public FBEstoqueAdapter(Context context)
     {
         super(context);
         t =  ((Activity)context).findViewById(R.id.barras_entrada_search);
+        s =  ((Activity)context).findViewById(R.id.barras_entrada_unidade);
     }
-
-
-
-
 
 
     @Override
@@ -64,7 +65,7 @@ public class FBEstoqueAdapter extends FBAdapter<InstIngrediente> {
 
         final InstIngredienteViewHolder holder = (InstIngredienteViewHolder) viewHolder;
 
-        InstIngrediente ingr = this.getModel().get(position);
+        final InstIngrediente ingr = this.getModel().get(position);
         holder.getNome().setText(ingr.nome.trim());
         holder.getQtde().setText(Double.toString(ingr.qtde).trim());
         holder.getIMedida().setText(ingr.unidade.trim());
@@ -73,6 +74,9 @@ public class FBEstoqueAdapter extends FBAdapter<InstIngrediente> {
             @Override
             public void onClick(View view) {
                 t.setQuery(holder.getNome().getText(),true);
+                ArrayAdapter<Unidade.uEnum> adap = (ArrayAdapter<Unidade.uEnum>) s.getAdapter();
+                s.setSelection(adap.getPosition(ingr.unidadeEnum));
+
             }
         });
 

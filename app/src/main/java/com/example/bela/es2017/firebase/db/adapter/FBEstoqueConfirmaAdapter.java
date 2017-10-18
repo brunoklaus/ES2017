@@ -35,7 +35,7 @@ public class FBEstoqueConfirmaAdapter extends FBEstoqueAdapter {
 
     @Override
     public void onSearchFinished(String input, List<InstIngrediente> results, QueryRunnable<InstIngrediente> q, boolean update){
-        if (btn_sel && input.trim().equals(btn_sel_str.trim())) {
+        if (btn_sel && input.trim().equals(btn_sel_str.trim()) && update) {
             this.btn_sel = false;
             rc.onSelectBtnSearchFinished(input,results);
         }

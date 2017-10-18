@@ -3,6 +3,8 @@ package com.example.bela.es2017.leitordebarras;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
@@ -10,10 +12,13 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bela.es2017.R;
+import com.example.bela.es2017.conversor.Conversor;
 import com.example.bela.es2017.firebase.db.adapter.FBEstoqueConfirmaAdapter;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
+import com.example.bela.es2017.firebase.db.model.Unidade;
 import com.example.bela.es2017.firebase.db.searchActivity.SearchActivity;
 import com.example.bela.es2017.firebase.searcher.RecebeSeleciona;
 import com.google.firebase.database.DatabaseReference;
@@ -42,13 +47,16 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
     private TextView confirma_antes;
     private TextView confirma_depois;
     private InstIngrediente ingrResultante = null;
+    private Unidade.uEnum selectedUn;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
     }
-    protected void setContentView(){
+
+
+        protected void setContentView(){
         setContentView(R.layout.leitor_barras_popup_seleciona);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -63,8 +71,12 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
         confirma_nome = (TextView) findViewById(R.id.barras_textview_result_nome);
         entrada_qtde = (TextView) findViewById(R.id.barras_entrada_qtde);
         entrada_unidade = (Spinner) findViewById(R.id.barras_entrada_unidade);
+    // Create an ArrayAdapter using the string array and a default spinner layout
+        entrada_unidade.setAdapter(new ArrayAdapter<Unidade.uEnum>(this,
+                android.R.layout.simple_list_item_1, Unidade.uEnum.values()
 
-
+        ) );
+        this.selectedUn = (Unidade.uEnum) entrada_unidade.getSelectedItem();
         menu_confirma.setVisibility(View.GONE);
         btn_seleciona = (Button) findViewById(R.id.barras_btn_sel);
         btn_cancela = (Button) findViewById(R.id.barras_btn_cancela);
@@ -99,17 +111,17 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
         fb.btnSel(query);
         mAdapter.filter(query, mDatabase);
 
-        Double qtdeDbl = new Double(-1);
-        String unStr = "";
+        Double qtdeDbl = new Double(0);
+        Unidade.uEnum un = Unidade.uEnum.VAZIO;
         if (entrada_unidade.getSelectedItem() != null) {
-            unStr = entrada_unidade.getSelectedItem().toString();
+            un = (Unidade.uEnum) entrada_unidade.getSelectedItem();
         }
         try{
             qtdeDbl = Double.parseDouble(entrada_qtde.getText().toString());
         } catch( NumberFormatException ex) {
             ex.printStackTrace();
         }
-        ingrResultante = new InstIngrediente(query,qtdeDbl,unStr);
+        ingrResultante = new InstIngrediente(query,qtdeDbl,un);
     }
     public void confirm(){
         super.finish();
@@ -131,16 +143,22 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
                 found = ingr;
             }
         }
+
+
+        if (found != null) {
+            try {
+                ingrResultante = Conversor.adiciona(found, ingrResultante);
+            } catch (IllegalArgumentException ex) {
+                Toast.makeText(this,"Unidades não compatíveis",Toast.LENGTH_LONG);
+                return;
+            }
+                this.confirma_antes.setText( Double.toString(found.qtde) + " " + found.unidade);
+            this.confirma_depois.setText( Double.toString(ingrResultante.qtde) + " " + ingrResultante.unidade);
+        }
         menu_sel.setVisibility(View.GONE);
         getRecyclerView().setVisibility(View.GONE);
         menu_confirma.setVisibility(View.VISIBLE);
         this.confirma_nome.setText(query);
-        if (found != null) {
-            this.confirma_antes.setText( Double.toString(found.qtde) + " " + found.unidade);
-            this.confirma_depois.setText( Double.toString(found.qtde) + " " + found.unidade);
-
-        }
-        ingrResultante = found;
 
     }
 
