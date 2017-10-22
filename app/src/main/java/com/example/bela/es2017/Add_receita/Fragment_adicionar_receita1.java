@@ -1,4 +1,4 @@
-package com.example.bela.es2017;
+package com.example.bela.es2017.Add_receita;
 
 
 import android.content.Context;
@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.bela.es2017.R;
 
 import org.w3c.dom.Text;
 

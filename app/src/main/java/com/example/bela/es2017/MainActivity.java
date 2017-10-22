@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.example.bela.es2017.Add_receita.Adicionar_receita;
+import com.example.bela.es2017.Estoque.Estoque;
 import com.example.bela.es2017.firebase.db.searchActivity.ListaEstoqueActivity;
 import com.example.bela.es2017.firebase.db.searchActivity.ListaReceitasActivity;
 import com.example.bela.es2017.leitordebarras.LeitorDeBarras;
@@ -31,8 +33,8 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
-                Intent it = new Intent(MainActivity.this, LeitorDeBarras.class);
-                startActivity(it);
+               // Intent it = new Intent(MainActivity.this, LeitorDeBarras.class);
+                //startActivity(it);
             }
         });
 
@@ -69,16 +71,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
-                Intent it3 = new Intent(MainActivity.this, ListaEstoqueActivity.class);
-                startActivity(it3);
-            }
-        });
-        Button botao_barras = (Button) findViewById(R.id.button6);
-        botao_barras.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent it3 = new Intent(MainActivity.this, LeitorDeBarras.class);
+                Intent it3 = new Intent(MainActivity.this, ListaReceitasActivity.class);
                 startActivity(it3);
             }
         });
