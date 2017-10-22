@@ -4,12 +4,14 @@ import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 import com.example.bela.es2017.firebase.db.model.Receita;
 import com.example.bela.es2017.firebase.db.model.Unidade;
+import com.example.bela.es2017.firebase.searcher.Searcher;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -134,6 +136,71 @@ public class FBInsereReceitas {
 
         );
     }
+    /**
+     * Associa codigo de barras ao ingrediente
+     *
+     * @param mDatabase  referencia do banco de dados
+     * @param inst    o ingrediente
+     * @param codigoBarras o codigo de barras
+     * @param safeInsert se verdadeiro, soh adiciona nao tiver outra
+     */
+    public static void insereCodigoBarras(DatabaseReference mDatabase, InstIngrediente inst, String codigoBarras, final boolean safeInsert) {
+        final DatabaseReference db = mDatabase;
+        final InstIngrediente r = inst;
+        final String barras = codigoBarras;
+        mDatabase.child("barras").child(barras).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getChildrenCount() == 0 || !safeInsert) {
+                            db.child("barras").child(barras).setValue(r);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+
+        );
+    }
+
+    /**
+     * Procura pelo dado codigo de barras no banco dados.
+     *
+     * @param mDatabase  referencia do banco de dados
+     * @param codigoBarras o codigo de barras
+     */
+    public static void encontraCodigoBarras(DatabaseReference mDatabase, String codigoBarras, Searcher<InstIngrediente> searcher) {
+        final DatabaseReference db = mDatabase;
+        final Searcher<InstIngrediente> s = searcher;
+        final String barras = codigoBarras;
+        mDatabase.child("barras").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ArrayList<InstIngrediente> l = new ArrayList<InstIngrediente>();
+                        if (dataSnapshot.hasChild(barras)) {
+                            InstIngrediente res = (InstIngrediente) dataSnapshot.child(barras).getValue(InstIngrediente.class);
+                            l.add(res);
+                        }
+                        s.onSearchFinished(barras,l,null,true);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+
+        );
+    }
+
+
+
+
 
 
     public static void adicionaEstoqueExemplo(FirebaseUser user, DatabaseReference mDatabase){

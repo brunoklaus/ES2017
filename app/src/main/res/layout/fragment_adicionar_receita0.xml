@@ -11,83 +11,72 @@
         >
 
         <TextView
-            android:id="@+id/textitem_passo3"
+            android:id="@+id/textitem_passo0"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="Passo 3. Informações adicionais"
-            android:textSize="20dp"
-            android:textStyle="bold"
             android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
+            android:text="Passo 1. Nome e Descrição"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/frag0_textView_nome"
             android:layout_width="0dp"
             android:layout_height="24dp"
-            android:text="Tempo de preparo"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:layout_marginRight="8dp"
-            app:layout_constraintRight_toRightOf="parent"
             android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginTop="19dp"
-            app:layout_constraintTop_toBottomOf="@+id/textitem_passo3" />
+            android:text="Nome"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textitem_passo0" />
 
         <EditText
-            android:id="@+id/editText_tempo"
-            android:layout_width="165dp"
+            android:id="@+id/frag0_editText_nome"
+            android:layout_width="517dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
             android:ems="10"
-            android:inputType="time"
-            app:layout_constraintLeft_toLeftOf="@+id/textView8"
-            android:layout_marginTop="9dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"
-            app:layout_constraintRight_toRightOf="@+id/textView8"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:hint="1h30m" />
+            android:hint="Nome da sua receita"
+            android:inputType="text"
+            app:layout_constraintLeft_toLeftOf="@+id/frag0_textView_nome"
+            app:layout_constraintTop_toBottomOf="@+id/frag0_textView_nome"
+            android:layout_marginStart="2dp" />
 
         <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
+            android:id="@+id/frag0_textView9"
+            android:layout_width="0dp"
             android:layout_height="24dp"
-            android:text="Dificuldade de preparo"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/editText_tempo"
-            android:layout_marginRight="157dp"
-            app:layout_constraintRight_toRightOf="@+id/editText_tempo"
             android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="@+id/editText_tempo"
-            app:layout_constraintHorizontal_bias="0.039"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="157dp" />
+            android:layout_marginTop="19dp"
+            android:text="Descrição (Opcional)"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag0_editText_nome" />
 
         <EditText
-            android:id="@+id/editText_dificuldade"
-            android:layout_width="wrap_content"
+            android:id="@+id/frag0_editText_descricao"
+            android:layout_width="517dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:ems="10"
-            android:hint="Insira um número de 1-10"
+            android:hint="Descreva brevemente sua receita"
             android:inputType="number"
-            app:layout_constraintHorizontal_bias="0.711"
-            app:layout_constraintLeft_toLeftOf="@+id/textView9"
-            app:layout_constraintRight_toRightOf="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/textView9"
-            android:layout_marginStart="32dp" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag0_textView9" />
 
     </android.support.constraint.ConstraintLayout>
 

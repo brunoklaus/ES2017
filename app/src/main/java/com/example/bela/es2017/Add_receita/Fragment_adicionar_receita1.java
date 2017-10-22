@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,6 +18,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.bela.es2017.R;
+import com.example.bela.es2017.firebase.db.model.InstIngrediente;
+import com.example.bela.es2017.firebase.db.model.Unidade;
 
 import com.example.bela.es2017.R;
 
@@ -35,9 +41,15 @@ public class Fragment_adicionar_receita1 extends Fragment  implements View.OnCli
     public EditText ingrediente, quantidade;
     public Spinner unidade;
     public LinearLayout add_container;
+    ArrayList<InstIngrediente> ingredientesEscolhidos;   //Ingredientes recebidos na entrada
+    final Fragment_adicionar_receita1 frag = this;
 
     public Fragment_adicionar_receita1() {
         // Required empty public constructor
+    }
+
+    public ArrayList<InstIngrediente> getIngredientes() {
+        return ingredientesEscolhidos;
     }
 
     @Override
@@ -57,7 +69,33 @@ public class Fragment_adicionar_receita1 extends Fragment  implements View.OnCli
         adicionarIng = (Button) view.findViewById(R.id.item_adicionar_ingrediente);
         adicionarIng.setOnClickListener(this);
 
+        //usa-se adaptador para mostrar os valores possiveis do enum no Spinner
+        unidade.setAdapter(new ArrayAdapter<Unidade.uEnum>(this.getContext(),
+                android.R.layout.simple_list_item_1, Unidade.uEnum.values()
+
+        ) );
+
+        ingredientesEscolhidos = new ArrayList<>();
+
         return view;
+    }
+
+    /**
+     * Remove o ingrediente da lista de ingredientes da entrada {@code ingredientesEscolhidos}
+     * @param ingr ingrediente a ser removido
+     */
+    private void removeFromIngrList(InstIngrediente ingr){
+        for (int i = 0; i < ingredientesEscolhidos.size(); i++) {
+            InstIngrediente el = ingredientesEscolhidos.get(i);
+            if (Double.compare(ingr.qtde, ingr.qtde) == 0 &&
+                    ingr.nome == el.nome &&
+                    ingr.unidadeEnum == el.unidadeEnum) {
+                ingredientesEscolhidos.remove(i);
+                break;
+            }
+        }
+        throw new IllegalStateException("Ingrediente a ser removido nao encontrado entre" +
+                "os adicionados");
     }
 
     @Override
@@ -67,21 +105,38 @@ public class Fragment_adicionar_receita1 extends Fragment  implements View.OnCli
                 (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View addView_item = layoutInflater.inflate(R.layout.item_adicionar_receita_ingrediente, add_container, false);
 
-        TextView textOut = (TextView) addView_item.findViewById(R.id.editText_ingrediente);
-        TextView textOut2 = (TextView) addView_item.findViewById(R.id.editText_quantidade);
-        Spinner textOut3 = (Spinner) addView_item.findViewById(R.id.spinner_unidade);
+        final InstIngrediente novoIngr;
+        try {
+            novoIngr = new InstIngrediente(ingrediente.getText().toString(),
+                    Double.parseDouble(quantidade.getText().toString()),
+                            ((Unidade.uEnum)unidade.getSelectedItem()).toString());
+            ingredientesEscolhidos.add(novoIngr);
 
-        textOut.setText(ingrediente.getText().toString());
-        textOut2.setText(quantidade.getText().toString());
+        } catch (Exception ex) {
+            Toast.makeText(getContext(),"Dados de entrada invalidos",Toast.LENGTH_LONG);
+            return;
+        }
+
+        TextView textOut = (TextView) addView_item.findViewById(R.id.editText_ingredienteEsc);
+        Button btn_cancela = (Button)addView_item.findViewById(R.id.ingrediente_cancela);
+        final Context c = getContext();
+        btn_cancela.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Remove o ingrediente da lista e remove a view correspondente
+                removeFromIngrList(novoIngr);
+                ViewGroup parentView = (ViewGroup) addView_item.getParent();
+                parentView.removeView(addView_item);
+            }
+        });
+
+        textOut.setText(ingrediente.getText().toString() + " - " + quantidade.getText().toString() +
+                " " + ((Unidade.uEnum)unidade.getSelectedItem()).toString());
 
         add_container.addView(addView_item);
 
         quantidade.setText(" ");
         ingrediente.setText(" ");
-
-        //testando o botao
-        //Intent intent = new Intent(getActivity(), MainActivity.class);
-        //startActivity(intent);
     }
 
 }

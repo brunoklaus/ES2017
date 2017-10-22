@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.util.DisplayMetrics;
@@ -21,6 +22,7 @@ import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 import com.example.bela.es2017.firebase.db.model.Unidade;
 import com.example.bela.es2017.firebase.db.searchActivity.SearchActivity;
 import com.example.bela.es2017.firebase.searcher.RecebeSeleciona;
+import com.example.bela.es2017.helpers.FBInsereReceitas;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -38,7 +40,7 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
     private Button btn_seleciona;
     private Button btn_confirma;
     private Button btn_cancela;
-
+    private String codigoDeBarras = null;
     private LinearLayout menu_confirma;
     private LinearLayout menu_sel;
     private TextView entrada_qtde;
@@ -46,12 +48,42 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
     private  TextView confirma_nome;
     private TextView confirma_antes;
     private TextView confirma_depois;
+    private TextView barrasEncontrado;
     private InstIngrediente ingrResultante = null;
-    private Unidade.uEnum selectedUn;
+    private InstIngrediente ingrAdicionado = null;
+
+
+    private  ArrayAdapter<Unidade.uEnum> spinnerAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getIntent().getExtras();
 
+        if (bundle == null || bundle.get("barras") == null ||
+                bundle.get("found") == null) {
+            throw new IllegalStateException("Popup nao recebeu argumentos suficientes no bundle");
+        }
+
+        //Pegar codigo de barras
+        codigoDeBarras = bundle.get("barras").toString();
+
+        //Verificar se achamos o codigo de barras no banco de dados
+        if (bundle.get("found").equals("TRUE")) {
+            barrasEncontrado.setText("Foi encontrado o código de barras no banco de dados.");
+            //Seleciona nome
+            searchView.setQuery(bundle.get("nome").toString(),true);
+            //Seleciona qtde
+            entrada_qtde.setText(bundle.get("qtde").toString());
+
+            //Seleciona unidade
+            String unidadeFound = bundle.get("unidade").toString();
+            for (int i = 0; i < spinnerAdapter.getCount(); i++){
+                if (spinnerAdapter.getItem(i).toString().equals(unidadeFound)) {
+                    entrada_unidade.setSelection(i);
+                    break;
+                }
+            }
+        }
 
     }
 
@@ -71,12 +103,12 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
         confirma_nome = (TextView) findViewById(R.id.barras_textview_result_nome);
         entrada_qtde = (TextView) findViewById(R.id.barras_entrada_qtde);
         entrada_unidade = (Spinner) findViewById(R.id.barras_entrada_unidade);
+        barrasEncontrado = (TextView) findViewById(R.id.barras_editText_encontrado);
+        searchView = (SearchView) findViewById(R.id.barras_entrada_search);
     // Create an ArrayAdapter using the string array and a default spinner layout
-        entrada_unidade.setAdapter(new ArrayAdapter<Unidade.uEnum>(this,
-                android.R.layout.simple_list_item_1, Unidade.uEnum.values()
-
-        ) );
-        this.selectedUn = (Unidade.uEnum) entrada_unidade.getSelectedItem();
+        spinnerAdapter = new ArrayAdapter<Unidade.uEnum>(this,
+                android.R.layout.simple_list_item_1, Unidade.uEnum.values());
+        entrada_unidade.setAdapter(spinnerAdapter);
         menu_confirma.setVisibility(View.GONE);
         btn_seleciona = (Button) findViewById(R.id.barras_btn_sel);
         btn_cancela = (Button) findViewById(R.id.barras_btn_cancela);
@@ -103,6 +135,9 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
         });
 
 
+
+
+
     }
 
     public void select(String query){
@@ -116,7 +151,7 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
         if (entrada_unidade.getSelectedItem() != null) {
             un = (Unidade.uEnum) entrada_unidade.getSelectedItem();
         }
-        try{
+        try {
             qtdeDbl = Double.parseDouble(entrada_qtde.getText().toString());
         } catch( NumberFormatException ex) {
             ex.printStackTrace();
@@ -124,6 +159,10 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
         ingrResultante = new InstIngrediente(query,qtdeDbl,un);
     }
     public void confirm(){
+        if (ingrAdicionado == null) throw new IllegalStateException("Ingrediente a ser associado " +
+                "com o  banco de dados eh nulo");
+        //Insere codigo de barras no banco de dados
+        FBInsereReceitas.insereCodigoBarras(mDatabase,ingrAdicionado,codigoDeBarras,false);
         super.finish();
     }
     public void cancel(){
@@ -144,9 +183,10 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
             }
         }
 
-
+        ingrAdicionado = ingrResultante;
         if (found != null) {
             try {
+
                 ingrResultante = Conversor.adiciona(found, ingrResultante);
             } catch (IllegalArgumentException ex) {
                 Toast.makeText(this,"Unidades não compatíveis",Toast.LENGTH_LONG);
@@ -177,7 +217,6 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) findViewById(R.id.barras_entrada_search);
         searchView.setSearchableInfo
                 (searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);

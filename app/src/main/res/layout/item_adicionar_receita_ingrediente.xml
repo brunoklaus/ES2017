@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="0dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="0dp"
+    android:orientation="vertical">
 
 
     <android.support.v7.widget.CardView
@@ -14,64 +15,41 @@
         app:cardCornerRadius="0dp"
         app:cardElevation="0dp">
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/editText_ingrediente"
-                android:textAppearance="@style/campos_cadastro_preenchido"
-                android:layout_width="100dp"
+                android:id="@+id/editText_ingredienteEsc"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginBottom="0dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="0dp"
-                android:ems="10"
-                android:textColor="@color/blue_grey_500"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/editText_quantidade"
-                android:textAppearance="@style/campos_cadastro_preenchido"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="0dp"
-                android:ems="10"
-                android:textColor="@color/blue_grey_500"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/editText_ingrediente"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.54"
-                app:layout_constraintRight_toLeftOf="@+id/spinner_unidade"
+                android:layout_column="0"
+                android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                app:layout_constraintHorizontal_bias="0.609" />
+                android:layout_marginStart="8dp"
+                android:layout_row="0"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="aaaaa"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:textAppearance="@style/campos_cadastro_preenchido"
+                android:textColor="@color/blue_grey_500" />
 
-            <Spinner
-                android:id="@+id/spinner_unidade"
+            <Button
+                android:id="@+id/ingrediente_cancela"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/item_receita_imagem"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="0dp"
-                android:layout_marginRight="7dp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="0dp"
-                app:layout_constraintVertical_bias="0.0" />
-
-
-        </android.support.constraint.ConstraintLayout>
-
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="right"
+                android:layout_row="0"
+                android:layout_weight="0"
+                android:text="X"
+                android:background="@color/red"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
 </RelativeLayout>

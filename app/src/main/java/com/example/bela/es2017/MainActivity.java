@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
-               // Intent it = new Intent(MainActivity.this, LeitorDeBarras.class);
-                //startActivity(it);
+               Intent it = new Intent(MainActivity.this, LeitorDeBarras.class);
+                startActivity(it);
             }
         });
 

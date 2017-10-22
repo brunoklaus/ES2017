@@ -6,9 +6,9 @@ package com.example.bela.es2017.firebase.db.model;
 
 public class Passo {
     public String descr;    //descricao (eventualmente pode ser em HTML)
-    public int duration;    //duracao associada a um timer, em segundos (-1 se n houver timer)
+    public Integer duration;    //duracao associada a um timer, em segundos (-1 se n houver timer)
 
-    public Passo(String descr, int duration) {
+    public Passo(String descr, Integer duration) {
         this.descr = descr;
         this.duration = duration;
     }

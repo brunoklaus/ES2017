@@ -19,7 +19,6 @@ public class Conversor {
 
     final private double COPO = 200.0; // Copo Americano - 200mL
     final private double XICARA_CHA = 240.0; // Xicara de Cha - 240mL
-    //final private double XICARA_CAFE = ;
     final private double COLHER_SOPA = 15.0; // Xicara de Cafe - 15mL
     final private double COLHER_CHA = 5.0; // Colher de Cha - 5mL
     final private double COLHER_CAFE = 2.5; // Colher de Cafe - 2.5mL
@@ -116,7 +115,6 @@ public class Conversor {
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
-
 
 }
 
