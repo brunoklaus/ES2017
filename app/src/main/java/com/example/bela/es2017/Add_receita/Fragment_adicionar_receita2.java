@@ -4,6 +4,7 @@ package com.example.bela.es2017.Add_receita;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Rational;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,11 @@ import android.widget.Toast;
 import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 import com.example.bela.es2017.firebase.db.model.Unidade;
+import com.example.bela.es2017.helpers.StringHelper;
+
+import org.apache.commons.math3.exception.MathParseException;
+import org.apache.commons.math3.fraction.Fraction;
+import org.apache.commons.math3.fraction.FractionFormat;
 
 import java.util.ArrayList;
 
@@ -82,6 +88,8 @@ public class Fragment_adicionar_receita2 extends Fragment  implements View.OnCli
                 "os adicionados");
     }
 
+
+
     @Override
     public void onClick(View view) {
         //no lugar de getActivity estava getBaseContext
@@ -92,12 +100,16 @@ public class Fragment_adicionar_receita2 extends Fragment  implements View.OnCli
         final InstIngrediente novoIngr;
         try {
             novoIngr = new InstIngrediente(ingrediente.getText().toString().trim(),
-                    Double.parseDouble(quantidade.getText().toString().trim()),
+                    StringHelper.interpretQtde(quantidade.getText().toString().trim()),
                     unidade.getText().toString().trim());
             ingredientesEscolhidos.add(novoIngr);
 
         } catch (Exception ex) {
-            Toast.makeText(getActivity(),"Dados de entrada invalidos",Toast.LENGTH_SHORT).show();
+            if (ex.getMessage() != null && !ex.getMessage().isEmpty()) {
+                Toast.makeText(getActivity(),ex.getMessage(),Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(),"Dados de entrada invalidos",Toast.LENGTH_SHORT).show();
+            }
             return;
         }
 

@@ -152,6 +152,7 @@ public class Adicionar_receita extends Activity {
         minhaReceita.ingredientesUsados = f.getIngredientes();
         if (minhaReceita.ingredientesUsados.isEmpty()){
             Toast.makeText(this, "Precisa de ao menos 1 ingrediente", Toast.LENGTH_SHORT).show();
+            return false;
         }
         return true;
     }
@@ -160,6 +161,7 @@ public class Adicionar_receita extends Activity {
         minhaReceita.passos = f.getPassos();
         if (minhaReceita.passos.isEmpty()){
             Toast.makeText(this, "Precisa de ao menos 1 ingrediente", Toast.LENGTH_SHORT).show();
+            return false;
         }
         return true;
     }
@@ -173,6 +175,7 @@ public class Adicionar_receita extends Activity {
             this.minhaReceita.tags = f.getTags();step++;
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Erro no formato do numero de porcoes", Toast.LENGTH_SHORT).show();
+            return false;
         }
         catch (Exception ex) {
             String[] l = {"dificulade","porcoes","tags"};

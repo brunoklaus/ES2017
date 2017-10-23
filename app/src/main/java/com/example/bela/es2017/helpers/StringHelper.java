@@ -19,6 +19,9 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.util.Log;
 
+import org.apache.commons.math3.fraction.Fraction;
+import org.apache.commons.math3.fraction.FractionFormat;
+
 
 /**
  * Classe que contem alguns metodos para criar strings desejadas.
@@ -110,5 +113,45 @@ public class StringHelper {
         }
         return longest;
     }
+
+    public static double interpretQtde(String str) {
+        if (str.contains("/")) {
+            int start, end;
+            start = end = str.indexOf('/');
+            while(start > 0 && Character.isDigit(str.charAt(start-1))) {
+                start--;
+            }
+            while(end + 1 < str.length() && Character.isDigit(str.charAt(end+1))){
+                end++;
+            }
+
+            String fracStr = str.substring(start,end+1);
+            String inteiroStr = str.substring(0,start).trim();
+            FractionFormat ff = new FractionFormat();
+            Fraction f = ff.parse(fracStr);
+            if (f.getNumerator() > 4 || f.getNumerator() == 0 ||
+                    f.getDenominator() == 0
+                    || f.getDenominator()  > 4) {
+                throw new NumberFormatException("Numerador e denominador precisar estar" +
+                        " entre 1 e 4");
+            }
+            double res = f.doubleValue();
+            if (!inteiroStr.isEmpty()){
+                if (Integer.parseInt(inteiroStr) == 0) {
+                    throw new NumberFormatException("0 nao pode fazer parte");
+                }
+                res+= (double) Integer.parseInt(inteiroStr);
+            }
+            return res;
+        } else {
+
+            if (Double.parseDouble(str) == 0.0) {
+                throw new NumberFormatException("nao pode ser 0");
+            }
+            return Double.parseDouble(str);
+        }
+    }
+
+
 
 }
