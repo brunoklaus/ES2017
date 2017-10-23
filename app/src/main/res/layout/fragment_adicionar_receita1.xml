@@ -3,133 +3,81 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bela.es2017.Add_receita.Fragment_adicionar_receita1">
+    tools:context=".Add_receita.Fragment_adicionar_receita4">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        >
 
         <TextView
             android:id="@+id/textitem_passo1"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="20dp"
-            android:text="Passo 1. Adicione os ingredientes:"
+            android:text="Passo 1. Nome e Descrição"
             android:textSize="20dp"
             android:textStyle="bold"
-            app:layout_constraintHorizontal_bias="0.027"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <TextView
-            android:id="@+id/textitem_receita_nome"
-            android:layout_width="match_parent"
+            android:id="@+id/frag0_textView_nome"
+            android:layout_width="0dp"
             android:layout_height="24dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Ingredientes"
+            android:layout_marginTop="19dp"
+            android:text="Nome"
             android:textSize="20dp"
             android:textStyle="bold"
-            app:layout_constraintHorizontal_bias="0.027"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textitem_passo1" />
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/frag0_editText_nome"
+            android:layout_width="517dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginLeft="2dp"
+            android:ems="10"
+            android:hint="Nome da sua receita"
+            android:inputType="text"
+            app:layout_constraintLeft_toLeftOf="@+id/frag0_textView_nome"
+            app:layout_constraintTop_toBottomOf="@+id/frag0_textView_nome"
+            android:layout_marginStart="2dp" />
 
-            <EditText
-                android:id="@+id/editText_ingrediente_original"
-                android:textAppearance="@style/campos_cadastro"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textColor="@color/blue_grey_500"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/editText_quantidade_original"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+        <TextView
+            android:id="@+id/frag0_textView9"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="19dp"
+            android:text="Descrição (Opcional)"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag0_editText_nome" />
 
-            <EditText
-                android:id="@+id/editText_quantidade_original"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/editText_ingrediente_original"
-                android:layout_alignBottom="@+id/editText_ingrediente_original"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_toEndOf="@+id/editText_ingrediente_original"
-                android:layout_toRightOf="@+id/editText_ingrediente_original"
-                android:ems="10"
-                android:inputType="number"
-                android:textAppearance="@style/campos_cadastro"
-                android:textColor="@color/blue_grey_500"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/editText_ingrediente_original"
-                app:layout_constraintRight_toLeftOf="@+id/spinner_unidade_original"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+        <EditText
+            android:id="@+id/frag0_editText_descricao"
+            android:layout_width="517dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:hint="Descreva brevemente sua receita"
+            android:inputType="text"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag0_textView9" />
 
-            <Spinner
-                android:id="@+id/spinner_unidade_original"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_toEndOf="@+id/editText_quantidade_original"
-                android:layout_toRightOf="@+id/editText_quantidade_original"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/editText_quantidade_original"
-                app:layout_constraintRight_toLeftOf="@+id/item_adicionar_ingrediente"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-
-            <Button
-                android:id="@+id/item_adicionar_ingrediente"
-                android:layout_width="45dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Add"
-                android:textSize="10sp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
-
-        <LinearLayout
-            android:id="@+id/add_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
-
-    </LinearLayout>
-
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

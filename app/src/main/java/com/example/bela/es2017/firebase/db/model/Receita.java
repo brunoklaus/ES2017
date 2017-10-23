@@ -21,6 +21,16 @@ public class Receita {
     public int downvotes = 0;
     public ArrayList<InstIngrediente> ingredientesUsados;
 
+    //Novos Atributos
+    public String autor;
+    public String category;
+    public Dificuldade difficulty;
+    public String duration;
+    public ArrayList<Passo> passos;
+    public ArrayList<String> tags;
+    public Integer servings;
+
+
     public Receita() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
@@ -48,7 +58,19 @@ public class Receita {
 
     }
 
-
+    public Receita(String titulo, String subtitulo, String descr,
+                           List<InstIngrediente> ingredientesUsados, String imgLink,
+                           String autor, String category, Dificuldade difficulty, String duration,
+                           ArrayList<Passo> passos, ArrayList<String> tags, Integer servings) {
+        this(titulo, subtitulo, descr, ingredientesUsados, -1, imgLink);
+        this.autor = autor;
+        this.category = category;
+        this.difficulty = difficulty;
+        this.duration = duration;
+        this.passos = new ArrayList<>(passos);
+        this.tags = new ArrayList<>(tags);
+        this.servings = servings;
+    }
 
 
 }

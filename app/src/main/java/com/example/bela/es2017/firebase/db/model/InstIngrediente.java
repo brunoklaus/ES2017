@@ -24,7 +24,6 @@ public class InstIngrediente {
         this.nome = nome.toLowerCase();
         this.qtde = qtde;
         this.unidade = unidade;
-        this.unidadeEnum = Unidade.uEnum.UNIDADE;
     }
     public InstIngrediente(String nome, double qtde, Unidade.uEnum unidade){
         this.nome = nome.toLowerCase();
