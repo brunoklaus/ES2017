@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/frag0_textView_nome"
+            android:id="@+id/frag1_textView_nome"
             android:layout_width="0dp"
             android:layout_height="24dp"
             android:layout_marginLeft="8dp"
@@ -42,19 +42,19 @@
             app:layout_constraintTop_toBottomOf="@+id/textitem_passo1" />
 
         <EditText
-            android:id="@+id/frag0_editText_nome"
+            android:id="@+id/frag1_editText_nome"
             android:layout_width="517dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:ems="10"
             android:hint="Nome da sua receita"
             android:inputType="text"
-            app:layout_constraintLeft_toLeftOf="@+id/frag0_textView_nome"
-            app:layout_constraintTop_toBottomOf="@+id/frag0_textView_nome"
+            app:layout_constraintLeft_toLeftOf="@+id/frag1_textView_nome"
+            app:layout_constraintTop_toBottomOf="@+id/frag1_textView_nome"
             android:layout_marginStart="2dp" />
 
         <TextView
-            android:id="@+id/frag0_textView9"
+            android:id="@+id/frag1_textView9"
             android:layout_width="0dp"
             android:layout_height="24dp"
             android:layout_marginLeft="8dp"
@@ -64,19 +64,19 @@
             android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frag0_editText_nome" />
+            app:layout_constraintTop_toBottomOf="@+id/frag1_editText_nome" />
 
         <EditText
-            android:id="@+id/frag0_editText_descricao"
+            android:id="@+id/frag1_editText_descricao"
             android:layout_width="517dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:ems="10"
             android:hint="Descreva brevemente sua receita"
             android:inputType="text"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frag0_textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/frag1_textView9" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -1,9 +1,12 @@
 package com.example.bela.es2017.Add_receita;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -28,7 +31,13 @@ public class Adicionar_receita extends Activity {
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     Receita minhaReceita;
+    private static String MSG_CONTINUA = "Continuar";
+    private static String MSG_FINALIZA = "Finalizar";
+    private static String MSG_ESPERA = "Espere...";
+
     public static boolean PODE_CRIAR_RECEITA_NO_FIREBASE = true;
+    boolean isUploading = false;
+    Adicionar_receita activityRef = this;
 
     @Override
     public void onBackPressed() {
@@ -65,7 +74,7 @@ public class Adicionar_receita extends Activity {
             fragmentTransaction.replace(R.id.fragment_container, fragment0);
         }
         fragmentTransaction.commit();
-        continuar.setText("Continuar");
+        continuar.setText(MSG_CONTINUA);
         continuar.setBackgroundColor(ContextCompat.getColor(this,android.R.color.holo_blue_light));
         status = 1;
 
@@ -80,13 +89,13 @@ public class Adicionar_receita extends Activity {
                     Fragment_adicionar_receita1 oldFrag =
                             (Fragment_adicionar_receita1) getFragmentManager().
                                     findFragmentById(R.id.fragment_container);
-                    if (!processFrag0Res(oldFrag)) return;
+                    if (!processFrag1Res(oldFrag)) return;
 
-                        Fragment_adicionar_receita2 fragment1 = new Fragment_adicionar_receita2();
-                        fragmentTransaction.replace(R.id.fragment_container, fragment1);
+                        Fragment_adicionar_receita2 fragment2 = new Fragment_adicionar_receita2();
+                        fragmentTransaction.replace(R.id.fragment_container, fragment2);
                         fragmentTransaction.addToBackStack("0");
                         fragmentTransaction.commit();
-                        continuar.setText("Continuar");
+                        continuar.setText(MSG_CONTINUA);
 
 
                 }
@@ -94,44 +103,59 @@ public class Adicionar_receita extends Activity {
                     Fragment_adicionar_receita2 oldFrag =
                             (Fragment_adicionar_receita2) getFragmentManager().
                                     findFragmentById(R.id.fragment_container);
-                    if (!processFrag1Res(oldFrag)) return;
+                    if (!processFrag2Res(oldFrag)) return;
 
-                        Fragment_adicionar_receita3 fragment2 = new Fragment_adicionar_receita3();
-                        fragmentTransaction.replace(R.id.fragment_container, fragment2);
+                        Fragment_adicionar_receita3 fragment3 = new Fragment_adicionar_receita3();
+                        fragmentTransaction.replace(R.id.fragment_container, fragment3);
                         fragmentTransaction.addToBackStack("1");
                         fragmentTransaction.commit();
-                        continuar.setText("Continuar");
+                        continuar.setText(MSG_CONTINUA);
 
 
                 } else if (status == 3) {
                     Fragment_adicionar_receita3 oldFrag =
                             (Fragment_adicionar_receita3) getFragmentManager().
                                     findFragmentById(R.id.fragment_container);
-                    if (!processFrag2Res(oldFrag)) return;
+                    if (!processFrag3Res(oldFrag)) return;
 
-                        Fragment_adicionar_receita4 fragment3 = new Fragment_adicionar_receita4();
-                        fragmentTransaction.replace(R.id.fragment_container, fragment3);
+                        Fragment_adicionar_receita4 fragment4 = new Fragment_adicionar_receita4();
+                        fragmentTransaction.replace(R.id.fragment_container, fragment4);
                         fragmentTransaction.addToBackStack("2");
                         fragmentTransaction.commit();
-                        continuar.setText("Finalizar");
-                    continuar.setBackgroundColor(ContextCompat.getColor(Adicionar_receita.super.getApplicationContext(),
-                            android.R.color.holo_green_dark));
-
-
+                        continuar.setText(MSG_CONTINUA);
 
                 } else if (status == 4){
                     Fragment_adicionar_receita4 oldFrag =
                             (Fragment_adicionar_receita4) getFragmentManager().
                                     findFragmentById(R.id.fragment_container);
-                    if (!processFrag3Res(oldFrag)) return;
+                    if (!processFrag4Res(oldFrag)) return;
 
-                    if (PODE_CRIAR_RECEITA_NO_FIREBASE){
-                        FBInsereReceitas.insereReceita(FirebaseDatabase.getInstance().getReference(),
-                                minhaReceita,true);
-                    }
-                        Intent it = new Intent(Adicionar_receita.this, MainActivity.class);
-                        startActivity(it);
+                    continuar.setText(MSG_FINALIZA);
+                    continuar.setBackgroundColor(ContextCompat.getColor(Adicionar_receita.super.getApplicationContext(),
+                            android.R.color.holo_green_dark));
+                    Fragment_adicionar_receita5 fragment5 = new Fragment_adicionar_receita5();
+                    fragmentTransaction.replace(R.id.fragment_container, fragment5);
+                    fragmentTransaction.addToBackStack("2");
+                    fragmentTransaction.commit();
+                } else if (status == 5){
+                    if(isUploading) return;
+                    else isUploading = true;
+                    Fragment_adicionar_receita5 oldFrag =
+                            (Fragment_adicionar_receita5) getFragmentManager().
+                                    findFragmentById(R.id.fragment_container);
+                    continuar.setText(MSG_ESPERA);
+                    Uri uri= oldFrag.toBeUploaded;
+                    if(uri == null)
+
+                    FBInsereReceitas.insereReceita(activityRef,FirebaseDatabase.getInstance().getReference(),
+                                minhaReceita,uri ,true);
+
+
+
+                    return;
                 }
+
+
                 status = status + 1;
 
             }
@@ -139,7 +163,7 @@ public class Adicionar_receita extends Activity {
         });
     }
 
-    boolean processFrag0Res(Fragment_adicionar_receita1 f){
+    boolean processFrag1Res(Fragment_adicionar_receita1 f){
         this.minhaReceita.subtitulo = f.getDescricao();
         this.minhaReceita.titulo = f.getNome();
         if (minhaReceita.titulo.isEmpty()) {
@@ -148,7 +172,7 @@ public class Adicionar_receita extends Activity {
         }
         return true;
     }
-    boolean processFrag1Res(Fragment_adicionar_receita2 f){
+    boolean processFrag2Res(Fragment_adicionar_receita2 f){
         minhaReceita.ingredientesUsados = f.getIngredientes();
         if (minhaReceita.ingredientesUsados.isEmpty()){
             Toast.makeText(this, "Precisa de ao menos 1 ingrediente", Toast.LENGTH_SHORT).show();
@@ -157,7 +181,7 @@ public class Adicionar_receita extends Activity {
         return true;
     }
 
-    boolean processFrag2Res(Fragment_adicionar_receita3 f){
+    boolean processFrag3Res(Fragment_adicionar_receita3 f){
         minhaReceita.passos = f.getPassos();
         if (minhaReceita.passos.isEmpty()){
             Toast.makeText(this, "Precisa de ao menos 1 ingrediente", Toast.LENGTH_SHORT).show();
@@ -166,7 +190,7 @@ public class Adicionar_receita extends Activity {
         return true;
     }
 
-    boolean processFrag3Res(Fragment_adicionar_receita4 f){
+    boolean processFrag4Res(Fragment_adicionar_receita4 f){
         int  step = 0;
         try {
 
@@ -184,6 +208,18 @@ public class Adicionar_receita extends Activity {
         }
 
     return true;
+    }
+
+    public void onUploadResult(boolean successful){
+        this.isUploading = false;
+        if(true) {
+            Intent it = new Intent(Adicionar_receita.this, MainActivity.class);
+            startActivity(it);
+        } else {
+            if (continuar.getText().equals(MSG_ESPERA)){
+                continuar.setText(MSG_FINALIZA);
+            }
+        }
     }
 
 

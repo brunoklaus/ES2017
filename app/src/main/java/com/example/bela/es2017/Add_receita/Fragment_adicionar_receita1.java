@@ -28,7 +28,7 @@ public class Fragment_adicionar_receita1 extends Fragment {
     public String getDescricao() throws NumberFormatException {
         if (etDescricao.getText().toString().trim().isEmpty()) {
             Log.d("D","descricao estava vazio");
-            return null;
+            return "";
         } else {
             return etDescricao.getText().toString();
         }
@@ -46,8 +46,8 @@ public class Fragment_adicionar_receita1 extends Fragment {
         // Inflate the layout for this fragment
         final View view =  inflater.inflate(R.layout.fragment_adicionar_receita1, container, false);
 
-        etNome = view.findViewById(R.id.frag0_editText_nome);
-        etDescricao = view.findViewById(R.id.frag0_editText_descricao);
+        etNome = view.findViewById(R.id.frag1_editText_nome);
+        etDescricao = view.findViewById(R.id.frag1_editText_descricao);
         return view;
     }
 }

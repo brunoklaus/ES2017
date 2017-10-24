@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.TreeMap;
 import com.example.bela.es2017.firebase.db.model.Unidade.*;
 
+import org.apache.commons.math3.fraction.Fraction;
+import org.apache.commons.math3.fraction.FractionFormat;
+
 /**
  * Created by brunogata on 28/09/17.
  */
@@ -114,6 +117,12 @@ public class Conversor {
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+
+
+    public static String approxDouble(Double d, int maxDenominator){
+        return new Fraction(d,maxDenominator).toString();
+
     }
 
 }

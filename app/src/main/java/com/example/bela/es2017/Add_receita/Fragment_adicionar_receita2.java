@@ -26,6 +26,7 @@ import org.apache.commons.math3.fraction.Fraction;
 import org.apache.commons.math3.fraction.FractionFormat;
 
 import java.util.ArrayList;
+import java.util.IllegalFormatException;
 
 
 /**
@@ -99,9 +100,20 @@ public class Fragment_adicionar_receita2 extends Fragment  implements View.OnCli
 
         final InstIngrediente novoIngr;
         try {
-            novoIngr = new InstIngrediente(ingrediente.getText().toString().trim(),
-                    StringHelper.interpretQtde(quantidade.getText().toString().trim()),
-                    unidade.getText().toString().trim());
+            if (unidade.getText().toString().trim().isEmpty() &&
+                    !quantidade.getText().toString().trim().isEmpty()) {
+                throw new IllegalArgumentException("unidade nao pode ser vazia se " +
+                        "quantidade nao for");
+            } else if (quantidade.getText().toString().trim().isEmpty() &&
+                    unidade.getText().toString().trim().isEmpty()) {
+
+                novoIngr = new InstIngrediente(ingrediente.getText().toString().trim(),-1,"");
+            } else {
+                novoIngr = new InstIngrediente(ingrediente.getText().toString().trim(),
+                        StringHelper.interpretQtde(quantidade.getText().toString().trim()),
+                        unidade.getText().toString().trim());
+            }
+
             ingredientesEscolhidos.add(novoIngr);
 
         } catch (Exception ex) {
@@ -126,8 +138,13 @@ public class Fragment_adicionar_receita2 extends Fragment  implements View.OnCli
             }
         });
 
-        textOut.setText(ingrediente.getText().toString() + " - " + quantidade.getText().toString() +
-                " " + unidade.getText().toString());
+        String displayStr;
+        if (novoIngr.qtde <= 0) {
+            textOut.setText(ingrediente.getText().toString());
+        } else {
+            textOut.setText(ingrediente.getText().toString() + " - " + quantidade.getText().toString() +
+                    " " + unidade.getText().toString());
+        }
 
         add_container.addView(addView_item);
         unidade.setText("");

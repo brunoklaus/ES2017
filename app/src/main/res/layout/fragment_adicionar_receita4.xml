@@ -32,7 +32,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/frag3_textView_tempo"
+                android:id="@+id/frag4_textView_tempo"
                 android:layout_width="0dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="8dp"
@@ -56,11 +56,11 @@
 
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                app:layout_constraintLeft_toLeftOf="@+id/frag3_textView_tempo"
-                app:layout_constraintTop_toBottomOf="@+id/frag3_textView_tempo">
+                app:layout_constraintLeft_toLeftOf="@+id/frag4_textView_tempo"
+                app:layout_constraintTop_toBottomOf="@+id/frag4_textView_tempo">
 
                 <EditText
-                    android:id="@+id/frag3_entrada_tempo_etHora"
+                    android:id="@+id/frag4_entrada_tempo_etHora"
                     android:maxLength="2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                     app:layout_constraintVertical_bias="0.51" />
 
                 <TextView
-                    android:id="@+id/frag3_entrada_tempo_textView_segundo"
+                    android:id="@+id/frag4_entrada_tempo_textView_segundo"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginBottom="8dp"
@@ -94,11 +94,11 @@
                     android:textAppearance="@style/TextAppearance.AppCompat"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/frag3_entrada_tempo_etSegudo"
+                    app:layout_constraintLeft_toRightOf="@+id/frag4_entrada_tempo_etSegudo"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/frag3_entrada_tempo_textView_minuto"
+                    android:id="@+id/frag4_entrada_tempo_textView_minuto"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginBottom="8dp"
@@ -112,11 +112,11 @@
                     android:textAppearance="@style/TextAppearance.AppCompat"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/frag3_entrada_tempo_etMinuto"
+                    app:layout_constraintLeft_toRightOf="@+id/frag4_entrada_tempo_etMinuto"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                    android:id="@+id/frag3_entrada_tempo_etSegudo"
+                    android:id="@+id/frag4_entrada_tempo_etSegudo"
                     android:maxLength="2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,11 +132,11 @@
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/frag3_entrada_tempo_textView_minuto"
+                    app:layout_constraintLeft_toRightOf="@+id/frag4_entrada_tempo_textView_minuto"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                    android:id="@+id/frag3_entrada_tempo_etMinuto"
+                    android:id="@+id/frag4_entrada_tempo_etMinuto"
                     android:maxLength="2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -151,11 +151,11 @@
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/frag3_entrada_textView_Hora"
+                    app:layout_constraintLeft_toRightOf="@+id/frag4_entrada_textView_Hora"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/frag3_entrada_textView_Hora"
+                    android:id="@+id/frag4_entrada_textView_Hora"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginLeft="8dp"
@@ -167,37 +167,38 @@
                     android:textAppearance="@style/TextAppearance.AppCompat"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/frag3_entrada_tempo_etHora"
+                    app:layout_constraintLeft_toRightOf="@+id/frag4_entrada_tempo_etHora"
                     app:layout_constraintTop_toTopOf="parent"></TextView>
             </android.support.constraint.ConstraintLayout>
 
             <TextView
-                android:id="@+id/frag3_textView_dificuldade"
+                android:id="@+id/frag4_textView_dificuldade"
                 android:layout_width="0dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 android:gravity="left"
                 android:text="Dificuldade de preparo"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="@+id/frag3_textView_tempo"
-                app:layout_constraintTop_toBottomOf="@+id/frag3_editText_tempo" />
+                app:layout_constraintLeft_toLeftOf="@+id/frag4_textView_tempo"
+                app:layout_constraintTop_toBottomOf="@+id/frag3_editText_tempo"
+                android:layout_marginLeft="1dp" />
 
 
             <Spinner
-                android:id="@+id/frag3_editText_dificuldade"
+                android:id="@+id/frag4_editText_dificuldade"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginStart="32dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
                 android:hint="Escolha dificuldade"
-                app:layout_constraintLeft_toLeftOf="@+id/frag3_textView_dificuldade"
-                app:layout_constraintTop_toBottomOf="@+id/frag3_textView_dificuldade" />
+                app:layout_constraintLeft_toLeftOf="@+id/frag4_textView_dificuldade"
+                app:layout_constraintTop_toBottomOf="@+id/frag4_textView_dificuldade" />
 
             <TextView
-                android:id="@+id/frag3_textView_tags"
+                android:id="@+id/frag4_textView_tags"
                 android:layout_width="0dp"
                 android:layout_height="24dp"
                 android:layout_marginLeft="8dp"
@@ -207,10 +208,10 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frag3_editText_dificuldade" />
+                app:layout_constraintTop_toBottomOf="@+id/frag4_editText_dificuldade" />
 
             <EditText
-                android:id="@+id/frag3_editText_tags"
+                android:id="@+id/frag4_editText_tags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -218,11 +219,11 @@
                 android:ems="10"
                 android:hint="Insira tags separadas por vírgula"
                 android:inputType="textMultiLine"
-                app:layout_constraintLeft_toLeftOf="@+id/frag3_textView_tags"
-                app:layout_constraintTop_toBottomOf="@+id/frag3_textView_tags" />
+                app:layout_constraintLeft_toLeftOf="@+id/frag4_textView_tags"
+                app:layout_constraintTop_toBottomOf="@+id/frag4_textView_tags" />
 
             <TextView
-                android:id="@+id/frag3_textView10"
+                android:id="@+id/frag4_textView10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -232,10 +233,10 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frag3_editText_tags" />
+                app:layout_constraintTop_toBottomOf="@+id/frag4_editText_tags" />
 
             <EditText
-                android:id="@+id/frag3_editText_porcoes"
+                android:id="@+id/frag4_editText_porcoes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -244,7 +245,7 @@
                 android:hint="Insira número de porções"
                 android:inputType="numberSigned"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frag3_textView10" />
+                app:layout_constraintTop_toBottomOf="@+id/frag4_textView10" />
 
 
         </android.support.constraint.ConstraintLayout>

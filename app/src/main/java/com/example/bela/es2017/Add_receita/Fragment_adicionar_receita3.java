@@ -137,7 +137,6 @@ public class Fragment_adicionar_receita3 extends Fragment  implements View.OnCli
                 }
             });
 
-
             //Adicionar listener no checkbox
             clockCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -161,7 +160,7 @@ public class Fragment_adicionar_receita3 extends Fragment  implements View.OnCli
             TextView prep = (TextView) addView_item.findViewById(R.id.editText_preparo_preenchido);
             Passo passoAdicionado = passosGuardados.get(passosGuardados.size() - 1);
             prep.setText(getVisualizaPassoStr(passoAdicionado));
-            add_container_preparo.addView(addView_item);
+            add_container_preparo.addView(addView_item,0);
         }
 
 
@@ -202,7 +201,7 @@ public class Fragment_adicionar_receita3 extends Fragment  implements View.OnCli
         Passo passoAdicionado = passosGuardados.get(passosGuardados.size() - 1);
         prep.setText(getVisualizaPassoStr(passoAdicionado));
         //add_container_preparo.removeAllViews();
-        add_container_preparo.addView(addView_item);
+        add_container_preparo.addView(addView_item,0);
         criaEntrada(true);
 
         final Button newButton = (Button) addView_item.findViewById(R.id.ingrediente_cancela);

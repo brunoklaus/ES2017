@@ -93,15 +93,15 @@ public class Fragment_adicionar_receita4 extends Fragment {
         // Inflate the layout for this fragment
         final View view =  inflater.inflate(R.layout.fragment_adicionar_receita4, container, false);
 
-        etTempo_Horas = (EditText) view.findViewById(R.id.frag3_entrada_tempo_etHora);
-        etTempo_Minutos = (EditText) view.findViewById(R.id.frag3_entrada_tempo_etMinuto);
-        etTempo_Segundos = (EditText) view.findViewById(R.id.frag3_entrada_tempo_etSegudo);
-        sDificuldade = (Spinner) view.findViewById(R.id.frag3_editText_dificuldade);
+        etTempo_Horas = (EditText) view.findViewById(R.id.frag4_entrada_tempo_etHora);
+        etTempo_Minutos = (EditText) view.findViewById(R.id.frag4_entrada_tempo_etMinuto);
+        etTempo_Segundos = (EditText) view.findViewById(R.id.frag4_entrada_tempo_etSegudo);
+        sDificuldade = (Spinner) view.findViewById(R.id.frag4_editText_dificuldade);
         sDificuldade.setAdapter(new ArrayAdapter<Dificuldade>(getActivity(),
                 android.R.layout.simple_list_item_1,Dificuldade.values()));
         sDificuldade.setSelection(2);
-        etPorcoes = (EditText) view.findViewById(R.id.frag3_editText_porcoes);
-        etTags = (EditText) view.findViewById(R.id.frag3_editText_tags);
+        etPorcoes = (EditText) view.findViewById(R.id.frag4_editText_porcoes);
+        etTags = (EditText) view.findViewById(R.id.frag4_editText_tags);
 
 
         //Mudar o foco pro prox. apos digitar hora ou minuto

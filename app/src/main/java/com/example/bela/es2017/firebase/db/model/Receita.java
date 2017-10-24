@@ -14,7 +14,7 @@ public class Receita {
     public  String titulo;
     public  String subtitulo;
     public  String descr;
-    public  int img;
+    public  String imgStorage;
     public  String imgLink;
 
     public int upvotes = 0;
@@ -26,6 +26,7 @@ public class Receita {
     public String category;
     public Dificuldade difficulty;
     public String duration;
+    public int img;
     public ArrayList<Passo> passos;
     public ArrayList<String> tags;
     public Integer servings;

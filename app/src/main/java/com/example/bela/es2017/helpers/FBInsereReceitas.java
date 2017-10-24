@@ -1,16 +1,29 @@
 package com.example.bela.es2017.helpers;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.widget.Toast;
+
+import com.example.bela.es2017.Add_receita.Adicionar_receita;
 import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 import com.example.bela.es2017.firebase.db.model.Receita;
 import com.example.bela.es2017.firebase.db.model.Unidade;
 import com.example.bela.es2017.firebase.searcher.Searcher;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -105,6 +118,96 @@ public class FBInsereReceitas {
                 }
 
         );
+    }
+    /**
+     * Insere uma receita no banco de dados do Firebase com a Imagem correspondente
+     *
+     * @param mDatabase  referencia do banco de dados
+     * @param receita    a receita
+     * @param u    referencia a imagem (bitmap)
+     * @param safeInsert se verdadeiro, soh adiciona nao tiver outra com mesmo titulo
+     */
+    public static void insereReceita(Adicionar_receita ad, DatabaseReference mDatabase, Receita receita, Uri u,
+                                     final boolean safeInsert) {
+        final DatabaseReference db = mDatabase;
+        final Receita r = receita;
+        final Uri filePath = u;
+        final Adicionar_receita c = ad;
+        mDatabase.child("receitas").orderByChild("titulo").equalTo(r.titulo).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getChildrenCount() == 0 || !safeInsert) {
+                            final DatabaseReference dr = db.child("receitas").push();
+                            dr.setValue(r);
+                            final String id = dr.getKey().toString();
+                            //Envia imagem ao FB
+                            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+
+                            if(filePath != null) {
+
+                                StorageReference childRef = storageRef.child(id.toString());
+
+                                //uploading the image
+                                UploadTask uploadTask = childRef.putFile(filePath);
+
+                                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        Receita r1 = r;
+                                        r1.imgStorage = id;
+                                        dr.setValue(r1);
+                                        c.onUploadResult(true);
+                                        Toast.makeText(c, "Upload successful", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                        c.onUploadResult(false);
+                                    }
+                                });
+                            } else {
+                                dr.setValue(r);
+                                c.onUploadResult(true);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+
+        );
+    }
+
+
+    public static void insereImagem(final Context context, Uri filePath, String id){
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+
+        if(filePath != null) {
+
+            StorageReference childRef = storageRef.child(id + ".png");
+
+            //uploading the image
+            UploadTask uploadTask = childRef.putFile(filePath);
+
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    Toast.makeText(context, "Upload successful", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(context, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
 
