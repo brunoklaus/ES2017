@@ -1,6 +1,8 @@
 package com.example.bela.es2017.helpers;
 
 import com.example.bela.es2017.R;
+import com.example.bela.es2017.conversor.Conversor;
+import com.example.bela.es2017.conversor.FBUnidadeConversor;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 
 import java.io.BufferedReader;
@@ -10,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,16 +65,17 @@ public class StringHelper {
      * @param ingredientesUsados lista de ingredientes usados na receita
      * @return string com os ingredientes listados um a um, com newlines
      */
-    public static String getIngredientStr(List<InstIngrediente> ingredientesUsados) {
+    public static String getIngredientStr(List<InstIngrediente> ingredientesUsados, boolean includeUnits) {
         if ( ingredientesUsados == null) {
             return "";
         }
         String str = "";
-        int caracterLinha = 0;
         for (int i = 0; i < ingredientesUsados.size(); i++) {
             String nxt = ingredientesUsados.get(i).nome;
+            if (includeUnits){
+                nxt += " " + interpretQtde(ingredientesUsados.get(i),13,true);
+            }
             nxt += (i != ingredientesUsados.size() - 1) ? ", " : "";
-            caracterLinha += nxt.length();
             str += nxt;
         }
         return str;
@@ -114,7 +118,7 @@ public class StringHelper {
         return longest;
     }
 
-    public static double interpretQtde(String str) {
+    public static double parseQtde(String str) {
         if (str.contains("/")) {
             int start, end;
             start = end = str.indexOf('/');
@@ -149,6 +153,52 @@ public class StringHelper {
                 throw new NumberFormatException("nao pode ser 0");
             }
             return Double.parseDouble(str);
+        }
+    }
+
+    public static String interpretQtde(InstIngrediente ingr, int maxDenom, boolean includeUnit) {
+        List<String> formalUnits =
+                Arrays.asList("mg","miligrama","dg","decigrama",
+                        "g","grama","dag","decagrama","centigrama",
+                        "cg","kg","kilograma","ton","tonelada",
+                        "ml","mililitro","dl","decilitro","l","litro",
+                        "dal","decalitro"
+                        );
+
+        if (ingr.unidade == null || ingr.unidade.isEmpty()) {
+            return "";
+        }
+
+        if (ingr.unidade.trim().compareTo("xicara") == 0) {
+            int a =0;
+        }
+
+        for (String str:formalUnits) {
+            if (FBUnidadeConversor.unidadeEquals(ingr.unidade,str)) {
+                //Apresentar unidade com ponto decimal
+                return includeUnit ? Double.toString(Conversor.round(ingr.qtde,2)) +
+                        " " + ingr.unidade : Double.toString(Conversor.round(ingr.qtde,2));
+            }
+        }
+
+
+        //Nossa unidade nao eh uma dessass, logo apresentamos ela como fracao
+        Fraction f = new Fraction(ingr.qtde,maxDenom);
+        if (f.getDenominator() == 0) return "";
+        int parteInteira = f.getNumerator() / f.getDenominator();
+        f = f.subtract(parteInteira);
+        if (parteInteira > 0 && f.getNumerator() > 0) {
+            return (includeUnit) ? Integer.toString(parteInteira) + " " + f.toString().replaceAll(" ","")
+                    + " " + ingr.unidade : Integer.toString(parteInteira) + " " +
+                    f.toString().replaceAll(" ","");
+        } else if (parteInteira > 0){
+            return includeUnit ? Integer.toString(parteInteira) + " " + ingr.unidade :
+                    Integer.toString(parteInteira);
+        } else if (f.getNumerator() > 0) {
+            return includeUnit ? f.toString().replaceAll(" ","") + " " + ingr.unidade :
+                    f.toString().replaceAll(" ","");
+        } else {
+            return "";
         }
     }
 

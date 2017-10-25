@@ -47,7 +47,7 @@ public class AQTReceita extends AQTFuzzy<Receita> {
     @Override
     List<String> getRelevantStrings(Receita possibleMatch){
         String matchWords = StringHelper.
-                getIngredientStr(possibleMatch.ingredientesUsados).
+                getIngredientStr(possibleMatch.ingredientesUsados,false).
                 toUpperCase();
         String title = possibleMatch.titulo.toUpperCase();
         List<String> rs = new ArrayList<>();

@@ -101,7 +101,7 @@ public class Fragment_adicionar_receita2 extends Fragment  implements View.OnCli
                 novoIngr = new InstIngrediente(ingrediente.getText().toString().trim(),-1,"");
             } else {
                 novoIngr = new InstIngrediente(ingrediente.getText().toString().trim(),
-                        StringHelper.interpretQtde(quantidade.getText().toString().trim()),
+                        StringHelper.parseQtde(quantidade.getText().toString().trim()),
                         unidade.getText().toString().trim());
             }
 

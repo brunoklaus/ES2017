@@ -308,7 +308,9 @@ public class AuthActivity extends AppCompatActivity implements
     // [START basic_write]
     private void writeNewUser(String userId, String name, String email) {
         User user = new User(name, email);
-        mDatabase.child("users").child(userId).setValue(user);
+        mDatabase.child("users").child(userId).child("username").setValue(name);
+        mDatabase.child("users").child(userId).child("email").setValue(email);
+
     }
     // [END basic_write]
 

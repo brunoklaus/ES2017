@@ -55,7 +55,7 @@ public class FBReceitasAdapter extends FBAdapter<Receita> {
         int MAX_LEN = 27;
         holder.getNome().setText(receita.titulo.trim());
         holder.getDescricao().setText(receita.subtitulo.trim());
-        holder.getIngredientes().setText(StringHelper.getIngredientStr(receita.ingredientesUsados).trim());
+        holder.getIngredientes().setText(StringHelper.getIngredientStr(receita.ingredientesUsados,true).trim());
         if (receita.imgLink != null && !receita.imgLink.isEmpty()){
             Picasso.with(this.context).load(receita.imgLink).into(holder.getImagem());
         } else if (receita.imgStorage != null){

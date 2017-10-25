@@ -80,9 +80,10 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/barras_entrada_plain_qtde"
                     android:layout_weight="1"
-
-                    android:hint="escolha qtde"
-                    android:inputType="numberDecimal"
+                    android:digits="0123456789/_. "
+                    android:ems="10"
+                    android:hint="qtde"
+                    android:inputType="date"
                     android:paddingLeft="10dp" />
 
                 <EditText
@@ -90,7 +91,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/barras_entrada_qtde"
-                    android:hint="unidade" />
+
+                     />
 
 
                 <EditText

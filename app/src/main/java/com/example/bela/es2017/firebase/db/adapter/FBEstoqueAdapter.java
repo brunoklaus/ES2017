@@ -14,6 +14,7 @@ import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 import com.example.bela.es2017.firebase.db.runnable.AQTEstoque;
 import com.example.bela.es2017.firebase.db.viewholder.InstIngredienteViewHolder;
 import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
+import com.example.bela.es2017.helpers.StringHelper;
 import com.google.firebase.database.DatabaseReference;
 
 /**
@@ -56,8 +57,14 @@ public class FBEstoqueAdapter extends FBAdapter<InstIngrediente> {
 
         final InstIngrediente ingr = this.getModel().get(position);
         holder.getNome().setText(ingr.nome.trim());
-        holder.getQtde().setText(Double.toString(ingr.qtde).trim());
-        holder.getIMedida().setText(ingr.unidade.trim());
+        if (!StringHelper.interpretQtde(ingr,5,true).isEmpty()) {
+            holder.getIMedida().setText(ingr.unidade.trim());
+
+        } else {
+            holder.getIMedida().setText("");
+        }
+        holder.getQtde().setText(StringHelper.interpretQtde(ingr,13,false));
+
 
         holder.getNome().setOnClickListener(new View.OnClickListener() {
             @Override

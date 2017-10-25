@@ -136,7 +136,7 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
 
         Double qtdeDbl = new Double(0);
         try {
-            qtdeDbl = StringHelper.interpretQtde(entrada_qtde.getText().toString());
+            qtdeDbl = StringHelper.parseQtde(entrada_qtde.getText().toString());
         } catch( NumberFormatException ex) {
             Toast.makeText(this,"quantidade invalida",Toast.LENGTH_LONG);
             ex.printStackTrace();
