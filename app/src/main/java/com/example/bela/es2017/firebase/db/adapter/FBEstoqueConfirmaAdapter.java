@@ -14,7 +14,7 @@ import java.util.List;
 
 public class FBEstoqueConfirmaAdapter extends FBEstoqueAdapter {
     String btn_sel_str = "";
-    boolean btn_sel = false;
+    boolean btn_sel = false;    //Verdadeiro quando estamos pesquisando
     InstIngrediente btn_sel_result = null;
     RecebeSeleciona<InstIngrediente> rc;
 
@@ -25,8 +25,10 @@ public class FBEstoqueConfirmaAdapter extends FBEstoqueAdapter {
         this.rc = rc;
 
     }
-
-    public void btnSel(String str){
+    /*
+    *   Guarda a string a ser selecionada e indica que estamos pesquisando
+     */
+    public void btnSelSetOptions(String str){
         this.btn_sel_str = str;
         this.btn_sel = true;
     }

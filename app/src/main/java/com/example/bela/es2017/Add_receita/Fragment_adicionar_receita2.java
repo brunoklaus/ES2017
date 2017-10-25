@@ -4,29 +4,20 @@ package com.example.bela.es2017.Add_receita;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Rational;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
-import com.example.bela.es2017.firebase.db.model.Unidade;
 import com.example.bela.es2017.helpers.StringHelper;
 
-import org.apache.commons.math3.exception.MathParseException;
-import org.apache.commons.math3.fraction.Fraction;
-import org.apache.commons.math3.fraction.FractionFormat;
-
 import java.util.ArrayList;
-import java.util.IllegalFormatException;
 
 
 /**

@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+
 /**
  * Classe que representa uma query que pode ser feita em paralelo. Ele possui informacao da
  * referencia de banco de dados utilizado, bem como a string de entrada. As subclasses de queryrunnable
@@ -27,7 +29,7 @@ import java.util.regex.Pattern;
  * Created by klaus on 13/09/17.
  */
 
-public class AQTReceita extends AQT<Receita> {
+public class AQTReceita extends AQTFuzzy<Receita> {
 
     public AQTReceita(Searcher adapter, DatabaseReference mDatabase, String str, Class myClass) {
        super(adapter,mDatabase,str,myClass);
@@ -55,22 +57,12 @@ public class AQTReceita extends AQT<Receita> {
     }
     @Override
     int calculateScore(String inputword, List<String> relStrings){
-        // Create a Pattern object
-        Pattern r = Pattern.compile(inputword);
-        // Now create matcher object.
-        Matcher mIngr = r.matcher(relStrings.get(0));
-        Matcher mTitle = r.matcher(relStrings.get(1));
-        int score = 0;
-        boolean foundIngr = mIngr.find();
-        boolean foundTitle = mTitle.find();
+       int scoreTitle =
+               (100 * (FuzzySearch.partialRatio(inputword,relStrings.get(1))))/100;
+        int scoreIngr =
+                (100 * (FuzzySearch.partialRatio(inputword,relStrings.get(0))))/100;
 
-        if (foundIngr) {
-            score += (mIngr.start() == 0) ? 2 : 1;
-        }
-        if (foundTitle) {
-            score += (mTitle.start() == 0) ? 200 : 100;
-        }
-        return score;
+        return (int)(0.8 * scoreTitle + 0.2*scoreIngr);
     }
 
 

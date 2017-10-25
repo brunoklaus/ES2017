@@ -85,11 +85,12 @@
                     android:inputType="numberDecimal"
                     android:paddingLeft="10dp" />
 
-                <Spinner
+                <EditText
                     android:id="@+id/barras_entrada_unidade"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/barras_entrada_qtde" />
+                    android:layout_toRightOf="@+id/barras_entrada_qtde"
+                    android:hint="unidade" />
 
 
                 <EditText

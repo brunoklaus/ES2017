@@ -15,12 +15,18 @@ import android.widget.Toast;
 
 import com.example.bela.es2017.MainActivity;
 import com.example.bela.es2017.R;
+import com.example.bela.es2017.conversor.FBUnidadeConversor;
+import com.example.bela.es2017.conversor.FBUnidadeConversorPreload;
 import com.example.bela.es2017.firebase.db.model.Receita;
+import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
+import com.example.bela.es2017.firebase.searcher.Searcher;
 import com.example.bela.es2017.helpers.FBInsereReceitas;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Adicionar_receita extends Activity {
+import java.util.List;
+
+public class Adicionar_receita extends Activity implements Searcher<Double> {
     /*
     private EditText ingrediente;
     private EditText modo_prepato;
@@ -77,6 +83,19 @@ public class Adicionar_receita extends Activity {
         continuar.setText(MSG_CONTINUA);
         continuar.setBackgroundColor(ContextCompat.getColor(this,android.R.color.holo_blue_light));
         status = 1;
+
+
+
+        //FBUnidadeConversor.adicionaArestasIniciais();
+        final Searcher<Double> s = this;
+        new Thread(new Runnable(){
+
+            @Override
+            public void run() {
+                new FBUnidadeConversorPreload().findConv("xicara", "mg", "mel",s);
+            }
+        }).run();
+
 
         continuar.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -223,4 +242,13 @@ public class Adicionar_receita extends Activity {
     }
 
 
+    @Override
+    public void onSearchFinished(String query, List<Double> results, QueryRunnable<Double> q, boolean update) {
+        if (results.isEmpty()) {
+            Toast.makeText(this, "None", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, results.get(0).toString(), Toast.LENGTH_SHORT).show();
+
+        }
+    }
 }

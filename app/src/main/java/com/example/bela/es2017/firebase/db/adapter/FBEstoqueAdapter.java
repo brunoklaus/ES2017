@@ -2,30 +2,19 @@ package com.example.bela.es2017.firebase.db.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.icu.text.DecimalFormat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.SearchView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
-import com.example.bela.es2017.firebase.db.model.Unidade;
 import com.example.bela.es2017.firebase.db.runnable.AQTEstoque;
-import com.example.bela.es2017.firebase.db.runnable.AQTReceita;
 import com.example.bela.es2017.firebase.db.viewholder.InstIngredienteViewHolder;
-import com.example.bela.es2017.firebase.db.viewholder.ReceitaViewHolder;
-import com.example.bela.es2017.firebase.db.model.Receita;
 import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
-import com.example.bela.es2017.helpers.StringHelper;
 import com.google.firebase.database.DatabaseReference;
-import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 /**
  * Ver documentacao em FBAdapter.
@@ -35,7 +24,7 @@ public class FBEstoqueAdapter extends FBAdapter<InstIngrediente> {
 
 
     final SearchView t;
-    final Spinner s;
+    final TextView s;
     public FBEstoqueAdapter(Context context)
     {
         super(context);
@@ -74,8 +63,7 @@ public class FBEstoqueAdapter extends FBAdapter<InstIngrediente> {
             @Override
             public void onClick(View view) {
                 t.setQuery(holder.getNome().getText(),true);
-                ArrayAdapter<Unidade.uEnum> adap = (ArrayAdapter<Unidade.uEnum>) s.getAdapter();
-                s.setSelection(adap.getPosition(ingr.unidadeEnum));
+                s.setText(holder.getIMedida().getText().toString());
 
             }
         });

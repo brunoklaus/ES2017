@@ -3,15 +3,11 @@ package com.example.bela.es2017.leitordebarras;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,20 +15,25 @@ import com.example.bela.es2017.R;
 import com.example.bela.es2017.conversor.Conversor;
 import com.example.bela.es2017.firebase.db.adapter.FBEstoqueConfirmaAdapter;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
-import com.example.bela.es2017.firebase.db.model.Unidade;
+import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
 import com.example.bela.es2017.firebase.db.searchActivity.SearchActivity;
 import com.example.bela.es2017.firebase.searcher.RecebeSeleciona;
+import com.example.bela.es2017.firebase.searcher.Searcher;
 import com.example.bela.es2017.helpers.FBInsereReceitas;
+import com.example.bela.es2017.helpers.StringHelper;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by klaus on 14/10/17.
  */
 
-public class BarrasEntradaPopup extends SearchActivity implements RecebeSeleciona<InstIngrediente> {
+public class BarrasEntradaPopup extends SearchActivity implements RecebeSeleciona<InstIngrediente>,
+        Searcher<InstIngrediente> {
 
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private RecyclerView rView;
@@ -44,16 +45,15 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
     private LinearLayout menu_confirma;
     private LinearLayout menu_sel;
     private TextView entrada_qtde;
-    private Spinner entrada_unidade;
+    private TextView entrada_unidade;
     private  TextView confirma_nome;
     private TextView confirma_antes;
     private TextView confirma_depois;
     private TextView barrasEncontrado;
     private InstIngrediente ingrResultante = null;
     private InstIngrediente ingrAdicionado = null;
+    private boolean esperandoSelect = false;
 
-
-    private  ArrayAdapter<Unidade.uEnum> spinnerAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,12 +77,7 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
 
             //Seleciona unidade
             String unidadeFound = bundle.get("unidade").toString();
-            for (int i = 0; i < spinnerAdapter.getCount(); i++){
-                if (spinnerAdapter.getItem(i).toString().equals(unidadeFound)) {
-                    entrada_unidade.setSelection(i);
-                    break;
-                }
-            }
+            entrada_unidade.setText(unidadeFound);
         }
 
     }
@@ -102,13 +97,9 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
         confirma_depois = (TextView) findViewById(R.id.barras_textview_result_depois);
         confirma_nome = (TextView) findViewById(R.id.barras_textview_result_nome);
         entrada_qtde = (TextView) findViewById(R.id.barras_entrada_qtde);
-        entrada_unidade = (Spinner) findViewById(R.id.barras_entrada_unidade);
+        entrada_unidade = (TextView) findViewById(R.id.barras_entrada_unidade);
         barrasEncontrado = (TextView) findViewById(R.id.barras_editText_encontrado);
         searchView = (SearchView) findViewById(R.id.barras_entrada_search);
-    // Create an ArrayAdapter using the string array and a default spinner layout
-        spinnerAdapter = new ArrayAdapter<Unidade.uEnum>(this,
-                android.R.layout.simple_list_item_1, Unidade.uEnum.values());
-        entrada_unidade.setAdapter(spinnerAdapter);
         menu_confirma.setVisibility(View.GONE);
         btn_seleciona = (Button) findViewById(R.id.barras_btn_sel);
         btn_cancela = (Button) findViewById(R.id.barras_btn_cancela);
@@ -141,28 +132,32 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
     }
 
     public void select(String query){
-        if(query.trim().isEmpty()) return;
-        FBEstoqueConfirmaAdapter fb = (FBEstoqueConfirmaAdapter) this.mAdapter;
-        fb.btnSel(query);
-        mAdapter.filter(query, mDatabase);
+        if(esperandoSelect || query.trim().isEmpty()) return;
 
         Double qtdeDbl = new Double(0);
-        Unidade.uEnum un = Unidade.uEnum.VAZIO;
-        if (entrada_unidade.getSelectedItem() != null) {
-            un = (Unidade.uEnum) entrada_unidade.getSelectedItem();
-        }
         try {
-            qtdeDbl = Double.parseDouble(entrada_qtde.getText().toString());
+            qtdeDbl = StringHelper.interpretQtde(entrada_qtde.getText().toString());
         } catch( NumberFormatException ex) {
+            Toast.makeText(this,"quantidade invalida",Toast.LENGTH_LONG);
             ex.printStackTrace();
+            return;
         }
-        ingrResultante = new InstIngrediente(query,qtdeDbl,un);
+        ingrResultante = new InstIngrediente(query,qtdeDbl,entrada_unidade.getText().toString());
+
+        //Verifica se item existe no estoque
+        esperandoSelect = true;
+        FBEstoqueConfirmaAdapter fb = (FBEstoqueConfirmaAdapter) this.mAdapter;
+        fb.btnSelSetOptions(query);
+        mAdapter.filter(query, mDatabase);
+
     }
     public void confirm(){
         if (ingrAdicionado == null) throw new IllegalStateException("Ingrediente a ser associado " +
                 "com o  banco de dados eh nulo");
         //Insere codigo de barras no banco de dados
         FBInsereReceitas.insereCodigoBarras(mDatabase,ingrAdicionado,codigoDeBarras,false);
+        FBInsereReceitas.inserenoEstoque(FirebaseAuth.getInstance().getCurrentUser(),
+                mDatabase,ingrResultante,false);
         super.finish();
     }
     public void cancel(){
@@ -185,20 +180,13 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
 
         ingrAdicionado = ingrResultante;
         if (found != null) {
-            try {
-
-                ingrResultante = Conversor.adiciona(found, ingrResultante);
-            } catch (IllegalArgumentException ex) {
-                Toast.makeText(this,"Unidades não compatíveis",Toast.LENGTH_LONG);
-                return;
-            }
-                this.confirma_antes.setText( Double.toString(found.qtde) + " " + found.unidade);
-            this.confirma_depois.setText( Double.toString(ingrResultante.qtde) + " " + ingrResultante.unidade);
+            this.confirma_antes.setText( Double.toString(found.qtde) + " " + found.unidade);
+            Conversor.adicionaComFB(found, ingrResultante, this);
+        } else {
+            this.confirma_antes.setText( Double.toString(ingrResultante.qtde) + " " +
+                    ingrResultante.unidade);
+            this.onSearchFinished("", Arrays.asList(ingrResultante),null,true);
         }
-        menu_sel.setVisibility(View.GONE);
-        getRecyclerView().setVisibility(View.GONE);
-        menu_confirma.setVisibility(View.VISIBLE);
-        this.confirma_nome.setText(query);
 
     }
 
@@ -228,4 +216,21 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
         return true;
     }
 
+    @Override
+    public void onSearchFinished(String query, List<InstIngrediente> results, QueryRunnable<InstIngrediente> q, boolean update) {
+        esperandoSelect = false;
+        if (results.isEmpty()) {
+            Toast.makeText(this,"Firebase nao conseguiu achar uma conversao entre as unidades",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this,"Firebase conseguiu achar uma conversao entre as unidades",
+                    Toast.LENGTH_SHORT).show();
+            ingrResultante = results.get(0);
+            this.confirma_depois.setText( Double.toString(ingrResultante.qtde) + " " + ingrResultante.unidade);
+            menu_sel.setVisibility(View.GONE);
+            getRecyclerView().setVisibility(View.GONE);
+            menu_confirma.setVisibility(View.VISIBLE);
+            this.confirma_nome.setText(query);
+        }
+    }
 }

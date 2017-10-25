@@ -11,8 +11,6 @@ public class InstIngrediente {
     public String nome;
     public double qtde;
     public String unidade;
-    public Unidade.uEnum unidadeEnum;
-
 
 
     public InstIngrediente() {
@@ -25,12 +23,5 @@ public class InstIngrediente {
         this.qtde = qtde;
         this.unidade = unidade;
     }
-    public InstIngrediente(String nome, double qtde, Unidade.uEnum unidade){
-        this.nome = nome.toLowerCase();
-        this.qtde = qtde;
-        this.unidadeEnum = unidade;
-        this.unidade = Unidade.enumUnidadeStr(this);
-    }
-
 
 }

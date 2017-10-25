@@ -76,7 +76,7 @@ public class LeitorDeBarras extends AppCompatActivity implements Searcher<InstIn
             it3.putExtra("found", "TRUE");
             it3.putExtra("nome", found.nome);
             it3.putExtra("qtde", Double.toString(found.qtde));
-            it3.putExtra("unidade", found.unidadeEnum.toString());
+            it3.putExtra("unidade", found.unidade.toString());
         } else {
             it3.putExtra("found", "FALSE");
         }
