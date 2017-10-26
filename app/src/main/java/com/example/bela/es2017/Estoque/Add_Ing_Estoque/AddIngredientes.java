@@ -67,13 +67,11 @@ public class AddIngredientes extends AppCompatActivity {
                     if (ing.getSelecionado() == true) {
                         data = data + "\n" + ing.getNomeIngrediente().toString();
                     }
-
                 }
 
                 Toast.makeText(AddIngredientes.this,
                         "Ingredientes selecionados: \n" + data, Toast.LENGTH_LONG)
                         .show();
-
 
                 finish();
                 //Intent it = new Intent(AddIngredientes.this, Estoque.class);

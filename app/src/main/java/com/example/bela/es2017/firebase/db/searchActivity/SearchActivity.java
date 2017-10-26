@@ -35,21 +35,24 @@ import java.util.List;
 
 public abstract class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
-    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    private RecyclerView rView;
-    private SearchManager searchManager;
-    private android.widget.SearchView searchView;
-    private MenuItem searchItem;
-    FBAdapter mAdapter;
+    protected DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    protected  RecyclerView rView;
+    protected  SearchManager searchManager;
+    protected  android.widget.SearchView searchView;
+    protected MenuItem searchItem;
+    protected FBAdapter mAdapter;
+    int numCurrentSearches = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista);
-        rView = (RecyclerView) findViewById(R.id.recycler1);
+        FBInsereReceitas.adicionaEstoqueExemplo(FirebaseAuth.getInstance().getCurrentUser(),mDatabase);
+        this.setContentView();
+        rView = getRecyclerView();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         setupViews();
-        FBInsereReceitas.adicionaReceitasIniciais(mDatabase);
+
+        //FBInsereReceitas.adicionaReceitasIniciais(mDatabase);
         /*
         Gson g = new Gson();
         String founderGson = StringHelper.readFromJsonFile(this);
@@ -72,14 +75,20 @@ public abstract class SearchActivity extends AppCompatActivity implements Search
         }
         int a = 1;
         */
-        FBInsereReceitas.adicionaEstoqueExemplo(FirebaseAuth.getInstance().getCurrentUser(),mDatabase);
+
 
     }
 
-    abstract void initAdapter();
+    abstract protected void setContentView();
+    abstract protected void initAdapter();
+
+    protected RecyclerView getRecyclerView() {
+        return (RecyclerView) findViewById(R.id.recycler1);
+    }
 
     void setupViews() {
         initAdapter();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         rView.setAdapter(mAdapter);
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rView.setLayoutManager(layout);

@@ -43,4 +43,8 @@
         <item name="android:textSize">20dp</item>
         <item name="android:textColor">@color/secondary_text</item>
     </style>
+    <style name="AppTheme.CustomTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
 </resources>

@@ -3,6 +3,8 @@ package com.example.bela.es2017.firebase.db.runnable;
 import android.util.Log;
 
 import com.example.bela.es2017.firebase.db.adapter.FBAdapter;
+import com.example.bela.es2017.firebase.db.result.FBResult;
+import com.example.bela.es2017.firebase.searcher.Searcher;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,12 +25,12 @@ import java.util.List;
 public abstract class QueryRunnable<T> implements Runnable {
     public boolean mustBeTerminated = false;
     String queryInput;  //Entrada da query
-    FBAdapter adapter;  //Adapter que criou essa classe, faremos callback nele
+    Searcher<T> searcher;  //Adapter que criou essa classe, faremos callback nele
     DatabaseReference mDatabase;//referencia do banco de dados
     Class myClass;
 
-    public QueryRunnable(FBAdapter adapter, DatabaseReference mDatabase, String str, Class myClass) {
-        this.adapter = adapter;
+    public QueryRunnable(Searcher<T> searcher, DatabaseReference mDatabase, String str, Class myClass) {
+        this.searcher = searcher;
         this.mDatabase = mDatabase;
         this.queryInput = str;
         this.myClass = myClass;
@@ -74,17 +76,17 @@ public abstract class QueryRunnable<T> implements Runnable {
                                 break;
                             }
                             if (mustBeTerminated) {
-                                adapter.onQueryFinished(newModel, q,false);
+                                searcher.onSearchFinished(queryInput,newModel, q,false);
                                 Log.d("d", "terminated current");
                                 return;
                             }
                         }
                         if (mustBeTerminated) {
                             Log.d("d", "terminated current");
-                            adapter.onQueryFinished(newModel, q,false);
+                            searcher.onSearchFinished(queryInput,newModel, q,false);
                             return;
                         }
-                        adapter.onQueryFinished(newModel, q,true);
+                        searcher.onSearchFinished(queryInput,newModel, q,true);
                     }
 
                     @Override

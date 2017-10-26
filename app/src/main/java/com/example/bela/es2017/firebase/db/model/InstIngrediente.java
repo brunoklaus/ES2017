@@ -10,7 +10,7 @@ public class InstIngrediente {
 
     public String nome;
     public double qtde;
-    String unidade;
+    public String unidade;
 
 
     public InstIngrediente() {
