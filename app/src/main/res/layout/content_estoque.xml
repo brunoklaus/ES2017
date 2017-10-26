@@ -85,7 +85,7 @@
                     fab:fab_colorNormal="@color/accent"
                     fab:fab_colorPressed="@color/accent_dark"
                     fab:fab_plusIconColor="@color/white"
-                    fab:fab_icon="@drawable/googleg_color"
+                    fab:fab_icon="@drawable/google_logo"
                     fab:fab_size="mini"
                     fab:fab_title="Others" />
 
