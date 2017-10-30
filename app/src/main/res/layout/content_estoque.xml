@@ -16,15 +16,20 @@
             android:orientation="vertical">
 
             <!-- other content in the activity -->
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vai ter um recyclerView aqui"
-                android:layout_marginLeft="30dp"
-                app:layout_constraintLeft_toLeftOf="parent"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_estoque"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="32dp" />
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/button_confirma" />
+
         </LinearLayout>
 
         <FrameLayout
@@ -85,7 +90,7 @@
                     fab:fab_colorNormal="@color/accent"
                     fab:fab_colorPressed="@color/accent_dark"
                     fab:fab_plusIconColor="@color/white"
-                    fab:fab_icon="@drawable/googleg_color"
+                    fab:fab_icon="@drawable/google_logo"
                     fab:fab_size="mini"
                     fab:fab_title="Others" />
 

@@ -2,14 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ES2017.iml" filepath="$PROJECT_DIR$/ES2017.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ES2017.iml" filepath="$PROJECT_DIR$/ES2017.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ES2017.2.iml" filepath="$PROJECT_DIR$/ES2017.2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ES2017_V5.iml" filepath="$PROJECT_DIR$/ES2017_V5.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ES2017_V5.iml" filepath="$PROJECT_DIR$/ES2017_V5.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ES2017_v6.iml" filepath="$PROJECT_DIR$/ES2017_v6.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Teste2.iml" filepath="$PROJECT_DIR$/Teste2.iml" />
+      <module fileurl="file://C:\Users\aleba\AndroidStudioProjects\ES2017.app\ES2017.iml" filepath="C:\Users\aleba\AndroidStudioProjects\ES2017.app\ES2017.iml" />
+      <module fileurl="file://C:\Users\aleba\AndroidStudioProjects\ES2017.app\ES2017.2.iml" filepath="C:\Users\aleba\AndroidStudioProjects\ES2017.app\ES2017.2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ES2017.app.iml" filepath="$PROJECT_DIR$/.idea/ES2017.app.iml" />
+      <module fileurl="file://C:\Users\aleba\AndroidStudioProjects\ES2017.app\ES2017_V5.iml" filepath="C:\Users\aleba\AndroidStudioProjects\ES2017.app\ES2017_V5.iml" />
+      <module fileurl="file://C:\Users\aleba\AndroidStudioProjects\ES2017.app\ES2017_v6.iml" filepath="C:\Users\aleba\AndroidStudioProjects\ES2017.app\ES2017_v6.iml" />
+      <module fileurl="file://C:\Users\aleba\AndroidStudioProjects\ES2017.app\Teste2.iml" filepath="C:\Users\aleba\AndroidStudioProjects\ES2017.app\Teste2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\aleba\AndroidStudioProjects\ES2017.app\app\app.iml" filepath="C:\Users\aleba\AndroidStudioProjects\ES2017.app\app\app.iml" />
     </modules>
   </component>
 </project>
