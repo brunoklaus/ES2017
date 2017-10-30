@@ -1,4 +1,4 @@
-package com.example.bela.es2017.Estoque.Add_Ing_Estoque;
+package com.example.bela.es2017.Estoque;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

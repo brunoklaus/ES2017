@@ -1,4 +1,4 @@
-package com.example.bela.es2017.Estoque.Add_Ing_Estoque;
+package com.example.bela.es2017.Estoque;
 
 public class Ingrediente {
 
