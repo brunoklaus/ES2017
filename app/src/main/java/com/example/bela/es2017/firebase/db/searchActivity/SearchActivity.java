@@ -102,6 +102,7 @@ public abstract class SearchActivity extends AppCompatActivity implements Search
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         searchItem = menu.findItem(R.id.action_search);
+        searchItem.setVisible(true);
         searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setSearchableInfo
                 (searchManager.getSearchableInfo(getComponentName()));

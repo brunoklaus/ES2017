@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.example.bela.es2017.R;
 import com.example.bela.es2017.conversor.FBUnidadeConversor;
 import com.example.bela.es2017.conversor.FBUnidadeConversorPreload;
 import com.example.bela.es2017.firebase.db.model.Receita;
+import com.example.bela.es2017.firebase.db.runnable.AQTEstoqueDisp;
 import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
 import com.example.bela.es2017.firebase.searcher.Searcher;
 import com.example.bela.es2017.helpers.FBInsereReceitas;
@@ -47,6 +49,8 @@ public class Adicionar_receita extends Activity implements Searcher<Double> {
 
     @Override
     public void onBackPressed() {
+
+        if (isUploading) return;
 
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
@@ -84,17 +88,15 @@ public class Adicionar_receita extends Activity implements Searcher<Double> {
         continuar.setBackgroundColor(ContextCompat.getColor(this,android.R.color.holo_blue_light));
         status = 1;
 
-
-
-        //FBUnidadeConversor.adicionaArestasIniciais();
-        final Searcher<Double> s = this;
-        new Thread(new Runnable(){
-
+        final Context c = (Context) this;
+        new AQTEstoqueDisp(new Searcher<Receita>() {
             @Override
-            public void run() {
-                new FBUnidadeConversorPreload().findConv("xicara", "mg", "mel",s);
+            public void onSearchFinished(String query, List<Receita> results, QueryRunnable<Receita> q, boolean update) {
+                if (!results.isEmpty()) {
+                    Toast.makeText(c, results.get(0).titulo, Toast.LENGTH_LONG).show();
+                }
             }
-        }).run();
+        }).go();
 
 
         continuar.setOnClickListener(new View.OnClickListener(){
@@ -164,10 +166,9 @@ public class Adicionar_receita extends Activity implements Searcher<Double> {
                                     findFragmentById(R.id.fragment_container);
                     continuar.setText(MSG_ESPERA);
                     Uri uri= oldFrag.toBeUploaded;
-                    if(uri == null)
-
                     FBInsereReceitas.insereReceita(activityRef,FirebaseDatabase.getInstance().getReference(),
-                                minhaReceita,uri ,true);
+                                minhaReceita,uri ,false);
+
 
 
 

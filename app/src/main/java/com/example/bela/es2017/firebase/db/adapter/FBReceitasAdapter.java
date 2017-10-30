@@ -1,6 +1,7 @@
 package com.example.bela.es2017.firebase.db.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+
+import visualizapasso.ScreenSlideActivity;
 
 /**
  * Ver documentacao em FBAdapter.
@@ -51,7 +54,7 @@ public class FBReceitasAdapter extends FBAdapter<Receita> {
 
         ReceitaViewHolder holder = (ReceitaViewHolder) viewHolder;
 
-        Receita receita = this.getModel().get(position);
+        final Receita receita = this.getModel().get(position);
         int MAX_LEN = 27;
         holder.getNome().setText(receita.titulo.trim());
         holder.getDescricao().setText(receita.subtitulo.trim());
@@ -66,6 +69,18 @@ public class FBReceitasAdapter extends FBAdapter<Receita> {
                     .load(ref)
                     .into(holder.getImagem());
         }
+        //Se receita possuir passos, adicionar onclicklistener para atividade que acompanha passos
+        if (receita.passos != null && !receita.passos.isEmpty()) {
+            holder.getCardView().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent it = ScreenSlideActivity.getIntentTo(context, receita);
+                    context.startActivity(it);
+                }
+            });
+        }
+
+
     }
 
 

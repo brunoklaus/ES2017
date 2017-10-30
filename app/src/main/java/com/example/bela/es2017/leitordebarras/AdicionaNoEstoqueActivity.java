@@ -2,12 +2,12 @@ package com.example.bela.es2017.leitordebarras;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
-import android.util.DisplayMetrics;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,10 +29,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by klaus on 14/10/17.
+ * Created by klaus on 29/10/17.
  */
 
-public class BarrasEntradaPopup extends SearchActivity implements RecebeSeleciona<InstIngrediente>,
+public class AdicionaNoEstoqueActivity extends SearchActivity implements RecebeSeleciona<InstIngrediente>,
         Searcher<InstIngrediente> {
 
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -53,43 +53,21 @@ public class BarrasEntradaPopup extends SearchActivity implements RecebeSelecion
     protected InstIngrediente ingrResultante = null;
     protected InstIngrediente ingrAdicionado = null;
     protected boolean esperandoSelect = false;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getIntent().getExtras();
-
-        if (bundle == null || bundle.get("barras") == null ||
-                bundle.get("found") == null) {
-            throw new IllegalStateException("Popup nao recebeu argumentos suficientes no bundle");
-        }
-
-        //Pegar codigo de barras
-        codigoDeBarras = bundle.get("barras").toString();
-
-        //Verificar se achamos o codigo de barras no banco de dados
-        if (bundle.get("found").equals("TRUE")) {
-            barrasEncontrado.setText("Foi encontrado o código de barras no banco de dados.");
-            //Seleciona nome
-            searchView.setQuery(bundle.get("nome").toString(),true);
-            //Seleciona qtde
-            entrada_qtde.setText(bundle.get("qtde").toString());
-
-            //Seleciona unidade
-            String unidadeFound = bundle.get("unidade").toString();
-            entrada_unidade.setText(unidadeFound);
-        }
+        this.barrasEncontrado.setText("Digite o novo ingrediente ou clique em um dos já " +
+                "existentes.");
 
     }
 
-
-        protected void setContentView(){
+    protected void setContentView(){
         setContentView(R.layout.leitor_barras_popup_seleciona);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-      //  getWindow().setLayout(width, (int) (height * 0.8));
+        //  getWindow().setLayout(width, (int) (height * 0.8));
         getSupportActionBar().hide();
         menu_confirma = (LinearLayout) findViewById(R.id.barras_entrada_menuconfirma);
         menu_sel = (LinearLayout) findViewById(R.id.barras_entrada_menusel);

@@ -12,11 +12,13 @@ import android.widget.Button;
 
 import com.example.bela.es2017.Add_receita.Adicionar_receita;
 import com.example.bela.es2017.Estoque.Estoque;
-import com.example.bela.es2017.firebase.db.searchActivity.ListaEstoqueActivity;
 import com.example.bela.es2017.firebase.db.searchActivity.ListaReceitasActivity;
+import com.example.bela.es2017.leitordebarras.AdicionaNoEstoqueActivity;
 import com.example.bela.es2017.leitordebarras.LeitorDeBarras;
 import com.example.bela.es2017.texttospeech.TTSActivity;
 import com.example.bela.es2017.timer.TimerActivity;
+
+import visualizapasso.ScreenSlideActivity;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -33,22 +35,33 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
-               Intent it = new Intent(MainActivity.this, LeitorDeBarras.class);
+               Intent it = new Intent(MainActivity.this, ScreenSlideActivity.class);
                 startActivity(it);
             }
         });
 
-        Button botao_estoque = (Button) findViewById(R.id.button2);
-        botao_estoque.setOnClickListener(new View.OnClickListener() {
+        Button botao_barras = (Button) findViewById(R.id.botao_barras);
+        botao_barras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent it2 = new Intent(MainActivity.this, Estoque.class);
+                Intent it2 = new Intent(MainActivity.this, LeitorDeBarras.class);
                 startActivity(it2);
             }
         });
 
-        Button botao_add_receitas = (Button) findViewById(R.id.button3);
+
+        Button botao_estoque = (Button) findViewById(R.id.botao_estoque);
+        botao_estoque.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it2 = new Intent(MainActivity.this, AdicionaNoEstoqueActivity.class);
+                startActivity(it2);
+            }
+        });
+
+        Button botao_add_receitas = (Button) findViewById(R.id.botao_add_receita);
         botao_add_receitas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +70,7 @@ public class MainActivity extends AppCompatActivity  {
                 startActivity(it3);
             }
         });
-        Button botao_timer = (Button) findViewById(R.id.button4);
+        Button botao_timer = (Button) findViewById(R.id.botao_timer);
         botao_timer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,7 +79,7 @@ public class MainActivity extends AppCompatActivity  {
                 startActivity(it3);
             }
         });
-        Button botao_busca = (Button) findViewById(R.id.button5);
+        Button botao_busca = (Button) findViewById(R.id.botao_busca);
         botao_busca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +89,7 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
-        Button botao_tts = (Button) findViewById(R.id.button7);
+        Button botao_tts = (Button) findViewById(R.id.botao_tts);
         botao_tts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

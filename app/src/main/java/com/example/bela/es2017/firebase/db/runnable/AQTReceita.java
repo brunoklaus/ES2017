@@ -1,23 +1,14 @@
 package com.example.bela.es2017.firebase.db.runnable;
 
-import android.util.Log;
-
 import com.example.bela.es2017.firebase.db.model.Receita;
-import com.example.bela.es2017.firebase.db.result.FBResult;
 import com.example.bela.es2017.firebase.searcher.Searcher;
 import com.example.bela.es2017.helpers.StringHelper;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
@@ -29,7 +20,7 @@ import me.xdrop.fuzzywuzzy.FuzzySearch;
  * Created by klaus on 13/09/17.
  */
 
-public class AQTReceita extends AQTFuzzy<Receita> {
+public class AQTReceita extends AQTScoreOnce<Receita> {
 
     public AQTReceita(Searcher adapter, DatabaseReference mDatabase, String str, Class myClass) {
        super(adapter,mDatabase,str,myClass);

@@ -4,9 +4,10 @@
     tools:context="com.example.bela.listanova.MainActivity">
     <item
         android:id="@+id/action_search"
+        android:visible="false"
         android:orderInCategory="100"
         android:title="Search"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@android:drawable/ic_menu_search"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
     <item

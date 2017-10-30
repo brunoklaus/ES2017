@@ -19,9 +19,9 @@ import java.util.List;
 
 
 
-public class AQTFuzzy<T> extends AQT<T> {
+public class AQTScoreOnce<T> extends AQT<T> {
 
-    public AQTFuzzy(Searcher adapter, DatabaseReference mDatabase, String str, Class myClass) {
+    public AQTScoreOnce(Searcher adapter, DatabaseReference mDatabase, String str, Class myClass) {
         super(adapter,mDatabase,str,myClass);
     }
     @Override

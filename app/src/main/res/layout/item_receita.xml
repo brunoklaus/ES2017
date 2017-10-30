@@ -7,6 +7,7 @@
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/item_receita_CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -22,10 +23,10 @@
                 android:id="@+id/item_receita_rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1">
 
                 <TextView
@@ -60,8 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:background="@color/blue_grey_500"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@color/blue_grey_500">
 
                 <ImageView
                     android:id="@+id/item_receita_imagem"
@@ -69,9 +70,9 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="0dp"
-                    android:layout_marginTop="0dp"
                     android:layout_marginEnd="59dp"
                     android:layout_marginRight="59dp"
+                    android:layout_marginTop="0dp"
                     android:layout_weight="1"
 
                     android:visibility="visible"
