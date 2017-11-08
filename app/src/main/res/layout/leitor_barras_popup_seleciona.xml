@@ -37,7 +37,7 @@
             android:layout_weight="0.3"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="0.02">
@@ -45,37 +45,76 @@
                 <EditText
                     android:id="@+id/barras_entrada_plain_nome"
                     android:layout_width="125dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_height="24dp"
                     android:background="@null"
                     android:ems="10"
                     android:focusable="false"
                     android:inputType="textPersonName"
-                    android:text="Nome:" />
+                    android:text="Nome:"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp" />
 
                 <SearchView
                     android:id="@+id/barras_entrada_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/barras_entrada_plain_nome"
                     android:layout_toRightOf="@+id/barras_entrada_plain_nome"
                     android:focusable="false"
                     android:focusableInTouchMode="true"
-                    android:focusedByDefault="false">
+                    android:focusedByDefault="false"
+                    android:visibility="visible"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toRightOf="@+id/barras_entrada_plain_nome"
+                    app:layout_constraintRight_toLeftOf="@+id/barras_btn_sel"
+                    app:layout_constraintTop_toTopOf="parent">
 
                 </SearchView>
 
-            </RelativeLayout>
+                <Button
+                    android:id="@+id/barras_btn_sel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/barras_entrada_plain_nome"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@+id/barras_entrada_search"
+                    android:layout_weight="1"
+                    android:background="@color/green"
+                    android:text="Seleciona"
+                    android:textColor="@color/white_overlay"
+                    android:textSize="13sp"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <RelativeLayout
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_weight="0.02">
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/barras_entrada_plain_qtde"
+                    android:layout_width="125dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@null"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:text="Quantidade:" />
 
                 <EditText
                     android:id="@+id/barras_entrada_qtde"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/barras_entrada_plain_qtde"
@@ -88,35 +127,17 @@
 
                 <EditText
                     android:id="@+id/barras_entrada_unidade"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
+                    android:layout_weight="0.25"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/barras_entrada_qtde"
 
-                     />
+                    />
 
 
-                <EditText
-                    android:id="@+id/barras_entrada_plain_qtde"
-                    android:layout_width="125dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:background="@null"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:text="Quantidade:" />
-
-            </RelativeLayout>
+            </LinearLayout>
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/barras_btn_sel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/green"
-            android:text="Seleciona"
-            android:textColor="@color/white_overlay" />
 
     </LinearLayout>
 
@@ -124,6 +145,8 @@
         android:id="@+id/barras_entrada_rview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         android:layout_weight="0.2" />
 
     <LinearLayout

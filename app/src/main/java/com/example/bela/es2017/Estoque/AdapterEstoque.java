@@ -46,11 +46,15 @@ public class AdapterEstoque extends RecyclerView.Adapter {
 
         holder.info.setText(ingrediente.getNomeIngrediente());
        // holder.edita.setOnClickListener(view -> editaItem(position));
-        holder.delete.setOnClickListener(view -> {
-            try {
-                deletaItem(position);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        final int pos = position;
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    deletaItem(pos);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

@@ -56,10 +56,21 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
+                Intent it2 = new Intent(MainActivity.this, Estoque.class);
+                startActivity(it2);
+            }
+        });
+
+        Button botao_estoque_add = (Button) findViewById(R.id.botao_estoque_manual);
+        botao_estoque_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
                 Intent it2 = new Intent(MainActivity.this, AdicionaNoEstoqueActivity.class);
                 startActivity(it2);
             }
         });
+
 
         Button botao_add_receitas = (Button) findViewById(R.id.botao_add_receita);
         botao_add_receitas.setOnClickListener(new View.OnClickListener() {

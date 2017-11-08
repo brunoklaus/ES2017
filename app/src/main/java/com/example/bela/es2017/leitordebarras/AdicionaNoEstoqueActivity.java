@@ -132,8 +132,6 @@ public class AdicionaNoEstoqueActivity extends SearchActivity implements RecebeS
     public void confirm(){
         if (ingrAdicionado == null) throw new IllegalStateException("Ingrediente a ser associado " +
                 "com o  banco de dados eh nulo");
-        //Insere codigo de barras no banco de dados
-        FBInsereReceitas.insereCodigoBarras(mDatabase,ingrAdicionado,codigoDeBarras,false);
         FBInsereReceitas.inserenoEstoque(FirebaseAuth.getInstance().getCurrentUser(),
                 mDatabase,ingrResultante,false);
         super.finish();

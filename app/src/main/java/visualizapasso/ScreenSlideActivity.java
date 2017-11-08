@@ -159,12 +159,18 @@ public class ScreenSlideActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int passo) {
-            return ScreenSlidePageFragment.create(r, passo);
+            if (passo == 0) {
+                return VisualizaReceitaFragment.create(r);
+            } else if (passo == 1) {
+                return EstoqueMatcherFragment.create(r);
+            }
+
+            return ScreenSlidePageFragment.create(r, passo - 2);
         }
 
         @Override
         public int getCount() {
-            return NUM_PAGES;
+            return NUM_PAGES + 2;
         }
     }
 }

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.example.bela.es2017"
         minSdkVersion 15
@@ -59,10 +59,7 @@ dependencies {
 
 android {
     useLibrary 'org.apache.http.legacy'
-    compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
-    }
+
 }
 
 

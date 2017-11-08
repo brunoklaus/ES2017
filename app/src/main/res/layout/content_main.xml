@@ -102,6 +102,15 @@
             android:layout_height="wrap_content"
             android:text="TextToSpeech" />
 
+        <Button
+            android:id="@+id/botao_estoque_manual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Adicionar Manualmente no Estoque"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

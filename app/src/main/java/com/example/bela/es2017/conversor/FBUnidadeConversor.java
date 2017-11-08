@@ -153,8 +153,17 @@ public class FBUnidadeConversor implements Searcher<ConversorEdge>  {
     }
 
     public static boolean unidadeEquals(String n1, String n2) {
-        n1 = n1.trim();
-        n2 = n2.trim();
+        n1 = n1.replaceAll(" ","");
+        n2 = n2.replaceAll(" ","");
+
+        n1 = deAccent(n1).toLowerCase();
+        n2 = deAccent(n2).toLowerCase();
+
+        n1 = n1.replaceAll("[^A-Za-z]+", "");
+        n2 = n2.replaceAll("[^A-Za-z]+", "");
+
+        n1 = n1.replaceAll(" ","");
+        n2 = n2.replaceAll(" ","");
 
         n1 = n1.replaceAll("eres","er");
         n1 = n1.replaceAll("etes","ete");
@@ -164,8 +173,7 @@ public class FBUnidadeConversor implements Searcher<ConversorEdge>  {
         n2 = n2.replaceAll("etes","ete");
         n2 = n2.replaceAll("s","");
 
-        return deAccent(n1).toUpperCase().
-                compareTo(deAccent(n2).toUpperCase()) == 0;
+        return n1.compareTo(n2) == 0;
     }
 
     private void sendPathResult(String last){

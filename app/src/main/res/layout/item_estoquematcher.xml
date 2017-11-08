@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/estoquematcher_cl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/estoquematcher_ingr_est"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="(Nâo achou no Estoque)"
+        app:layout_constraintBottom_toBottomOf="@+id/estoquematcher_seta"
+        app:layout_constraintLeft_toRightOf="@+id/estoquematcher_seta"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/estoquematcher_seta"
+        app:layout_constraintVertical_bias="0.333" />
+
+    <TextView
+        android:id="@+id/estoquematcher_ingr_rec"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="(Ingrediente da Receita)"
+        app:layout_constraintBottom_toBottomOf="@+id/estoquematcher_seta"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/estoquematcher_seta"
+        app:layout_constraintTop_toTopOf="@+id/estoquematcher_seta"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp" />
+
+    <TextView
+        android:id="@+id/estoquematcher_seta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:singleLine="false"
+        android:text="->"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/estoquematcher_ingr_est"
+        app:layout_constraintLeft_toRightOf="@+id/estoquematcher_ingr_rec" />
+</android.support.constraint.ConstraintLayout>

@@ -88,7 +88,7 @@ public class Adicionar_receita extends Activity implements Searcher<Double> {
         continuar.setBackgroundColor(ContextCompat.getColor(this,android.R.color.holo_blue_light));
         status = 1;
 
-        final Context c = (Context) this;
+        /*final Context c = (Context) this;
         new AQTEstoqueDisp(new Searcher<Receita>() {
             @Override
             public void onSearchFinished(String query, List<Receita> results, QueryRunnable<Receita> q, boolean update) {
@@ -97,7 +97,7 @@ public class Adicionar_receita extends Activity implements Searcher<Double> {
                 }
             }
         }).go();
-
+        */
 
         continuar.setOnClickListener(new View.OnClickListener(){
             @Override
