@@ -59,8 +59,8 @@ public class Estoque extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estoque);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         recyclerViewEstoque = (RecyclerView) findViewById(R.id.recycler_estoque);
         ingredientes = new ArrayList<Ingrediente>();
