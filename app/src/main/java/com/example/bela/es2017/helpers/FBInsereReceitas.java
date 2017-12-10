@@ -10,8 +10,10 @@ import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 import com.example.bela.es2017.firebase.db.model.Receita;
 import com.example.bela.es2017.firebase.searcher.Searcher;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -242,6 +244,40 @@ public class FBInsereReceitas {
 
 
     /**
+     * Remove o item do estoque imediatamente
+     *
+     * @param mDatabase  referencia do banco de dados
+     */
+    public static void removedoEstoque(FirebaseUser user, DatabaseReference mDatabase, String nome, final Searcher<Boolean> s) {
+        final DatabaseReference db = mDatabase;
+        final FirebaseUser u = user;
+        db.child("users").child(u.getUid()).child("estoque").orderByChild("nome").equalTo(nome).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snap : dataSnapshot.getChildren()){
+                            Task t = snap.getRef().removeValue();
+                            t.addOnCompleteListener(new OnCompleteListener() {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+                                    s.onSearchFinished(null,null,null,true);
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+
+        );
+    }
+
+
+
+    /**
      * Atualiza lista de receitas feitas
      *
      * @param user O usuario
@@ -256,7 +292,7 @@ public class FBInsereReceitas {
     }
 
     /**
-     * Atualiza lista de receitas feitas
+     * Le lista de receitas feitas
      *
      * @param user O usuario
      * @param mDatabase  referencia do banco de dados
@@ -288,6 +324,43 @@ public class FBInsereReceitas {
 
         );
     }
+
+
+
+
+    /**
+     * Le lista de receitas feitas
+     *
+     * @param user O usuario
+     * @param mDatabase  referencia do banco de dados
+     * @param ss Searcher que recebe o resultado
+     */
+    public static void leReceitasRecomendadas(FirebaseUser user, DatabaseReference mDatabase,Searcher<ArrayList<String>> ss) {
+        final DatabaseReference db = mDatabase;
+        final FirebaseUser u = user;
+        final Searcher<ArrayList<String>> s = ss;
+        mDatabase.child("users").child(u.getUid()).child("receitasrecomendadas").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(!dataSnapshot.exists()) {
+                            ArrayList<String> l = new ArrayList<String>();
+                            s.onSearchFinished("",(List<ArrayList<String>>)Arrays.asList(l),null,true);
+                        } else {
+                            ArrayList<String> l = (ArrayList<String>) dataSnapshot.getValue();
+                            s.onSearchFinished("",(List<ArrayList<String>>)Arrays.asList(l),null,true);
+                        }
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+
+        );
+    }
+
 
 
     /**

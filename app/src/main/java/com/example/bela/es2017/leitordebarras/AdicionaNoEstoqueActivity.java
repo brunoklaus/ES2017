@@ -29,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Arrays;
 import java.util.List;
 
-/**
+/**Classe responsavel por adicionar elementos no estoque.
  * Created by klaus on 29/10/17.
  */
 
@@ -119,7 +119,7 @@ public class AdicionaNoEstoqueActivity extends SearchActivity implements RecebeS
 
     }
 
-    public void select(String query){
+    private void select(String query){
         if(esperandoSelect || query.trim().isEmpty()) return;
 
         Double qtdeDbl = new Double(0);
@@ -139,14 +139,14 @@ public class AdicionaNoEstoqueActivity extends SearchActivity implements RecebeS
         mAdapter.filter(query, mDatabase);
 
     }
-    public void confirm(){
+    private void confirm(){
         if (ingrAdicionado == null) throw new IllegalStateException("Ingrediente a ser associado " +
                 "com o  banco de dados eh nulo");
         FBInsereReceitas.inserenoEstoque(FirebaseAuth.getInstance().getCurrentUser(),
                 mDatabase,ingrResultante,false);
         super.finish();
     }
-    public void cancel(){
+    private void cancel(){
         ingrResultante = null;
         menu_sel.setVisibility(View.VISIBLE);
         getRecyclerView().setVisibility(View.VISIBLE);
@@ -154,7 +154,12 @@ public class AdicionaNoEstoqueActivity extends SearchActivity implements RecebeS
     }
 
 
-
+    /**
+     * Descreve acao tomada apos receber o resultado da procura pelo ingrediente
+     * no estoque apos clicar em select
+     * @param query
+     * @param res
+     */
     public void onSelectBtnSearchFinished(String query, List<InstIngrediente> res){
         query = query.trim().toUpperCase();
         InstIngrediente found = null;

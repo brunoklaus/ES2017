@@ -75,6 +75,9 @@ public class FBReceitasAdapter extends FBAdapter<Receita> {
                     .using(new FirebaseImageLoader())
                     .load(ref)
                     .into(holder.getImagem());
+        } else {
+            //Desabilitar imagem
+            holder.getImagem().setVisibility(View.GONE);
         }
         //Adicionar listener para quando clicar na receita
         if (receita.passos != null && !receita.passos.isEmpty()) {

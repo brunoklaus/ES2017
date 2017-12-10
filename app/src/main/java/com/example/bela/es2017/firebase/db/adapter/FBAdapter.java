@@ -14,6 +14,7 @@ import com.example.bela.es2017.firebase.searcher.Searcher;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,7 +32,8 @@ import java.util.List;
  */
 public class FBAdapter<T> extends RecyclerView.Adapter implements Searcher<T>{
 
-    private List<T> model = new ArrayList<>();//Uma lista com o tipo de dados guardado
+    //Uma lista com o tipo de dados guardado. Esse modelo eh atualizado apos cada query
+    private List<T> model = Collections.synchronizedList(new ArrayList<T>());
     Context context;
     volatile QueryRunnable nextToRun = null;    //proximo runnable a rodar
     volatile QueryRunnable currentlyRunning = null; //runnable que esta rodando
@@ -52,7 +54,13 @@ public class FBAdapter<T> extends RecyclerView.Adapter implements Searcher<T>{
     }
     public void setModel(List<T> r) {
         model = r;
+        notifyDataSetChanged();
     }
+    public void addToModel(T t){
+        model.add(t);
+        notifyItemRangeInserted(model.size() - 1, 1);
+    }
+
 
 
     @Override

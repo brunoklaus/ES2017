@@ -9,7 +9,9 @@ import com.example.bela.es2017.firebase.searcher.RecebeSeleciona;
 import java.util.List;
 
 /**
+ * Versao de EstoqueAdapter que faz callback em um @link{RecebeSeleciona} quando acaba a busca.
  * Created by klaus on 15/10/17.
+ * @see {com.example.bela.es2017.firebase.db.adapter.FBEstoqueAdapter}
  */
 
 public class FBEstoqueConfirmaAdapter extends FBEstoqueAdapter {
@@ -18,7 +20,11 @@ public class FBEstoqueConfirmaAdapter extends FBEstoqueAdapter {
     InstIngrediente btn_sel_result = null;
     RecebeSeleciona<InstIngrediente> rc;
 
-
+    /**
+     * Construtor
+     * @param context contexto
+     * @param rc
+     */
     public FBEstoqueConfirmaAdapter(Context context, RecebeSeleciona<InstIngrediente> rc)
     {
         super(context);
@@ -34,7 +40,10 @@ public class FBEstoqueConfirmaAdapter extends FBEstoqueAdapter {
     }
 
 
-
+    /**
+     * Quando terminada a busca, tambem chamamos callback indicando que a busca que se originou
+     * ao se clicar no botao Select acabou
+     */
     @Override
     public void onSearchFinished(String input, List<InstIngrediente> results, QueryRunnable<InstIngrediente> q, boolean update){
         if (btn_sel && input.trim().equals(btn_sel_str.trim()) && update) {

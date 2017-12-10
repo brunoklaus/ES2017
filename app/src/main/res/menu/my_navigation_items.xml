@@ -3,6 +3,9 @@
     <item android:id="@+id/nav_item_main"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="EasyFeed Home"/>
+    <item android:id="@+id/nav_item_recomenda"
+        android:icon="@drawable/ic_whatshot_black_24dp"
+        android:title="Recomendações"/>
     <item android:id="@+id/nav_item_busca"
         android:icon="@android:drawable/ic_menu_search"
         android:title="Busca" />

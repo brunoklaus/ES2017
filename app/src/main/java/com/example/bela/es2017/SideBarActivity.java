@@ -21,6 +21,8 @@ import com.example.bela.es2017.leitordebarras.LeitorDeBarras;
 import com.example.bela.es2017.receitaspossiveis.ReceitasPossiveisActivity;
 import com.example.bela.es2017.timer.TimerActivity;
 
+import recomendareceitas.RecomendaReceitasActivity;
+
 /**
  * Created by klaus on 09/12/17.
  */
@@ -89,6 +91,9 @@ public abstract class SideBarActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_item_receitaspossiveis:
                         it = new Intent(ac, ReceitasPossiveisActivity.class);
+                        break;
+                    case R.id.nav_item_recomenda:
+                        it = new Intent(ac, RecomendaReceitasActivity.class);
                         break;
 
 

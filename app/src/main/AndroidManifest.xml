@@ -41,6 +41,7 @@
             />
 
         <activity android:name=".receitaspossiveis.ReceitasPossiveisActivity" />
+        <activity android:name="recomendareceitas.RecomendaReceitasActivity" />
 
         <activity android:name="visualizareceita.VisualizaReceitaActivity"
             android:label="Screen Slide"

@@ -11,26 +11,30 @@ import android.widget.TextView;
 
 import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
+import com.example.bela.es2017.firebase.db.model.User;
 import com.example.bela.es2017.firebase.db.runnable.AQTEstoque;
 import com.example.bela.es2017.firebase.db.viewholder.InstIngredienteViewHolder;
 import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
+import com.example.bela.es2017.firebase.searcher.Searcher;
+import com.example.bela.es2017.helpers.FBInsereReceitas;
 import com.example.bela.es2017.helpers.StringHelper;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-/**
- * Ver documentacao em FBAdapter.
+import java.util.List;
+
+/**Adapter para o estoque. Responsavel por
+ * @see {FBAdapter}
  */
 public class FBEstoqueAdapter extends FBAdapter<InstIngrediente> {
 
 
 
-    final SearchView t;
-    final TextView s;
     public FBEstoqueAdapter(Context context)
     {
         super(context);
-        t =  ((Activity)context).findViewById(R.id.barras_entrada_search);
-        s =  ((Activity)context).findViewById(R.id.barras_entrada_unidade);
     }
 
 
@@ -69,9 +73,27 @@ public class FBEstoqueAdapter extends FBAdapter<InstIngrediente> {
         holder.getNome().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                t.setQuery(holder.getNome().getText(),true);
-                s.setText(holder.getIMedida().getText().toString());
+                //Quando clicar no ingrediente, preencher campos
+                SearchView s = ((Activity)context).findViewById(R.id.barras_entrada_search);
+                s.setQuery(holder.getNome().getText(),true);
+                TextView t =  ((Activity)context).findViewById(R.id.barras_entrada_unidade);
+                t.setText(holder.getIMedida().getText().toString());
 
+            }
+        });
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final Searcher<Boolean> updateItems = new Searcher<Boolean>() {
+            @Override
+            public void onSearchFinished(String query, List<Boolean> results, QueryRunnable<Boolean> q, boolean update) {
+
+                filter("", FirebaseDatabase.getInstance().getReference());
+            }
+        };
+        holder.getRemoveBtn().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FBInsereReceitas.removedoEstoque(user,mDatabase,holder.getNome().getText().toString(),updateItems);
             }
         });
 
