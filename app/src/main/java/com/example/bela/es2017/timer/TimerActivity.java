@@ -9,19 +9,23 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.bela.es2017.R;
+import com.example.bela.es2017.SideBarActivity;
+import com.example.bela.es2017.SideBarInfo;
 
-public class TimerActivity extends AppCompatActivity {
+public class TimerActivity extends SideBarActivity {
 
     private EditText tempo_ipt;
 
     private MyCountdownTimer timer;
 
     @Override
+    protected SideBarInfo getInfo(){
+        return new SideBarInfo("EasyFeed - Timer",R.layout.activity_timer);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timer);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         tempo_ipt = (EditText) findViewById(R.id.tempoIpt);
         Button play_btn = (Button) findViewById(R.id.playTimer);

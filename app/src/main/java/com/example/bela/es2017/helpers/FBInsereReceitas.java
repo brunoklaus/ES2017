@@ -104,7 +104,9 @@ public class FBInsereReceitas {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getChildrenCount() == 0 || !safeInsert) {
-                            db.child("receitas").push().setValue(r);
+                            DatabaseReference ref = db.child("receitas").push();
+                            r.id = ref.getKey();
+                            ref.setValue(r);
                         }
                     }
 
@@ -237,6 +239,57 @@ public class FBInsereReceitas {
 
         );
     }
+
+
+    /**
+     * Atualiza lista de receitas feitas
+     *
+     * @param user O usuario
+     * @param mDatabase  referencia do banco de dados
+     * @param inst    a lista de ids
+     */
+    public static void atualizaReceitasFeitas(FirebaseUser user, DatabaseReference mDatabase, ArrayList<String> inst) {
+        final DatabaseReference db = mDatabase;
+        final ArrayList<String> r = inst;
+        final FirebaseUser u = user;
+        db.child("users").child(u.getUid()).child("receitasfeitas").setValue(r);
+    }
+
+    /**
+     * Atualiza lista de receitas feitas
+     *
+     * @param user O usuario
+     * @param mDatabase  referencia do banco de dados
+     * @param ss Searcher que recebe o resultado
+     */
+    public static void leReceitasFeitas(FirebaseUser user, DatabaseReference mDatabase,Searcher<ArrayList<String>> ss) {
+        final DatabaseReference db = mDatabase;
+        final FirebaseUser u = user;
+        final Searcher<ArrayList<String>> s = ss;
+        mDatabase.child("users").child(u.getUid()).child("receitasfeitas").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(!dataSnapshot.exists()) {
+                            ArrayList<String> l = new ArrayList<String>();
+                            s.onSearchFinished("",(List<ArrayList<String>>)Arrays.asList(l),null,true);
+                        } else {
+                            ArrayList<String> l = (ArrayList<String>) dataSnapshot.getValue();
+                            s.onSearchFinished("",(List<ArrayList<String>>)Arrays.asList(l),null,true);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+
+        );
+    }
+
+
     /**
      * Associa codigo de barras ao ingrediente
      *

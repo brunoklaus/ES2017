@@ -14,8 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/app_name"/>
         <activity android:name=".firebase.db.searchActivity.ListaReceitasActivity" />
         <activity android:name=".firebase.db.searchActivity.ListaEstoqueActivity" />
         <activity
@@ -30,12 +29,10 @@
         </activity>
         <activity
             android:name=".Estoque.Estoque"
-            android:label="@string/title_activity_estoque"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_estoque" />
         <activity android:name=".Estoque.AddIngredientes" />
         <activity android:name=".Add_receita.Adicionar_receita"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".leitordebarras.LeitorDeBarras" />
         <activity android:name=".texttospeech.TTSActivity" />
         <activity android:name=".leitordebarras.BarrasEntradaPopup"
@@ -43,17 +40,19 @@
         <activity android:name=".leitordebarras.AdicionaNoEstoqueActivity"
             />
 
-        <activity android:name="visualizapasso.ScreenSlideActivity"
+        <activity android:name=".receitaspossiveis.ReceitasPossiveisActivity" />
+
+        <activity android:name="visualizareceita.VisualizaReceitaActivity"
             android:label="Screen Slide"
             android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".timer.TimerActivity"
-            android:label="@string/title_activity_timer"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_timer" />
         <activity android:name=".timer.Timer2Activity" />
         android:name="com.journeyapps.barcodescanner.CaptureActivity"
         android:screenOrientation="fullSensor"

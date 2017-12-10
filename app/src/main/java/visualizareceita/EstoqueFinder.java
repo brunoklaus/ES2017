@@ -1,4 +1,4 @@
-package visualizapasso;
+package visualizareceita;
 
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 import com.example.bela.es2017.firebase.searcher.Searcher;
@@ -9,13 +9,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.apache.http.conn.EofSensorInputStream;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
+ * Classe usada para manter o estoque da usuario
  * Created by klaus on 30/10/17.
  */
 
@@ -34,6 +33,10 @@ public class EstoqueFinder {
         this.mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
+    /**
+     * Procura o estoque no usuario no Firebase (se ainda nao tiver)
+     * @param adapter
+     */
     public void getEstoque(Searcher<InstIngrediente> adapter){
 
         synchronized (EstoqueFinder.class){
@@ -60,13 +63,13 @@ public class EstoqueFinder {
                         }
                         setEstoqueBool(false);
                         for (Searcher<InstIngrediente> s : l)
-                            s.onSearchFinished(null, estoque, null, false);
+                            s.onSearchFinished(null, new ArrayList<InstIngrediente>(estoque), null, false);
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         for (Searcher<InstIngrediente> s : l)
-                            s.onSearchFinished(null, estoque, null, false);
+                            s.onSearchFinished(null, new ArrayList<InstIngrediente>(estoque), null, false);
                     }
 
                 });

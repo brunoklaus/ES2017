@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package visualizapasso;
+package visualizareceita;
 
 
 import android.content.Context;
@@ -40,13 +40,13 @@ import java.util.Locale;
 import static com.example.bela.es2017.R.id.status;
 
 /**
- * A fragment representing a single step in a wizard. The fragment shows a dummy title indicating
- * the page number, along with some dummy text.
+ * Fragment que visualiza apenas um passo. Contem informacoes do passo, botao que faz Text-To-Speech
+ * do passo, e possivelmente uma contagem regressiva de acordo com o passo
  *
- * <p>This class is used by the  {@link
- * ScreenSlideActivity} samples.</p>
+ * <p>Essas classe eh usada por {@link
+ * FListaPassos}.</p>
  */
-public class ScreenSlidePageFragment extends Fragment {
+public class FPasso extends Fragment {
     /**
      * The argument key for the page number this fragment represents.
      */
@@ -63,15 +63,7 @@ public class ScreenSlidePageFragment extends Fragment {
     private static final int FINISHED_COLOR = android.R.color.holo_red_dark;
 
 
-
-
-
-    /**
-     * The fragment's page number, which is set to the argument value for {@link #ARG_PAGE}.
-     */
     private int mPageNumber;
-
-
     private int passoTime;
     private long milisLeft;
     private String descr;
@@ -88,8 +80,8 @@ public class ScreenSlidePageFragment extends Fragment {
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
      */
-    public static ScreenSlidePageFragment create(Receita r, int pageNumber) {
-        ScreenSlidePageFragment fragment = new ScreenSlidePageFragment();
+    public static FPasso create(Receita r, int pageNumber) {
+        FPasso fragment = new FPasso();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNumber);
         args.putString(ARG_DESC, r.passos.get(pageNumber).descr);
@@ -100,10 +92,10 @@ public class ScreenSlidePageFragment extends Fragment {
         return fragment;
     }
 
-    public ScreenSlidePageFragment() {
+    public FPasso() {
     }
 
-
+    //BEGIN - metodos para controlar o estado da contagem regressiva
     private void changeState(CountDownState nxt) {
 
         state = nxt;
@@ -117,7 +109,7 @@ public class ScreenSlidePageFragment extends Fragment {
         }
 
     }
-    void onChangeToUninitialized(){
+    private void onChangeToUninitialized(){
         if (alertTimer != null) {
             alertTimer.cancel();
             alertTimer = null;
@@ -141,8 +133,7 @@ public class ScreenSlidePageFragment extends Fragment {
             }
         };
     }
-
-    void onChangeToFinished(){
+    private void onChangeToFinished(){
         countDown.setTextColor(getResources().getColor(FINISHED_COLOR));
         alertTimer = new CountDownTimer(30*1000, 1000) {
 
@@ -160,7 +151,6 @@ public class ScreenSlidePageFragment extends Fragment {
         };
         alertTimer.start();
     }
-
     void onChangeToRunning() {
         cTimer.start();
         startStopBtn.setImageResource(PAUSE_IMG);
@@ -183,14 +173,13 @@ public class ScreenSlidePageFragment extends Fragment {
             }
         };
     }
-
     String getTimeLeft(long sec) {
         String timeLeftStr =
                 String.format("%02d:%02d:%02d", sec / 3600,
                         (sec % 3600) / 60, (sec % 60));
         return timeLeftStr;
     }
-
+    //END - metodos para controlar o estado da contagem regressiva
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

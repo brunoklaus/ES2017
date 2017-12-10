@@ -1,4 +1,4 @@
-package visualizapasso;
+package visualizareceita;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
-import com.example.bela.es2017.firebase.db.viewholder.InstIngredienteViewHolder;
 import com.example.bela.es2017.helpers.StringHelper;
 
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 /**
+ * Adapter que usa
  * Created by klaus on 30/10/17.
  */
 

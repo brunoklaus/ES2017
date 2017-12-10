@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bela.es2017.R;
+import com.example.bela.es2017.SideBarInfo;
 import com.example.bela.es2017.conversor.Conversor;
 import com.example.bela.es2017.firebase.db.adapter.FBEstoqueConfirmaAdapter;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
@@ -56,13 +57,22 @@ public class AdicionaNoEstoqueActivity extends SearchActivity implements RecebeS
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView();
         this.barrasEncontrado.setText("Digite o novo ingrediente ou clique em um dos já " +
                 "existentes.");
 
     }
 
+
+
+    @Override
+    protected SideBarInfo getInfo(){
+        return new SideBarInfo("EasyFeed - Leitor de Barras",R.layout.leitor_barras_popup_seleciona);
+    }
+
+
+
     protected void setContentView(){
-        setContentView(R.layout.leitor_barras_popup_seleciona);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;

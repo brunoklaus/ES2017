@@ -1,8 +1,7 @@
 package com.example.bela.es2017.helpers;
 
-import com.example.bela.es2017.R;
 import com.example.bela.es2017.conversor.Conversor;
-import com.example.bela.es2017.conversor.FBUnidadeConversor;
+import com.example.bela.es2017.conversor.ConversorHelper;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 
 import java.io.BufferedReader;
@@ -19,8 +18,6 @@ import java.util.regex.Pattern;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.content.res.Resources;
-import android.util.Log;
 
 import org.apache.commons.math3.fraction.Fraction;
 import org.apache.commons.math3.fraction.FractionFormat;
@@ -174,7 +171,7 @@ public class StringHelper {
         }
 
         for (String str:formalUnits) {
-            if (FBUnidadeConversor.unidadeEquals(ingr.unidade,str)) {
+            if (ConversorHelper.unidadeEquals(ingr.unidade,str)) {
                 //Apresentar unidade com ponto decimal
                 return includeUnit ? Double.toString(Conversor.round(ingr.qtde,2)) +
                         " " + ingr.unidade : Double.toString(Conversor.round(ingr.qtde,2));

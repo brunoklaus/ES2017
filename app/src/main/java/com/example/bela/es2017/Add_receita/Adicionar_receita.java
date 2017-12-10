@@ -1,25 +1,20 @@
 package com.example.bela.es2017.Add_receita;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.bela.es2017.MainActivity;
 import com.example.bela.es2017.R;
-import com.example.bela.es2017.conversor.FBUnidadeConversor;
-import com.example.bela.es2017.conversor.FBUnidadeConversorPreload;
+import com.example.bela.es2017.SideBarActivity;
+import com.example.bela.es2017.SideBarInfo;
 import com.example.bela.es2017.firebase.db.model.Receita;
-import com.example.bela.es2017.firebase.db.runnable.AQTEstoqueDisp;
 import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
 import com.example.bela.es2017.firebase.searcher.Searcher;
 import com.example.bela.es2017.helpers.FBInsereReceitas;
@@ -28,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class Adicionar_receita extends Activity implements Searcher<Double> {
+public class Adicionar_receita extends SideBarActivity implements Searcher<Double> {
     /*
     private EditText ingrediente;
     private EditText modo_prepato;
@@ -46,6 +41,12 @@ public class Adicionar_receita extends Activity implements Searcher<Double> {
     public static boolean PODE_CRIAR_RECEITA_NO_FIREBASE = true;
     boolean isUploading = false;
     Adicionar_receita activityRef = this;
+
+
+    @Override
+    protected SideBarInfo getInfo(){
+        return new SideBarInfo("EasyFeed - Adicionar Receita",R.layout.activity_adicionar_receita);
+    }
 
     @Override
     public void onBackPressed() {
@@ -67,7 +68,6 @@ public class Adicionar_receita extends Activity implements Searcher<Double> {
         protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adicionar_receita);
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -88,16 +88,6 @@ public class Adicionar_receita extends Activity implements Searcher<Double> {
         continuar.setBackgroundColor(ContextCompat.getColor(this,android.R.color.holo_blue_light));
         status = 1;
 
-        /*final Context c = (Context) this;
-        new AQTEstoqueDisp(new Searcher<Receita>() {
-            @Override
-            public void onSearchFinished(String query, List<Receita> results, QueryRunnable<Receita> q, boolean update) {
-                if (!results.isEmpty()) {
-                    Toast.makeText(c, results.get(0).titulo, Toast.LENGTH_LONG).show();
-                }
-            }
-        }).go();
-        */
 
         continuar.setOnClickListener(new View.OnClickListener(){
             @Override

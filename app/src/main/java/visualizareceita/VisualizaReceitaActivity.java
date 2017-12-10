@@ -14,38 +14,56 @@
  * limitations under the License.
  */
 
-package visualizapasso;
+package visualizareceita;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.bela.es2017.MainActivity;
 import com.example.bela.es2017.R;
+import com.example.bela.es2017.SideBarActivity;
+import com.example.bela.es2017.SideBarInfo;
 import com.example.bela.es2017.firebase.db.model.Receita;
+import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
+import com.example.bela.es2017.firebase.searcher.Searcher;
+import com.example.bela.es2017.helpers.FBInsereReceitas;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Demonstrates a "screen-slide" animation using a {@link ViewPager}. Because {@link ViewPager}
- * automatically plays such an animation when calling {@link ViewPager#setCurrentItem(int)}, there
- * isn't any animation-specific code in this sample.
- *
- * <p>This sample shows a "next" button that advances the user to the next step in a wizard,
- * animating the current screen out (to the left) and the next screen in (from the right). The
- * reverse animation is played when the user presses the "previous" button.</p>
- *
- * @see ScreenSlidePageFragment
+ * Activity que consiste na visualizacao de uma dada receita. O fluxo dessa activity consiste
+ * na troca de fragments por meio de um tablayout, utilizando para isso um {@link ViewPager}
+ * para trocar entre fragments.
+ * @see FPasso
+ * @see FResumo
+ * @see EstoqueMatcherFragment
  */
-public class ScreenSlideActivity extends FragmentActivity {
+public class VisualizaReceitaActivity extends SideBarActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
@@ -65,13 +83,29 @@ public class ScreenSlideActivity extends FragmentActivity {
     /** A receita cujos passos serao mostrados **/
     private Receita r;
 
+    /** Fragment para visualizar resumo da receita*/
+    private Fragment fragVisReceita;
+    /** Fragment para visualizar correspondencia de ingredientes no estoque **/
+    private Fragment fragIngredientes;
+    /** Fragment para visualizar os passos da receita **/
+    private Fragment fragPasso;
+
+
+
+
+
+
+
+    @Override
+    protected SideBarInfo getInfo(){
+        return new SideBarInfo(null,R.layout.activity_screen_slide);
+    }
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_screen_slide);
 
         String target = getIntent().getStringExtra("MyObjectAsString");
         if (target == null) {
@@ -80,11 +114,32 @@ public class ScreenSlideActivity extends FragmentActivity {
         Gson g = new Gson();
         r = (Receita) g.fromJson(target, Receita.class);
 
+
+
+        //Criar fragments
+         fragVisReceita = FResumo.create(r);
+        fragIngredientes = EstoqueMatcherFragment.create(r);
+        fragPasso = FListaPassos.create(r);
+
+
+        ImageView image = (ImageView) findViewById(R.id.image);
+
+        if (r.imgStorage != null){
+            StorageReference ref = FirebaseStorage.getInstance().getReference().child(r.imgStorage);
+            // Load the image using Glide
+            Glide.with(this)
+                    .using(new FirebaseImageLoader())
+                    .load(ref)
+                    .into(image);
+        } else {
+            image.setMaxHeight(0);
+        }
+
         NUM_PAGES = r.passos.size();
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -96,12 +151,33 @@ public class ScreenSlideActivity extends FragmentActivity {
                 invalidateOptionsMenu();
             }
         });
+        final Toolbar actionBar = (Toolbar) findViewById(R.id.toolbar3);
+        int cord[] = new int [2];
+        actionBar.getLocationInWindow (cord);
+        mPager.setY(cord[1] + actionBar.getHeight());
+
+
+        // Specify that tabs should be displayed in the action bar.
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(mPager);
+
+        updateInfo(new SideBarInfo(r.titulo,R.layout.activity_lista));
+
+
     }
+
+    @Override
+    public void onBackPressed() {
+    super.onBackPressed();
+
+
+    }
+
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
      */
     public static Intent getIntentTo(Context c, Receita r) {
-        Intent i = new Intent(c, ScreenSlideActivity.class);
+        Intent i = new Intent(c, VisualizaReceitaActivity.class);
         Gson g = new Gson();
         i.putExtra("MyObjectAsString", g.toJson(r, Receita.class));
         return i;
@@ -149,28 +225,39 @@ public class ScreenSlideActivity extends FragmentActivity {
     }
 
     /**
-     * A simple pager adapter that represents 5 {@link ScreenSlidePageFragment} objects, in
+     * A simple pager adapter that represents 5 {@link FPasso} objects, in
      * sequence.
      */
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
+    private class TabPagerAdapter extends FragmentStatePagerAdapter {
+        public TabPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int passo) {
             if (passo == 0) {
-                return VisualizaReceitaFragment.create(r);
+                return fragVisReceita;
             } else if (passo == 1) {
-                return EstoqueMatcherFragment.create(r);
+                return fragIngredientes;
             }
 
-            return ScreenSlidePageFragment.create(r, passo - 2);
+            return fragPasso;
         }
 
         @Override
         public int getCount() {
-            return NUM_PAGES + 2;
+            return 3;
         }
+
+        @Override
+        public CharSequence getPageTitle(int pos) {
+            if (pos == 0) {
+                return "Resumo";
+            } else if (pos == 1) {
+                return "Ingredientes";
+            }
+            return "Passos";
+        }
+
     }
 }

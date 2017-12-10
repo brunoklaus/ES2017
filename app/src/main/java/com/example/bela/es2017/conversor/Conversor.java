@@ -39,7 +39,15 @@ public class Conversor {
         return ((quantidade_medida1 * MEDIDAS[selecao_medida1]) / MEDIDAS[selecao_medida2]);
     }
 
-
+    /**
+     * Dadas duas receitas (com unidades possivelmente diferentes), usa-se o Firebase para
+     * achar uma conversao das unidades e "somar"
+     * @param A receita #1
+     * @param B receita #2
+     * @param s usado para fazer o callback na classe que procurou a receita
+     * @post s recebe NULL sse nao achou conversao, senao recebe uma receita com
+     * nome de A e unidade de A, sendo a unidade de B convetida e somada na de A.
+     */
     public static void adicionaComFB(InstIngrediente A, InstIngrediente B, final Searcher<InstIngrediente> s) {
         FBUnidadeConversorPreload conv = new FBUnidadeConversorPreload();
         final InstIngrediente a = A;
@@ -62,6 +70,12 @@ public class Conversor {
         });
     }
 
+    /**
+     * Metodo utilitario que arrendonda para um numero de casas decimais
+     * @param value valor
+     * @param places # casas decimais a serem utilizadas
+     * @return valor arrendondado para as casas decimais
+     */
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
@@ -70,7 +84,12 @@ public class Conversor {
         return bd.doubleValue();
     }
 
-
+    /**
+     * Aproxima um Double para uma fracao
+     * @param d valor do double
+     * @param maxDenominator max denominador usado  na aproximacao
+     * @return string da fracao aproximada do valor
+     */
     public static String approxDouble(Double d, int maxDenominator){
         return new Fraction(d,maxDenominator).toString();
 

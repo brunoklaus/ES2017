@@ -13,6 +13,9 @@
     <string name="signing_in">Entrando…</string>
     <string name="signed_out">Saiu</string>
     <string name="signed_in_err">"Error: please check logs."</string>
+    <string name="drawer_open"> Abriu drawer</string>
+    <string name="drawer_close"> Fechou drawer </string>
+
     <string name="error_null_person">
         Error: Plus.PeopleApi.getCurrentPerson returned null. Ensure that the Google+ API is
         enabled for your project, you have a properly configured google-services.json file

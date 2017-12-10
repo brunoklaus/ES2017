@@ -23,95 +23,37 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Um conjunto de metodos designados para ajudar com a tarefa de conversao
  * Created by klaus on 24/10/17.
  */
 
-public class FBUnidadeConversor implements Searcher<ConversorEdge>  {
+public class ConversorHelper {
 
 
-    private Set<String> found = new TreeSet<>();
-    private HashMap<String, String> parentMap = new HashMap<>();
-    private HashMap<String, Double> dblMap = new HashMap<>();
-    private double DIST_MAX = 5;
-    int dist = 0;
-    String ingrName;
-    private String search_to;
-    private String search_from;
-    Searcher<Double> searcher;
-    Queue<String> Q = new LinkedList<>();
-
+    /** Retira acentos diacriticos da string.
+     *  @param str a string
+     */
     public static String deAccent(String str) {
         String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(nfdNormalizedString).replaceAll("");
     }
-    public void findConv(String from, String to, String ingrName, Searcher<Double> searcher){
-        this.search_to = to;
-        this.search_from = from;
-        this.searcher = searcher;
-        this.ingrName = ingrName;
-        found.add(from);
-        if (unidadeEquals(from,to)) searcher.onSearchFinished(from,Arrays.asList(1.0),null,true);
-        encontraNomesAdj(from, this,true);
-    }
-
-    public static void encontraNomesAdj(String node, final Searcher searcher, boolean isFirstQuery) {
-        final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-        final Searcher<InstIngrediente> s = searcher;
-        final String from = node;
-        if (isFirstQuery) {
-            db.child("unidadeGrafo").addListenerForSingleValueEvent(
-                    new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            ArrayList<ConversorEdge> l = new ArrayList<ConversorEdge>();
-                            for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                ConversorEdge e = child.getValue(ConversorEdge.class);
-                                if (unidadeEquals(e.n1,from)) {
-                                    l.add(((ConversorEdge) child.getValue(ConversorEdge.class)));
-                                }
-                            }
-                            searcher.onSearchFinished(from,l,null,true);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    }
-
-            );
-        }else {
-            db.child("unidadeGrafo").orderByChild("n1").equalTo(from).addListenerForSingleValueEvent(
-                    new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            ArrayList<ConversorEdge> l = new ArrayList<ConversorEdge>();
-                            for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                l.add(((ConversorEdge) child.getValue(ConversorEdge.class)));
-
-                            }
-                            searcher.onSearchFinished(from,l,null,true);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    }
-
-            );
-        }
-
-    }
-
+    /** Adiciona arestas nas duas direcoes no grafo do FB
+     *  @param edge A aresta de conversao
+     *  @param safeInsert se verdadeiro adiciona aresta apenas se nao existir
+     * */
     public static void insereEdge(ConversorEdge edge, final boolean safeInsert) {
         insereEdgeDir(FirebaseDatabase.getInstance().getReference(), edge, safeInsert);
         insereEdgeDir(FirebaseDatabase.getInstance().getReference(), new ConversorEdge(edge,true), safeInsert);
 
     }
 
-        private static void insereEdgeDir(DatabaseReference mDatabase, ConversorEdge edge, final boolean safeInsert) {
+    /** Adiciona aresta (uma direcao) no grafo do FB
+     *  @param mDatabase referencia do banco de dados
+     *  @param edge A aresta de conversao
+     *  @param safeInsert se verdadeiro adiciona aresta apenas se nao existir
+     * */
+    private static void insereEdgeDir(DatabaseReference mDatabase, ConversorEdge edge, final boolean safeInsert) {
         final DatabaseReference db = mDatabase;
         final ConversorEdge e = edge;
         if (safeInsert) {
@@ -152,6 +94,14 @@ public class FBUnidadeConversor implements Searcher<ConversorEdge>  {
 
     }
 
+    /**
+     * Calcula se deve-se tratar duas strings de unidades como "iguais". Eh possivel que duas strings sejam consideradas
+     * a mesma unidade mesmo que nao sejam identicas. Por exemplo, podem ter acentos diacriticos
+     * diferentes, caixa alta ou nao, etc.
+     * @param n1 a primeira string a ser comparada
+     * @param n2 a segunda string a ser comparada
+     * @return verdadeiro somente se as duas strings sao consideradas a mesma unidade
+     */
     public static boolean unidadeEquals(String n1, String n2) {
         n1 = n1.replaceAll(" ","");
         n2 = n2.replaceAll(" ","");
@@ -176,59 +126,12 @@ public class FBUnidadeConversor implements Searcher<ConversorEdge>  {
         return n1.compareTo(n2) == 0;
     }
 
-    private void sendPathResult(String last){
-        Double d = 1.0;
-        String ptr = last;
-        while (!unidadeEquals(ptr,search_from)) {
-            if (parentMap.get(ptr) == null) {
-                throw new IllegalStateException("Did not find parent of" +
-                        " " + ptr);
-            } else if (dblMap.get(ptr) == null){
-                throw new IllegalStateException("Did not find double of" +
-                        " " + ptr);
-            }
-            d *= dblMap.get(ptr);
-            ptr = parentMap.get(ptr);
-
-        }
-        if (Double.compare(0,d) == 0) {
-            this.searcher.onSearchFinished(search_to,new ArrayList<Double>(),null,true);
-        } else {
-            ArrayList<Double> l = new ArrayList<>();
-            l.add(new Double(1/d));
-            this.searcher.onSearchFinished(search_to,l,null,true);
-        }
-    }
-
-    @Override
-    public void onSearchFinished(String query, List<ConversorEdge> results, QueryRunnable<ConversorEdge> q, boolean update) {
-        dist++;
-        if (dist > DIST_MAX) {
-            this.searcher.onSearchFinished(search_to,new ArrayList<Double>(),null,true);
-            return;
-        }
-        for (ConversorEdge e : results) {
-            if (!this.found.contains(e.n2) && labelMatches(this.ingrName,e.label)) {
-                found.add(e.n2);
-                Q.add(e.n2);
-                parentMap.put(e.n2,query);
-                double ww  = e.w == 0.0 ? 0.0 : 1/e.w;
-                dblMap.put(e.n2,ww);
-                if (unidadeEquals(e.n2,this.search_to)) {
-                    sendPathResult(e.n2);
-                    return;
-                }
-            }
-
-        }
-        if (Q.isEmpty()){
-            this.searcher.onSearchFinished(search_to,new ArrayList<Double>(),null,true);
-        } else {
-            String from = Q.poll();
-            encontraNomesAdj(from,this, false);
-        }
-    }
-
+    /**
+     * Verifica se uma label esta dentro de outra
+     * @param queryLabel a label que possivelmente contem a outra
+     * @param foundLabel a label que possivelmente estah dentro da outra
+     * @return verdadeiro sse foundLabel faz parte de queryLabel
+     */
     public static boolean labelMatches(String queryLabel, String foundLabel) {
         if (queryLabel == null || foundLabel == null || foundLabel.isEmpty()) return true;
         // Create a Pattern object
@@ -238,6 +141,9 @@ public class FBUnidadeConversor implements Searcher<ConversorEdge>  {
         return m.find();
     }
 
+    /**
+     * Adiciona as arestas iniciais do grafo de conversoes
+     */
     public static void adicionaArestasIniciais(){
         List<ConversorEdge> edges = Arrays.asList(
                 new ConversorEdge("kg","kilo",1.0),

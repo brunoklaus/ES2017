@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.example.bela.es2017.R;
+import com.example.bela.es2017.SideBarActivity;
+import com.example.bela.es2017.SideBarInfo;
 import com.example.bela.es2017.firebase.db.adapter.FBAdapter;
 import com.example.bela.es2017.firebase.db.adapter.FBReceitasAdapter;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public abstract class SearchActivity extends SideBarActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     protected DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     protected  RecyclerView rView;
@@ -44,10 +46,14 @@ public abstract class SearchActivity extends AppCompatActivity implements Search
     int numCurrentSearches = 0;
 
     @Override
+    protected SideBarInfo getInfo(){
+        return new SideBarInfo("EasyFeed - Busca",R.layout.activity_lista);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FBInsereReceitas.adicionaEstoqueExemplo(FirebaseAuth.getInstance().getCurrentUser(),mDatabase);
-        this.setContentView();
         rView = getRecyclerView();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         setupViews();
@@ -79,7 +85,6 @@ public abstract class SearchActivity extends AppCompatActivity implements Search
 
     }
 
-    abstract protected void setContentView();
     abstract protected void initAdapter();
 
     protected RecyclerView getRecyclerView() {

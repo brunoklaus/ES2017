@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_item_main"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="EasyFeed Home"/>
+    <item android:id="@+id/nav_item_busca"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Busca" />
+    <item android:id="@+id/nav_item_estoque"
+        android:icon="@drawable/ic_add_shopping_cart_black_24dp"
+        android:title="Estoque" />
+    <item android:id="@+id/nav_item_barras"
+        android:icon="@drawable/codigodebarras"
+        android:title="Código de Barras"/>
+    <item android:id="@+id/nav_item_add"
+        android:icon="@drawable/ic_file_upload_black_24dp"
+        android:title="Enviar Receita" />
+    <item android:id="@+id/nav_item_receitaspossiveis"
+        android:icon="@drawable/ic_kitchen_black_24dp"
+        android:title="Receitas usando estoque"/>
+    <item android:id="@+id/nav_item_timer"
+        android:icon="@android:drawable/ic_lock_idle_alarm"
+        android:title="Timer"/>
+
+
+
+</menu>

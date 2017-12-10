@@ -1,7 +1,6 @@
 package com.example.bela.es2017.conversor;
 
 import com.example.bela.es2017.firebase.db.model.ConversorEdge;
-import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
 import com.example.bela.es2017.firebase.searcher.Searcher;
 import com.google.firebase.database.DataSnapshot;
@@ -10,22 +9,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.apache.commons.math3.geometry.spherical.twod.Edge;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.Semaphore;
 
 /**
+ * FBUnidadeConversorPreload eh responsavel por achar uma conversao entre duas strings que
+ * representam unidades. Para isso, ele obtem do Firebase um grafo cujas arestas  ligam unidades
+ * e contem o valor de conversao. Para completar a query ele realiza uma Breadth-First-Search
+ * no grafo para achar um caminho entre as unidades e fazer a conversao.
  * Created by klaus on 24/10/17.
  */
 
@@ -41,7 +38,7 @@ public class FBUnidadeConversorPreload implements Searcher<ConversorEdge> {
             throw new IllegalStateException("Terminou de baixar os dados mas os valores continuam" +
                     " null");
         }
-        if (FBUnidadeConversor.unidadeEquals(from, to)) {
+        if (ConversorHelper.unidadeEquals(from, to)) {
             searcher.onSearchFinished(from, Arrays.asList(1.0), null, true);
             return;
         }
@@ -54,7 +51,7 @@ public class FBUnidadeConversorPreload implements Searcher<ConversorEdge> {
         //Achar vertice compativel com from
         Vertex source = null;
         for (Vertex v : vList) {
-            if (FBUnidadeConversor.unidadeEquals(v.nome,from)) {
+            if (ConversorHelper.unidadeEquals(v.nome,from)) {
                 source = v;
                 break;
             }
@@ -70,13 +67,13 @@ public class FBUnidadeConversorPreload implements Searcher<ConversorEdge> {
             Vertex v = Q.poll();
             for (ConversorEdge e : v.l) {
                 Vertex v2 = findVertex(e.n2, vList, hMap);
-                if (!mark[v2.id] &&  FBUnidadeConversor.labelMatches(this.ingrName,e.label)) {
+                if (!mark[v2.id] &&  ConversorHelper.labelMatches(this.ingrName,e.label)) {
                     mark[v2.id] = true;
                     Q.add(v2);
                     parentMap.put(v2.nome, v.nome);
                     double ww = e.w == 0.0 ? 0.0 : 1 / e.w;
                     dblMap.put(e.n2, ww);
-                    if (FBUnidadeConversor.unidadeEquals(to, e.n2)) {
+                    if (ConversorHelper.unidadeEquals(to, e.n2)) {
                         sendPathResult(e.n2, from, searcher);
                         return;
                     }
@@ -87,7 +84,9 @@ public class FBUnidadeConversorPreload implements Searcher<ConversorEdge> {
     }
 
 
-
+/* Utiliza-se a classe Vertex para representar uma string que corresponde a uma unidade.
+    Cada vértice possui uma lista de ConversorEdge como lista de adjacencia.
+ */
     class Vertex {
         public String nome;
         public List<ConversorEdge> l;
@@ -105,8 +104,6 @@ public class FBUnidadeConversorPreload implements Searcher<ConversorEdge> {
     Queue<Vertex> Q = new LinkedList<>();
     private HashMap<String, String> parentMap = new HashMap<>();
     private HashMap<String, Double> dblMap = new HashMap<>();
-    private final Semaphore sem = new Semaphore(0);
-
     private String from;
     private String to;
     private Searcher<Double> searcher;
@@ -132,6 +129,11 @@ public class FBUnidadeConversorPreload implements Searcher<ConversorEdge> {
         }
         onSearchFinished("",null,null,true);
     }
+
+    /** Se ainda nao possui a lista de vertices,
+     * usa o Firebase para obter todas as relacoes entre unidades
+     * (representada por arestas) e construir a lista de vertices
+     */
 
     void getVertex() {
         if (inst == null || vMap == null) {
@@ -178,7 +180,7 @@ public class FBUnidadeConversorPreload implements Searcher<ConversorEdge> {
     private void sendPathResult(String last, String from, Searcher<Double> searcher) {
         Double d = 1.0;
         String ptr = last;
-        while (!FBUnidadeConversor.unidadeEquals(ptr, from)) {
+        while (!ConversorHelper.unidadeEquals(ptr, from)) {
             if (parentMap.get(ptr) == null) {
                 throw new IllegalStateException("Did not find parent of" +
                         " " + ptr);

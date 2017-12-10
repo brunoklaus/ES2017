@@ -1,4 +1,4 @@
-package visualizapasso;
+package visualizareceita;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,28 +7,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.Passo;
 import com.example.bela.es2017.firebase.db.model.Receita;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
 /**
+ * Fragment que mostra o resumo de uma receita (informacoes como autor, descricao, dificuldade, etc)
  * Created by klaus on 30/10/17.
  */
 
-public class VisualizaReceitaFragment extends Fragment {
+public class FResumo extends Fragment {
 
-    private static String ARG_RECEITA = "receita";
+    static String ARG_RECEITA = "receita";
     private Receita r;
 
-    private ImageView iv;
     private TextView autor;
     private TextView porcoes;
     private TextView dificuldade;
@@ -43,8 +38,8 @@ public class VisualizaReceitaFragment extends Fragment {
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
      */
-    public static VisualizaReceitaFragment create(Receita r) {
-        VisualizaReceitaFragment fragment = new VisualizaReceitaFragment();
+    public static FResumo create(Receita r) {
+        FResumo fragment = new FResumo();
         Bundle args = new Bundle();
         Gson g = new Gson();
         args.putString(ARG_RECEITA, g.toJson(r));
@@ -68,7 +63,7 @@ public class VisualizaReceitaFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_visualiza_receita, container, false);
 
-        iv = (ImageView) rootView.findViewById(R.id.vrec_iv);
+
         autor = (TextView) rootView.findViewById(R.id.vrec_tv_autor_2);
         porcoes = (TextView) rootView.findViewById(R.id.vrec_tv_servings_2);
         dificuldade = (TextView) rootView.findViewById(R.id.vrec_tv_dificuldade_2);
@@ -76,14 +71,6 @@ public class VisualizaReceitaFragment extends Fragment {
         ingredientes = (RecyclerView) rootView.findViewById(R.id.vrec_tv_ingr_2);
         passos = (TextView) rootView.findViewById(R.id.vrec_tv_preparo_2);
 
-        if (r.imgStorage != null){
-            StorageReference ref = FirebaseStorage.getInstance().getReference().child(r.imgStorage);
-            // Load the image using Glide
-            Glide.with(getContext().getApplicationContext())
-                    .using(new FirebaseImageLoader())
-                    .load(ref)
-                    .into(iv);
-        }
 
         autor.setText(r.autor);
         if(r.servings != null) {

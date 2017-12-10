@@ -17,6 +17,9 @@ public class Receita {
     public  String imgStorage;
     public  String imgLink;
 
+    public String id;
+
+
     public int upvotes = 0;
     public int downvotes = 0;
     public ArrayList<InstIngrediente> ingredientesUsados;
