@@ -1,5 +1,7 @@
 package visualizareceita;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,15 +9,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.bela.es2017.MainActivity;
 import com.example.bela.es2017.R;
+import com.example.bela.es2017.conversor.Conversor;
 import com.example.bela.es2017.firebase.db.model.InstIngrediente;
 import com.example.bela.es2017.firebase.db.model.Receita;
 import com.example.bela.es2017.firebase.db.runnable.QueryRunnable;
 import com.example.bela.es2017.firebase.searcher.Searcher;
+import com.example.bela.es2017.helpers.FBInsereReceitas;
+import com.example.bela.es2017.helpers.StringHelper;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
@@ -38,7 +52,10 @@ public class EstoqueMatcherFragment extends  Fragment{
     private List<InstIngrediente> estoque;
 
     //RecyclerView para mostrar a lista de correspondencias
-    private RecyclerView rView;
+    private RecyclerView rViewMatch, rViewResults;
+
+    private List<InstIngrediente> ingredientesResultantes =
+            Collections.synchronizedList(new ArrayList<InstIngrediente>());
 
 
     /**
@@ -97,40 +114,105 @@ public class EstoqueMatcherFragment extends  Fragment{
             return maxEst;
         }
 
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             // Inflate the layout containing a title and body text.
-            ViewGroup rootView = (ViewGroup) inflater
+            final ViewGroup rootView = (ViewGroup) inflater
                     .inflate(R.layout.fragment_estoquematcher, container, false);
 
-            rView = (RecyclerView) rootView.findViewById(R.id.estoquematcher_rview);
-            final EstoqueMatcherAdapter adapter = new EstoqueMatcherAdapter(r.ingredientesUsados,getContext());
-            rView.setAdapter(adapter);
-            RecyclerView.LayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-            rView.setLayoutManager(layout);
+
+            rViewMatch = (RecyclerView) rootView.findViewById(R.id.estoquematcher_rview);
+            final EstoqueMatcherAdapter matchAdapter = new EstoqueMatcherAdapter(r.ingredientesUsados,getContext());
+            rViewMatch.setAdapter(matchAdapter);
+            RecyclerView.LayoutManager layoutMatch = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+            rViewMatch.setLayoutManager(layoutMatch);
+
+            Button removeBtn = rootView.findViewById(R.id.button);
+            final Context context = this.getContext();
+            removeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    for (InstIngrediente ingr : ingredientesResultantes) {
+                        FBInsereReceitas.inserenoEstoque(
+                                FirebaseAuth.getInstance().getCurrentUser(),
+                                FirebaseDatabase.getInstance().getReference(),
+                                ingr, false
+                        );
+                    }
+                    Intent it = new Intent(context, MainActivity.class);
+                    startActivity(it);
+                }
+            });
+
 
             //Usa EstoqueFinder para obter estoque do usuario
             EstoqueFinder finder = new EstoqueFinder();
             finder.getEstoque(new Searcher<InstIngrediente>() {
                 @Override
                 public void onSearchFinished(String query, List<InstIngrediente> results, QueryRunnable<InstIngrediente> q, boolean update) {
+                    Map<InstIngrediente, InstIngrediente> estoqueXReceita = new HashMap<>();
                     estoque = results;
                     if (!results.isEmpty()) {
                         for (InstIngrediente ingrReceita : r.ingredientesUsados) {
                             InstIngrediente maxEst = matchEstoque(results,ingrReceita);
-                            if (getScore(ingrReceita, maxEst) > 70.0) {
-                                adapter.addMap(ingrReceita.nome, maxEst);
+                            if (getScore(ingrReceita, maxEst) > 75.0) {
+                                matchAdapter.addMap(ingrReceita.nome, maxEst);
+                                boolean b1 = estoqueXReceita.get(maxEst) == null;
+                                boolean b2 = !b1 && getScore(ingrReceita,maxEst) >
+                                                    getScore(estoqueXReceita.get(maxEst), maxEst);
+                                if (b1 || b2) {
+                                    estoqueXReceita.put(maxEst, ingrReceita);
+                                }
                             }
                         }
-                        adapter.notifyDataSetChanged();
+                        matchAdapter.notifyDataSetChanged();
+                        createResultMatcher(rootView, estoqueXReceita);
                     }
                 }
             });
 
+
             return  rootView;
 
         }
+
+        private void createResultMatcher(View rootView, Map<InstIngrediente, InstIngrediente> estoqueXReceita){
+            rViewResults = (RecyclerView) rootView.findViewById(R.id.estoqueresults_rview);
+            final EstoqueMatcherAdapter ResAdapter =
+                    new EstoqueMatcherAdapter(new ArrayList<>(estoqueXReceita.keySet()),getContext());
+            rViewResults.setAdapter(ResAdapter);
+            RecyclerView.LayoutManager layoutRes = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+            rViewResults.setLayoutManager(layoutRes);
+
+            for (final InstIngrediente doEstoque : estoqueXReceita.keySet()) {
+                Conversor.subtraiComFB(doEstoque, estoqueXReceita.get(doEstoque),
+                        new Searcher<InstIngrediente>() {
+                            @Override
+                            public void onSearchFinished(String query, List<InstIngrediente> results, QueryRunnable<InstIngrediente> q, boolean update) {
+                                if (results != null && !results.isEmpty()) {
+                                    InstIngrediente resultante = results.get(0);
+                                    ingredientesResultantes.add(resultante);
+                                    String left = doEstoque.nome;
+                                    String right =
+                                            StringHelper.getIngredientStr(
+                                                    Arrays.asList(resultante),true
+                                            );
+
+                                    ResAdapter.addMap(left,right);
+
+                                } else {
+                                    ResAdapter.addMap(doEstoque.nome, "");
+                                }
+                            }
+                        });
+            }
+
+
+
+        }
+
 
     }
 

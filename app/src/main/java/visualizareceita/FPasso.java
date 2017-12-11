@@ -34,6 +34,7 @@ import android.widget.TextView;
 
 import com.example.bela.es2017.R;
 import com.example.bela.es2017.firebase.db.model.Receita;
+import com.example.bela.es2017.timer.TimerComBotoes;
 
 import java.util.Locale;
 
@@ -54,26 +55,16 @@ public class FPasso extends Fragment {
     public static final String ARG_DESC = "description";
     public static final String ARG_TIME = "passoTime";
 
-    enum CountDownState {UNINITIALIZED,RUNNING,PAUSED,FINISHED};
-
-    CountDownState state = CountDownState.UNINITIALIZED;
-    private static final int PLAY_IMG = android.R.drawable.ic_media_play;
-    private static final int PAUSE_IMG = android.R.drawable.ic_media_pause;
-    private static final int DEFAULT_COLOR = android.R.color.holo_blue_dark;
-    private static final int FINISHED_COLOR = android.R.color.holo_red_dark;
 
 
-    private int mPageNumber;
-    private int passoTime;
-    private long milisLeft;
     private String descr;
     private TextToSpeech tts;
     private TextView tvDescr;
     private ImageView soundBtn;
     private TextView countDown;
-    private FloatingActionButton startStopBtn,resetBtn;
-    CountDownTimer cTimer;
-    CountDownTimer alertTimer;
+    private int mPageNumber;
+    private int passoTime;
+    TimerComBotoes timer = null;
 
     private boolean isPaused = false;
 
@@ -95,91 +86,7 @@ public class FPasso extends Fragment {
     public FPasso() {
     }
 
-    //BEGIN - metodos para controlar o estado da contagem regressiva
-    private void changeState(CountDownState nxt) {
 
-        state = nxt;
-        switch (state) {
-            case UNINITIALIZED: onChangeToUninitialized();break;
-            case RUNNING: onChangeToRunning();break;
-            case PAUSED: onChangeToPaused();break;
-            case FINISHED: onChangeToFinished();break;
-            default:break;
-
-        }
-
-    }
-    private void onChangeToUninitialized(){
-        if (alertTimer != null) {
-            alertTimer.cancel();
-            alertTimer = null;
-        }
-
-        startStopBtn.setImageResource(PLAY_IMG);
-        countDown.setText(getTimeLeft(passoTime));
-        countDown.setTextColor(getResources().getColor(DEFAULT_COLOR));
-        milisLeft = passoTime * 1000;
-        cTimer = new CountDownTimer(passoTime * 1000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                milisLeft = millisUntilFinished;
-                countDown.setText(getTimeLeft(millisUntilFinished/1000));
-            }
-
-            public void onFinish() {
-                milisLeft = 0;
-                countDown.setText("Pronto !");
-                changeState(CountDownState.FINISHED);
-            }
-        };
-    }
-    private void onChangeToFinished(){
-        countDown.setTextColor(getResources().getColor(FINISHED_COLOR));
-        alertTimer = new CountDownTimer(30*1000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                Vibrator vibra = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                long t_mili = 500;
-                ToneGenerator beep = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-                vibra.vibrate(t_mili);
-                beep.startTone(ToneGenerator.TONE_CDMA_PIP, 300);
-            }
-
-            public void onFinish() {
-                changeState(CountDownState.UNINITIALIZED);
-            }
-        };
-        alertTimer.start();
-    }
-    void onChangeToRunning() {
-        cTimer.start();
-        startStopBtn.setImageResource(PAUSE_IMG);
-    }
-    void onChangeToPaused() {
-        cTimer.cancel();
-
-        startStopBtn.setImageResource(PLAY_IMG);
-        cTimer = new CountDownTimer(milisLeft, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                milisLeft = millisUntilFinished;
-                countDown.setText(getTimeLeft(millisUntilFinished));
-            }
-
-            public void onFinish() {
-                milisLeft = 0;
-                countDown.setText("Pronto !");
-                changeState(CountDownState.FINISHED);
-            }
-        };
-    }
-    String getTimeLeft(long sec) {
-        String timeLeftStr =
-                String.format("%02d:%02d:%02d", sec / 3600,
-                        (sec % 3600) / 60, (sec % 60));
-        return timeLeftStr;
-    }
-    //END - metodos para controlar o estado da contagem regressiva
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -206,10 +113,6 @@ public class FPasso extends Fragment {
 
         tvDescr = (TextView) dView.findViewById(R.id.passo_descr);
 
-        countDown = (TextView) cView.findViewById(R.id.passo_chrono);
-        startStopBtn = (FloatingActionButton) cView.findViewById(R.id.passo_startStop);
-        resetBtn = (FloatingActionButton) cView.findViewById(R.id.passo_reset);
-
 
         tvDescr.setText(this.descr);
 
@@ -231,45 +134,17 @@ public class FPasso extends Fragment {
                 tts.speak(falar, TextToSpeech.QUEUE_ADD, null);
             }
         });
-
-        changeState(CountDownState.UNINITIALIZED);
-        if (passoTime != 0) {
-            cView.setVisibility(View.VISIBLE);
-
-
-            //Adicionar os elementos relevantes para contagem regressiva
-            startStopBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    switch (state) {
-                        case UNINITIALIZED:changeState(CountDownState.RUNNING);break;
-                        case RUNNING:changeState(CountDownState.PAUSED);break;
-                        case PAUSED:changeState(CountDownState.RUNNING);break;
-                        case FINISHED:changeState(CountDownState.UNINITIALIZED);break;
-                        default:break;
-                    }
-                }
-            });
-            resetBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    changeState(CountDownState.UNINITIALIZED);
-                }
-            });
-        } else {
-            cView.setVisibility(View.GONE);
-        }
-
-
-
-
-
-
-
-
+        timer  = new TimerComBotoes(rootView,getActivity(),passoTime);
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (timer != null) {
+            timer.clearTimer();
+        }
+    }
     /**
      * Returns the page number represented by this fragment object.
      */

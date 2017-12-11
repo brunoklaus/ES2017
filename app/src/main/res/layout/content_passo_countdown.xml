@@ -32,8 +32,8 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/passo_reset"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
@@ -46,8 +46,8 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/passo_startStop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"

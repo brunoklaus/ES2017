@@ -53,11 +53,11 @@
         </activity>
         <activity
             android:name=".timer.TimerActivity"
-            android:label="@string/title_activity_timer" />
-        <activity android:name=".timer.Timer2Activity" />
+            android:label="@string/title_activity_timer" /><![CDATA[
         android:name="com.journeyapps.barcodescanner.CaptureActivity"
         android:screenOrientation="fullSensor"
         tools:replace="screenOrientation" />
+        ]]>
         <activity android:name=".conversor.ConversorActivity" />
     </application>
 

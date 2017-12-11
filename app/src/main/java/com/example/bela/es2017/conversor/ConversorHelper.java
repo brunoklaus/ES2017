@@ -103,6 +103,10 @@ public class ConversorHelper {
      * @return verdadeiro somente se as duas strings sao consideradas a mesma unidade
      */
     public static boolean unidadeEquals(String n1, String n2) {
+
+        if (n1 == null || n2 == null) return false;
+
+
         n1 = n1.replaceAll(" ","");
         n2 = n2.replaceAll(" ","");
 

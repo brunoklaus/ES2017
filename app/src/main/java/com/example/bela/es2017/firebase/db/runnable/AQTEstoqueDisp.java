@@ -65,10 +65,17 @@ public class AQTEstoqueDisp {
 
     int localScore;
     int maxEst, maxScoreIngr;
+
+    /** Conjunto que mapeia a receita ao seu score quanto a similaridade com o estoque
+     * do usuario
+     */
     final HashMap<Receita,Double> score = new HashMap<Receita, Double>();
+    /**  Conjunto de  {@code (a,b)} : {@code a} eh um ingrediente encontrada na receita,
+     * e  {@code b} eh o melhor match no estoque do usuario*/
     final HashMap<InstIngrediente,InstIngrediente> mapToEstoque = new HashMap<>();
     private static final int CUTOFF_RECEITA_SCORE = 30;
     private static final int CUTOFF_INGR_SCORE = 70;
+    private static final int FOUND_INGR_REWARD = 100;
 
 
 
@@ -80,7 +87,8 @@ public class AQTEstoqueDisp {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Receita r = snapshot.getValue(Receita.class);
                     int scoreReceita = 0;
-                    if (r.ingredientesUsados == null || r.ingredientesUsados.isEmpty()) {
+                    if (r.ingredientesUsados == null || r.ingredientesUsados.isEmpty()
+                    || r.passos == null) {
                         score.put(r,0.0);
                         continue;
                     }
@@ -92,7 +100,7 @@ public class AQTEstoqueDisp {
                             //achouIngredientes = false;
                             maxScoreIngr = 0;
                         } else {
-                            maxScoreIngr = 100;
+                            maxScoreIngr = FOUND_INGR_REWARD;
                         }
                         mapToEstoque.put(usado, maxEst);
                         scoreReceita += maxScoreIngr;
@@ -124,9 +132,16 @@ public class AQTEstoqueDisp {
     int convSearchesLeft = 0;
     HashSet<Receita> receitasValidas = new HashSet<>();
     private void classificaReceitasB(){
-        List<Receita> receitaList = new ArrayList<>(score.keySet());
+        List<Receita> receitaList = new ArrayList<>();
+        for (Receita r : score.keySet()) {
+            if (score.get(r) > CUTOFF_RECEITA_SCORE) {
+                receitaList.add(r);
+            }
+        }
+
         for (int i = 0; i < receitaList.size(); i++) {
             Receita r = receitaList.get(i);
+
             for (InstIngrediente ingr : r.ingredientesUsados) {
 
                 InstIngrediente noEstoque = mapToEstoque.get(ingr);
@@ -165,7 +180,10 @@ public class AQTEstoqueDisp {
             if (noEstoque.qtde < convMap.get(p).doubleValue()) {
                 //Temos no estoque mas eh qtde menor
                 if (receitasValidas.contains(p.first)) {
-                    //receitasValidas.remove(p.first);
+                    score.put(p.first,
+                            (score.get(p.first) - 0.5*FOUND_INGR_REWARD) /
+                                    (p.first.ingredientesUsados.size())
+                            );
                 }
             }
         }

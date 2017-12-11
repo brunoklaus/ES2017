@@ -15,12 +15,16 @@ import com.example.bela.es2017.R;
 public class EstoqueMatcherViewHolder extends RecyclerView.ViewHolder {
     private TextView estoque;
     private  TextView receita;
+    private View constrLayout;
 
     public TextView getEstoque(){return  estoque;}
     public TextView getReceita(){return  receita;}
+    public View getConstrLayout(){return constrLayout;}
+
 
     public EstoqueMatcherViewHolder(View itemView) {
         super(itemView);
+        constrLayout = itemView.findViewById(R.id.estoquematcher_cl);
         estoque = itemView.findViewById(R.id.estoquematcher_ingr_est);
         receita = itemView.findViewById(R.id.estoquematcher_ingr_rec);
     }
