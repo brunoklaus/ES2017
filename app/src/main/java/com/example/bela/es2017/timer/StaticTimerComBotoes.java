@@ -25,8 +25,8 @@ import static com.example.bela.es2017.R.id.status;
 
 /**
  * Created by klaus on 11/12/17.
+ * Versao estatica de um @link{TimerComBotoes}
  */
-
 public class StaticTimerComBotoes {
 
 

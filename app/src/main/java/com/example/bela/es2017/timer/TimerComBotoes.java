@@ -24,9 +24,10 @@ import visualizareceita.FPasso;
 import static com.example.bela.es2017.R.id.status;
 
 /**
+ * Classe que representa um timer a ser associado com um TextView pra contagem regressiva
+ * e botoes de play/pause e reset.
  * Created by klaus on 11/12/17.
  */
-
 public class TimerComBotoes {
 
     enum CountDownState {UNINITIALIZED,RUNNING,PAUSED,FINISHED};
@@ -50,8 +51,12 @@ public class TimerComBotoes {
     private TextView countDown;
 
 
-
-
+    /**
+     * Construtor do timer
+     * @param rootView a view onde os botoes estao
+     * @param act a atividade atual
+     * @param initTime duracao do timer
+     */
     public TimerComBotoes(ViewGroup rootView, Activity act, long initTime) {
         this.passoTime = initTime;
         View cView = rootView.findViewById(R.id.passo_include_timer);
@@ -164,7 +169,7 @@ public class TimerComBotoes {
         };
         alertTimer.start();
     }
-    void onChangeToRunning() {
+    private void onChangeToRunning() {
         if (cTimer != null) cTimer.cancel();
         cTimer  = new CountDownTimer(milisLeft, 1000) {
 
@@ -184,7 +189,7 @@ public class TimerComBotoes {
         cTimer.start();
         startStopBtn.setImageResource(PAUSE_IMG);
     }
-    void onChangeToPaused() {
+    private void onChangeToPaused() {
         cTimer.cancel();
 
         startStopBtn.setImageResource(PLAY_IMG);
@@ -202,6 +207,12 @@ public class TimerComBotoes {
             }
         };
     }
+
+    /**
+     * Retorna o tempo restante formatado em String
+     * @param milis numero de milisegundos restantes
+     * @return tempo restante no formato hh:mm:ss
+     */
     String getTimeLeft(long milis) {
         long sec = milis / 1000;
         String timeLeftStr =
