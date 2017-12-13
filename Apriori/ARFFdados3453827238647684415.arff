@@ -1,0 +1,9 @@
+@relation dados
+@attibute 1 { !}
+@attibute 2 { !}
+@attibute 3 { !}
+@attibute 4 { !}
+@attibute 5 { !}
+@data
+?,!,!,!,?
+!,!,?,?,!
